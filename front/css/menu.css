@@ -1,0 +1,51 @@
+.sidebar {
+
+    width: 80px;
+    height: 100%;
+    left: 0px;
+    margin-bottom: 0%;
+    backdrop-filter: blur(10px);
+    background: rgba(109, 96, 96, 0.1);
+    border-radius: 0px 20px 20px 0px;
+    box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.sidebar .menu ul {
+    padding: 0px;
+    margin: 20px 0;
+}
+
+.sidebar .menu ul li
+{
+    margin: 0px 0px 0px 0px;
+}
+
+.sidebar .menu ul li a 
+{
+    padding: 20px;
+    display: block;
+}
+
+.sidebar .menu ul li a img {
+    width: 30px;
+    display: block;
+}
+
+/*   content: ''; => Empty Content: The empty string '' means that no actual content is inserted, but the pseudo-element itself can be styled.
+Pseudo-elements: The content property only works with pseudo-elements like ::before and ::after. 
+ */
+.sidebar .menu  a::after {
+    content: '';
+    height: 5px;
+    background-color: transparent;
+    border-radius: 10px;
+    width: 30px;
+    display: block;
+}
+
+.sidebar .menu  a:hover::after, .sidebar .menu  a.active::after {
+    background-color:#3992A5;
+}
