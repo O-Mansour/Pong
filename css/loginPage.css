@@ -183,14 +183,13 @@ input[type="email"] {
 }
 
 .login-box .signup-box{
-
+    
     font-family: 'Poppins',sans-serif;
     color: #ffffff;
     letter-spacing: 0.5px;
     outline: none;
     border: none;
 }
-
 
 .login-box .signup-box h3, 
 .login-box .signup-box h6 {
@@ -200,7 +199,6 @@ input[type="email"] {
     text-align: center;
   
 }
-
 
  input[type="text"],
  input[type="password"],

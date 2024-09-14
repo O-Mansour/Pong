@@ -1,8 +1,4 @@
-
-
 /*  
-
-
 
 .sidebar {
 
@@ -89,116 +85,106 @@
 }
  */
 
- 
 
 
-.stats h1
-{
+
+.stats h1 {
+
     text-align: center;
     color: white;
     font-family: "Roboto", sans-serif;
-   font-size: 30px;
-   text-shadow: 
-    1px 1px 0 #3992A5, 
-    -1px -1px 0 #3992A5, 
-    1px -1px 0 #3992A5, 
-    -1px 1px 0 #3992A5;
+    font-size: 30px;
+    text-shadow:
+        1px 1px 0 #3992A5,
+        -1px -1px 0 #3992A5,
+        1px -1px 0 #3992A5,
+        -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5;
 }
 
-.stats-view
-{
-  
+.stats-view {
+
     display: flex;
-    justify-content:center;
+    justify-content: center;
 
     margin-bottom: 2%;
-   /*justify-content: space-around;*/
+    /*justify-content: space-around;*/
 }
 
-.stat3 
+.stat3 {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat2 {
+
+    display: flex;
+    flex-direction: column;
+}
+
+.stat1 
 {
     display: flex;
     flex-direction: column;
-
-
-}
-.stat2 
-{
-    display: flex;
-    flex-direction: column;
-
-}
-.stat1
-{
-    display: flex;
-    flex-direction: column;
-
 }
 
 
-.stat1 .number 
-{
+.stat1 .number {
     color: white;
     font-size: 30px;
     font-weight: 700;
     font-family: "Roboto", sans-serif;
-    text-shadow: 
-    1px 1px 0 #3992A5, 
-    -1px -1px 0 #3992A5, 
-    1px -1px 0 #3992A5, 
-    -1px 1px 0 #3992A5;
+    text-shadow:
+        1px 1px 0 #3992A5,
+        -1px -1px 0 #3992A5,
+        1px -1px 0 #3992A5,
+        -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5;
 
 }
 
-.number
-{
+.number {
     text-align: center;
 }
 
-.stat2
-{
+.stat2 {
     margin-left: 120px;
     margin-right: 120px;
 }
 
-.stat2 .number 
-{
+.stat2 .number {
     color: white;
     font-size: 30px;
     font-weight: 700;
     font-family: "Roboto", sans-serif;
-    text-shadow: 
-    1px 1px 0 #3992A5, 
-    -1px -1px 0 #3992A5, 
-    1px -1px 0 #3992A5, 
-    -1px 1px 0 #3992A5;
+    text-shadow:
+        1px 1px 0 #3992A5,
+        -1px -1px 0 #3992A5,
+        1px -1px 0 #3992A5,
+        -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #0f1a1c;
     margin-left: 40px;
     margin-right: 40px;
 }
 
-.stat3 .number 
-{
+.stat3 .number {
     color: white;
     font-size: 30px;
     font-weight: 700;
     font-family: "Roboto", sans-serif;
-    text-shadow: 
-    1px 1px 0 #3992A5, 
-    -1px -1px 0 #3992A5, 
-    1px -1px 0 #3992A5, 
-    -1px 1px 0 #3992A5;
+    text-shadow:
+        1px 1px 0 #3992A5,
+        -1px -1px 0 #3992A5,
+        1px -1px 0 #3992A5,
+        -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5;
     margin-left: 40px;
     margin-right: 40px;
 
 }
 
-.stat1 .total
-{
-   
+.stat1 .total {
+
     color: white;
     font-size: 30px;
     font-weight: 700;
@@ -207,26 +193,22 @@
     text-align: center;
 }
 
-.total
-{
+.total {
     margin-left: 1px;
 }
-.stat2 .total
-{
-   
+
+.stat2 .total {
+
     color: white;
     font-size: 30px;
     font-family: "Roboto", sans-serif;
     color: #3992A5;
     font-size: 29px;
     font-weight: 700;
-   
-
 }
 
-.stat3 .total
-{
-   
+.stat3 .total {
+
     color: #3992A5;
     font-size: 29px;
     font-weight: 700;
@@ -234,8 +216,7 @@
 
 }
 
-.head
-{   
+.head {
     width: 80%;
     height: 5%;
     backdrop-filter: blur(10px);
@@ -243,7 +224,7 @@
     border-radius: 20px 20px 20px 20px;
     box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
 
-   /* background: linear-gradient(to right, #509cb3, #446870);
+    /* background: linear-gradient(to right, #509cb3, #446870);
    background: linear-gradient(to right, rgba(139, 174, 182, 1), rgba(24, 27, 28, 1));
    
    background: linear-gradient(to right, #181B1C 50%, #446870 50%);
@@ -258,37 +239,33 @@
       background: linear-gradient(to right, rgba(24, 27, 28, 1), rgba(68, 104, 112, 0));
       background: linear-gradient(to right, rgba(24, 27, 28, 0.4), rgba(68, 104, 112, 0));
 ------------
-
-
 -->
 one 
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
 
 -->
    */
-
-   background: linear-gradient(to bottom right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
+    background: linear-gradient(to bottom right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
 }
 
-.body-home .content .header
-{
+.body-home .content .header {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap :2%;
+    gap: 2%;
     margin: 0% 2%;
 }
 
-.img_prof {
+.img_prof 
+{
     position: relative;
 }
 
-.header .img_prof .online-status
- {
-
+.header .img_prof .online-status 
+{
     width: 25px;
     height: 25px;
-    background-color:#37C25E; 
+    background-color: #37C25E;
     border-radius: 50%;
     position: absolute;
     top: 0px;
@@ -306,7 +283,7 @@ one
 
 .meg,
 .play {
- 
+
     background: none;
     border: none;
     border-radius: 5px;
@@ -327,7 +304,7 @@ one
 
 .meg {
 
-    background-color: #453827 ; 
+    background-color: #453827;
 
 }
 
@@ -339,8 +316,7 @@ one
     background: #07414e;
 }
 
-.add-friend-btn:hover
-{
+.add-friend-btn:hover {
     background: #07414e;
 }
 
@@ -348,9 +324,8 @@ one
 
 /* ranking */
 
-.box .ranking .rank
-{
-    
+.box .ranking .rank {
+
     justify-content: center;
     width: 90%;
     height: 50%;
@@ -363,38 +338,35 @@ one
 
 }
 
-.rank
-{
+.rank {
     /* margin-right: 20px; */
     display: flex;
-    text-align: center; 
+    text-align: center;
     justify-content: center;
     flex-direction: column;
     /* margin-left: 50px; */
 }
 
 
-.rank1
-{
+.rank1 {
     color: white;
     font-size: 30px;
     font-weight: 400;
     font-family: "Roboto", sans-serif;
-    text-shadow: 
-    1px 1px 0 #3992A5, 
-    -1px -1px 0 #3992A5, 
-    1px -1px 0 #3992A5, 
-    -1px 1px 0 #3992A5;
+    text-shadow:
+        1px 1px 0 #3992A5,
+        -1px -1px 0 #3992A5,
+        1px -1px 0 #3992A5,
+        -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5;
     text-align: center;
 }
 
-.rank
-{
+.rank {
     padding-top: 100%;
 }
-.rank .r1
-{
+
+.rank .r1 {
     color: white;
     font-size: 13px;
     font-weight: 400;
@@ -414,27 +386,24 @@ one
     margin-left: 3%;
 }
 
-.ranking .rank
-{
-  padding: 80px 29px 40px 15px;
-   /* margin-top: 16px; */
-   /* margin-bottom: 16px;
+.ranking .rank {
+    padding: 80px 29px 40px 15px;
+    /* margin-top: 16px; */
+    /* margin-bottom: 16px;
    margin-left: 30px;
    margin-right: 29px;  */
-   
+
 }
 
 /* fin ranking */
 
-
 /* mtch =>chart-container*/
-.mtch .matches 
-{
+
+.mtch .matches {
     margin-top: 20px;
 }
 
-.mtch .matches .matches-plyes
-{
+.mtch .matches .matches-plyes {
     width: 70%;
     height: 19%;
 
@@ -447,34 +416,31 @@ one
 }
 
 
-.mtch .matches-plyes
-{
+.mtch .matches-plyes {
     padding: 30px 29px 30px 15px;
-     /* margin-top: 16px; */
+    /* margin-top: 16px; */
     margin-bottom: 15px;
     margin-left: 30px;
-    margin-right: 29px; 
+    margin-right: 29px;
     text-align: center;
 }
 
-.m1
-{
+.m1 {
     color: white;
     font-size: 30px;
     font-weight: 400;
     font-family: "Roboto", sans-serif;
-    text-shadow: 
-    1px 1px 0 #3992A5, 
-    -1px -1px 0 #3992A5, 
-    1px -1px 0 #3992A5, 
-    -1px 1px 0 #3992A5;
+    text-shadow:
+        1px 1px 0 #3992A5,
+        -1px -1px 0 #3992A5,
+        1px -1px 0 #3992A5,
+        -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5;
     text-align: center;
 }
 
 
-.matches-plyes .m2
-{
+.matches-plyes .m2 {
     color: white;
     font-size: 13px;
     font-weight: 400;
@@ -483,8 +449,7 @@ one
 
 /* fin mutch */
 
-.legend h1
-{
+.legend h1 {
     font-size: 14px;
     margin-left: 20px;
     margin-top: 20px;
@@ -492,8 +457,7 @@ one
 }
 
 
-.leadebord 
-{
+.leadebord {
 
     display: flex;
     flex-direction: column;
@@ -509,8 +473,7 @@ one
 
 
 
-.leader 
-{
+.leader {
 
     display: grid;
     grid-template-columns: 50px 50px minmax(70px, 1fr) auto;
@@ -519,7 +482,7 @@ one
     /* border: solid #37C25E; */
 
 
-   /* display: flex;
+    /* display: flex;
     align-items: center;
     border-radius: 10px;
     color: white;
@@ -529,14 +492,14 @@ one
 .leader h1,
 .leader img,
 .leader .add-friend-btn {
-    display:  flex;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .leader .leader-name,
 .leader .leader-username {
-    display:  flex;
+    display: flex;
     /* align-items: center; */
     /* justify-content: center; */
 }
@@ -544,7 +507,7 @@ one
 .leader h1 {
     grid-row-start: 1;
     grid-row-end: -1;
-    display:  flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     align-items: flex-start;
@@ -572,18 +535,16 @@ one
 }
 
 /* */
-.leader .img_leader
-{
+.leader .img_leader {
     width: 50px;
     height: 50px;
     border-radius: 10px;
-    
+
     /* margin-right: 20px; */
 
 }
 
-.leader-name
-{
+.leader-name {
 
     color: white;
     display: flex;
@@ -592,9 +553,8 @@ one
     /* margin-bottom: 5px; */
 }
 
-.leader-username
-{
-   
+.leader-username {
+
     color: #828282;
     display: flex;
     flex-direction: row;
@@ -603,10 +563,9 @@ one
 }
 
 
-.add-friend-btn
-{
-   
-   width: 110px;
+.add-friend-btn {
+
+    width: 110px;
     height: 18px;
     background: none;
     padding: 8px 16px;
@@ -622,8 +581,7 @@ one
     background-color: #3992A5;
 }
 
-.message-btn
-{
+.message-btn {
     width: 110px;
     height: 18px;
     background: none;
@@ -635,15 +593,14 @@ one
     padding-right: 19px;
 }
 
-.message-btn
-{
+.message-btn {
 
-    background-color: #453827; 
+    background-color: #453827;
 
 }
 
 .head {
-    
+
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -653,52 +610,48 @@ one
 
 }
 
-.head .profile 
-{
+.head .profile {
     width: calc(100% - 280px);
 }
 
-.img_prof .prof
-{
-    width: 160px;
-    height: 128px;
+.img_prof .prof {
 
+    /* width: 160px;
+    height: 128px; */
+    width: 120px;
+    height: 120px;
     border-radius: 15px;
     margin-top: 0px;
-    
+
 }
 
-.head .profile h2
-{
-   /* margin-left: 40px; */
-   
-   color: white;
-   font-family: "Roboto", sans-serif;
-   font-size: 30px;
-   text-shadow: 
-    1px 1px 0 #3992A5, 
-    -1px -1px 0 #3992A5, 
-    1px -1px 0 #3992A5, 
-    -1px 1px 0 #3992A5;
-    -webkit-text-stroke: 0px #3992A5; 
+.head .profile h2 {
+    /* margin-left: 40px; */
+
+    color: white;
+    font-family: "Roboto", sans-serif;
+    font-size: 30px;
+    text-shadow:
+        1px 1px 0 #3992A5,
+        -1px -1px 0 #3992A5,
+        1px -1px 0 #3992A5,
+        -1px 1px 0 #3992A5;
+    -webkit-text-stroke: 0px #3992A5;
     margin-bottom: 10px;
 }
 
 /* jjj */
 
-.body-home .sidebar .content
-{
+.body-home .sidebar .content {
     margin-top: 0%;
 }
 
-.body-home .content .header
-{
+.body-home .content .header {
     margin-top: 19px;
 }
 
 
-.progress
-{
+.progress {
     width: 50%;
     height: 4px;
     background-color: #453827;
@@ -708,32 +661,29 @@ one
 }
 
 
-.progress::before
-{
+.progress::before {
     content: "";
     display: block;
-    width: 50%; 
+    width: 50%;
     height: 100%;
     background-color: #3992A5;
 }
 
 
-.xp
-{
+.xp {
 
     color: white;
     font-size: 12px;
     font-family: "Roboto", sans-serif;
- 
+
     position: absolute;
-    top:0;
+    top: 0;
     left: 0;
     translate: 0 -100%;
-   
+
 }
 
-.matches
-{
+.matches {
     margin-top: 10px;
     margin-left: 40px;
 }
@@ -744,18 +694,16 @@ one
     font-size: 12px;
     font-family: "Roboto", sans-serif;
     position: absolute;
-    top:0;
+    top: 0;
     right: 0;
     translate: 0 -100%;
 }
 
-.body-home
-{
-    margin-bottom:70%;
+.body-home {
+    margin-bottom: 70%;
 }
 
-.p1
-{
+.p1 {
     display: grid;
     grid-template-columns: 49% 49%;
     column-gap: 2%;
@@ -775,10 +723,9 @@ one
 */
 
 
-.box
-{
- 
-    
+.box {
+
+
     display: flex;
     justify-content: space-around;
     /* margin: 20px; */
@@ -798,8 +745,7 @@ one
 }
 
 
-.mtch
-{
+.mtch {
     /* margin: 20px; */
     /* margin: 10px; */
     /* margin-top: 2%; */
@@ -819,6 +765,7 @@ one
 
 
 .chart-container {
+    
     width: 60%;
     height: 100%;
     position: relative;
@@ -830,6 +777,7 @@ one
 
 
 .chart {
+
     /* width: 150px;
     height: 150px; */
 
@@ -871,6 +819,7 @@ one
     
     display: flex;
     align-items: center;
+   
     /* font-size: 14px; */
     color: hsl(0, 0%, 100%);
     width: 20%;
@@ -925,7 +874,6 @@ one
     padding: 5%;
 }
 
-
 .percentage.win
 {
     position: absolute;
@@ -941,8 +889,6 @@ one
     font-family: "Roboto", sans-serif;
     font-weight: 700;
     text-align: center;
-
-
 }
 
 

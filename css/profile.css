@@ -7,16 +7,13 @@
     margin: 0% 2%; */
     padding-top: 2%;
     /* margin-top: 5%; */
-
 }
-
 
 .tournam_profile .user-info
 {
     display: grid;
     grid-template-rows: 50px 50px;
     grid-template-columns: 100px 1fr auto;
-
 
 }
 
@@ -43,18 +40,22 @@
     /* margin-top: 2%; */
 }
 
-
+/*classe -> user-info=> transform: translate(x, y);=> x is the horizontal movement (left/right).
+                                 y is the vertical movement (up/down).
+    The element is moved up by 50% of its own height (-50% on the Y-axis). 
+    The negative value indicates upward movement.
+*/
 .user-info
 {
     position: absolute;
     top:0;
     left: 0;
     translate: 0 -50%;
-
 }
 
  /* plus importent  grid*/
-.user-info .firstL {
+.user-info .firstL 
+{
     grid-row: 1 / 2;
     grid-column: 2 / 3;
     display: flex;
@@ -70,7 +71,8 @@
     margin: 0;
 }
 
-.user-info .joined {
+.user-info .joined
+{
     grid-row: 1 / 2;
     grid-column: 3 / 4;
     display: flex;
@@ -80,17 +82,6 @@
 
 /* fin plus griid */
 
-/* .tourn_playe
-{
-    margin: 50px 0 0 0;
-} */
-
-/* .user-info 
-{
-    justify-content: space-around;
-} */
-
-
 .tournaments
 {   
     width: 90%;
@@ -99,14 +90,8 @@
     display: flex;
     flex-direction: row;
     column-gap: 2%;
-    
-}
 
-.header_1 
-{
-    
 }
-
 
 .header_1 .tournam_profile .user-info .firstL
 {
@@ -135,8 +120,6 @@
     grid-column: 1 / 2;
 }
 
-
-
 .user-info
 {
     display: flex;
@@ -150,7 +133,7 @@
 {
    color: white;
    font-family: "Roboto", sans-serif;
-    font-weight: 300;
+   font-weight: 300;
    font-size: 14px;
 
 }
@@ -165,7 +148,6 @@
     padding-bottom: 2%;
 }
 
-
 .header_1 .tournam_profile .user-info .username
 {
    color: white;
@@ -174,16 +156,6 @@
    font-size: 14px;
 
 }
-
-/* 
-.hd
-{
-    display: flex;
-    flex-direction: row;
-} */
-
-/* style="width: 100%; height: 100%;" */
-
 
 
 .img_prof_2 .prof_1
@@ -236,7 +208,6 @@
 {
    
     width: 100%;
-
     /* height: 100%; */
     padding: 5px;
     backdrop-filter: blur(10px);
@@ -255,11 +226,6 @@
 }
 
 
-.header_1 .tournam_profile
-{
-    /* display: flex; */
-
-}
 
 .t1
 {
@@ -306,27 +272,17 @@
 
 
 /* leval */
-.level2 {
-
-    color: white;
-    font-size: 12px;
-    font-family: "Roboto", sans-serif;
-    position: absolute;
-    top:0;
-    right: 0;
-    translate: 0 -100%;
-}
 
 .progress_2
 {
-    width: 50%;
+    width: 76%;
     height: 4px;
     top: 20%;
     text-align: center;
     background-color: #453827;
     border-radius: 4px;
     position: relative;
-    margin-left: 10%;
+    margin-left: 12%;
 }
 
 .progress_2::before
@@ -338,6 +294,11 @@
     height: 100%;
     background-color: #3992A5;
 
+}
+
+.message-btn_1:hover
+{
+    background: #34291c;
 }
 
 .xp2
@@ -354,6 +315,17 @@
    
 }
 
+.level2 {
+
+    color: white;
+    font-size: 12px;
+    font-family: "Roboto", sans-serif;
+    position: absolute;
+    top:0;
+    right: 0;
+    translate: 0 -100%;
+}
+
 
 /* fin */
 
@@ -363,11 +335,20 @@
     display: grid;
     grid-template-columns: 49% 49%;
     column-gap: 2%;
+    padding: 0 5%;  /* padding left and rghit l parent  not chaild*/
    
+}
+
+.hidden-scrollbar
+{
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .box_p2
 {
+
     overflow: auto;
     display: flex;
     justify-content: space-around;
@@ -379,11 +360,15 @@
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
     box-sizing: border-box;
     padding: 5px 10%;
+
+
 }
 
 
 
-/* box 1*/
+.meg:hover {
+    background: #34291c;
+}
 
 /* .box_p2 .Friend_list
 {
@@ -409,6 +394,7 @@
     grid-template-rows: 260px;
     /* column-gap: 5%; */
 }
+
 .leader_1
 {
 
@@ -449,7 +435,8 @@
     margin-top: 10px;
 } */
 
-.leader_1 img {
+.leader_1 img
+{
     grid-row-start: 1;
     grid-row-end: -1;
 }
@@ -464,6 +451,7 @@
     grid-row-start: 2;
 }
 
+/* 2 => grid-row-end: -1;*/
 .leader_1 .add-friend-btn_1 {
     grid-row-start: 1;
     grid-row-end: -1;
@@ -482,7 +470,6 @@
 
 .leader-name_1
 {
-
     color: white;
     display: flex;
     flex-direction: row;
@@ -529,16 +516,16 @@
     padding-left: 19px;
     padding-right: 19px;
 }
+
 .message-btn_1
 {
     background-color: #453827; 
 }
 
-
 /* los and winn */
 
-
 .chart-container_1 {
+
     width: 60%;
     height: 100%;
     position: relative;
@@ -549,17 +536,19 @@
 }
 
 .charts {
+
     /* width: 150px;
     height: 150px; */
 
     width: 50%;
     height: 70%;
     justify-content: center;
+    
     background: conic-gradient(#3992A5 0% var(--per), #453827 var(--per) 100%);
+    /* background: conic-gradient(#3992A5 0% var(--per), #45382700 var(--per) 100%); */
     border-radius: 50%;
     position: relative;
 }
-
 
 .charts::before {
     content: '';
@@ -573,14 +562,17 @@
     border-radius: 50%;
 }
 
+
+
 .labels_1 {
+
     width: 100%;
     display: flex;
-    
     justify-content: center;
     gap: 10%;
     margin-bottom: 5%;
     margin-left: 10%;
+
     /* position: absolute;
     top: 0;
     right: 0; */
@@ -592,7 +584,8 @@
     align-items: center;
    
     /* font-size: 14px; */
-    color: hsl(0, 0%, 100%);
+    /* color: hsl(0, 0%, 100%); */
+    color:white;
     width: 20%;
     font-size: 20px;
     font-family: "Roboto", sans-serif;
@@ -612,12 +605,12 @@
  
 }
 
-.lab-colorr .losss {
+.lab-colorr.losss {
     background-color: #453827;
     
 }
 
-.lab  .lab-colorr .losss
+.lab.lab-colorr .losss
 {
     align-content: space-between;
     margin-left: 90px;
@@ -643,6 +636,7 @@
     text-align: center;
     border-radius: 10px;
     padding: 5%;
+    /* z-index: 1; */
 }
 
 .percentagee.winn   
@@ -660,6 +654,7 @@
     font-family: "Roboto", sans-serif;
     font-weight: 700;
     text-align: center;
+    /* z-index: 1; */
 }
 
 .mtch1
@@ -668,9 +663,10 @@
     /* margin: 10px; */
     /* margin-top: 2%; */
     display: flex;
-    width: 93%;
+    width: 100%;
     height: 100%;
-    margin-left: 30px;
+    max-height: 260px;
+    /* margin-left: 60px; */
     /* margin: 0px 3%; */
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
@@ -681,7 +677,7 @@
 
 .list_hostory
 {
-
+    padding: 0 5%; /* padding l child -> left and right*/
 }
 
 .matches2
@@ -708,7 +704,6 @@
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
 
 }
-
 
 .mtch1 .matches-plyes_1
 {
@@ -746,19 +741,29 @@
 
 
 /* metch_history */
+.hidden-scrollbar 
+{
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
 
 .list_ho{
 
- 
-    width: 97%;
+    /* justify-content: space-around; */
+    overflow: auto;
+    width: 100%;
     height: 100%;
+    max-height: 260px;
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
     border-radius: 20px 20px 20px 20px;
     box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
-    padding: 20px 10px;
-    box-sizing: border-box;
+    padding: 10px 0px;
+    box-sizing: border-box;  /* بناء الجملة: مربع المحتوى | مربع الحدود*/
+    /* padding-top: 3%; */
+    /* padding-bottom: 2px; */
 }
 
 .list_hostory .title_host
@@ -776,33 +781,45 @@
     -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5;
     text-align: center;
-
+    
+    margin-top: 1px;
 }
+
 .list_hostory
 {
+    /* margin-top: 1%; */
    text-align: center;
+   /* margin-bottom: 5%; */
+   /* padding-top: 5px; */
+   /* margin-bottom: 10px; */
+   margin-top: 1px;
 }
 
 .list_hostory  .progress_3
 {
-    width: 50%;
-    height: 4px;
-    top: 20%;
+    width: 100%;
+    height: 3px;
+    bottom: 0;
     /* text-align: center; */
     background-color: #453827;
     border-radius: 4px;
     /* position: relative; */
-    margin-left: 19%;
-}
 
+}
+.history_1
+{
+    margin-top: 5px;
+}
 .progress_3::before
 {
     content: "";
     display: block;
     width: 50%; 
     height: 100%;
-    background-color: #3992A5;
+    background-color: #453827;
 }
+
+
 .history_1 .img_vs1
 {
     width: 50px; 
@@ -812,4 +829,142 @@
     border-radius: 15px;
     margin-top: 0px;
     
+}
+
+.history_1 .img_valide
+{
+    width: 30px;
+    height: 30px;
+}
+
+.history_1 .img_close
+{
+    width: 25px;
+    height: 28px;
+}
+
+
+.history_1 .vs
+{
+    color: white;
+    font-size: 30px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    text-shadow: 
+    1px 1px 0 #3992A5, 
+    -1px -1px 0 #3992A5, 
+    1px -1px 0 #3992A5, 
+    -1px 1px 0 #3992A5;
+    -webkit-text-stroke: 0px #3992A5;
+}
+
+.opp_user
+{
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+
+}
+
+.history_1 .opp_win
+{
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+
+    text-align: center;
+}
+
+.history_1 .opp_loss
+{
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+}
+
+.history_1 .date
+{
+    color: #3992A5;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+}
+
+
+.list_hostory .history_1{
+    
+    display: grid;
+    grid-template-rows: 50px;
+    grid-template-columns: 50px 50px 1fr minmax(auto, 1fr) auto;
+    column-gap: 3%;
+    width: 100%;
+}
+
+
+.history_1 .vs
+{
+    grid-row: 1/2;
+    grid-column: 1/2;
+
+}
+
+.history_1 .img_vs1
+{
+    grid-row: 1/2;
+    grid-column: 2/3;
+}
+
+.history_1 .opp_user
+{
+    /* grid-row: 1/2; */
+    grid-column: 3/4;
+}
+
+.history_1 .img_valide
+{
+    grid-row: 1/2;
+    grid-column: 4/5;
+}
+
+.history_1 .opp_win
+{
+    grid-row: 1/2;
+    grid-column: 4/5;
+}
+
+
+.history_1 .date
+{
+    grid-row: 1/2;
+    grid-column: 5/6;
+
+}
+
+
+.history_1 .img_close
+{
+    grid-row: 1/2;
+    grid-column: 4/5;
+
+
+}
+
+.history_1 .opp_loss
+{
+    grid-row: 1/2;
+    grid-column: 4/5;
+}
+
+
+
+.history_1 > * {
+    display: flex;
+    align-items: flex-end;
+    align-content: flex-end;
+    /* vertical-align: text-bottom; */
 }
