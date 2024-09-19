@@ -1,0 +1,50 @@
+{% load static %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  
+    <!--<script src="javascript" href="./js/script.js">-->
+
+    </script>
+</head>
+
+<body>
+
+   <div class="container">
+            <img src="{% static 'images/logo.png' %}"class="logo">
+            <form class="login-box" action="" method="POST">
+                <!-- Added to show Error Messages -->
+                <div>
+                    {% for message in messages %}
+                    <h5 color="red">{{message}}</h5>
+                    {% endfor %}
+                </div>
+
+                {% csrf_token %} <!-- we need this with POST method -->
+                <div class="log">
+                    <h3 class="l1">Login</h3>
+                    <h6 class="l2">Welcome back !</h6>
+                </div>
+                <input type="text" placeholder="Username" id="username" name="username">
+                <input type="password" placeholder="Password" id="password"  name="password">
+                <div class="check_">
+                    <input class="check" type="checkbox" id="veh" name="veh" value="Bike" checked>
+                    <label for="veh"> Remember me </label><br>
+                </div>
+                <button  id="frontside" type="submit">Login</button>
+                <a href="forgetpassword.html" class="forgot-password">Forgot password ?</a>
+                <div class="or">Or</div>
+                <button class="intra-login"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 137.6 96.6" fill="#fff" stroke="transparent" width="40" height="32"><path d="M229.2 443.9h50.7v25.4h25.3v-45.9h-50.6l50.6-50.7h-25.3l-50.7 50.7zM316.1 398.1l25.3-25.4h-25.3z" fill="#fff" transform="translate(-229.2 -372.7)"></path><path d="m341.4 398.1-25.3 25.3v25.3h25.3v-25.3l25.4-25.3v-25.4h-25.4zM366.8 423.4l-25.4 25.3h25.4z" fill="#fff" transform="translate(-229.2 -372.7)"></path></svg>
+                    <a href="{% provider_login_url '42' %}">Sign in with intra</a></button>
+                <p class="signup">Don’t have an account ? <a href="signup">Signup</a></p>
+            </form>
+    </div>
+</body>
+</html>
