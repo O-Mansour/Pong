@@ -32,6 +32,21 @@ def login(request):
 	else:
 		return render(request, 'login.html')
 
+def forgotpassword(request):
+	# if request.method == 'POST':
+	# 	username = request.POST['username']
+	# 	password = request.POST['password']
+
+	# 	user = auth.authenticate(username=username, password=password)
+	# 	if user is not None:
+	# 		auth.login(request, user)
+	# 		return redirect('/')
+	# 	else:
+	# 		messages.info(request, 'Invalid Credentials')
+	# 		return redirect('login')
+	# else:
+		return render(request, 'forgetpassword.html')
+
 @login_required(login_url='login')
 def logout(request):
 	auth.logout(request)
