@@ -44,6 +44,17 @@ def forgotpassword(request):
 	# 	else:
 	# 		messages.info(request, 'Invalid Credentials')
 	# 		return redirect('login')
+	# else:# if request.method == 'POST':
+	# 	username = request.POST['username']
+	# 	password = request.POST['password']
+
+	# 	user = auth.authenticate(username=username, password=password)
+	# 	if user is not None:
+	# 		auth.login(request, user)
+	# 		return redirect('/')
+	# 	else:
+	# 		messages.info(request, 'Invalid Credentials')
+	# 		return redirect('login')
 	# else:
 		return render(request, 'forgetpassword.html')
 
@@ -74,7 +85,7 @@ def signup(request):
 
 				#create a profile object
 				user_model = User.objects.get(username=username)
-				new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
+				new_profile = Profile.objects.create(user=user_model)
 				new_profile.save()
 				return redirect('login')
 		else:
