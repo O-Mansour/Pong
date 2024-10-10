@@ -24,15 +24,15 @@
 .change_1 .chge_select
 {
     width: 130%;
-
     height: 35px;
     border-radius: 5px;
     cursor: pointer;
     background: none;
     background-color: #3992A5;
     color: white;
-    /* font-family: "Roboto", sans-serif;
-    text-align: center; */
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    font-weight:bold;
 }
 
 .chge_select option[value=""]
@@ -48,20 +48,39 @@
     display: flex;
     justify-content:center;
     align-items:center;
-  
     width: 120px;
     height: 120px;
-    /* height: 82%; */
     border: none;
     border-radius: 15px;
-    /* margin-top: 32%; */
 }
+
+
+.hed_1 .logee:hover
+{
+    background: #34291c;
+}
+
+.acc-settings .update-btn:hover
+{
+    background: #07414e;
+}
+
+.header_2 .hed_1 .change_1 .chg1:hover
+{
+    background: #07414e;
+}
+
+
+.pass-settings .btn_ch:hover
+{
+    background: #07414e;
+}
+
 
 
 .hed_1 .logee
 {
-
-    width: 50%;
+    width: 40%;
     border-radius: 6px;
     cursor: pointer;
     background: none;
@@ -74,6 +93,7 @@
     position: absolute;
     transform: translateY(100%);
     bottom: 0;
+    box-sizing: border-box;
 }
 
 .logee img 
@@ -86,8 +106,6 @@
     width: 20px; 
     margin: 0 10px;
 }
-
-
 
 .con
 {
@@ -112,7 +130,6 @@
     box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
     box-sizing: border-box;
-
     justify-content: space-evenly;
     align-items: center;
 }
@@ -133,8 +150,6 @@
     color: #fff;
 }
 
-
-
 .lop1{
 
     text-align: center;
@@ -142,6 +157,7 @@
     font-weight: 800; 
     font-size: 1.4rem;
     color: #fff;
+    
 }
 
 .title10,
@@ -217,6 +233,8 @@
     font-family: "Roboto", sans-serif;
     text-align: center;
     margin-top: 29px;
+    box-sizing: border-box;
+    font-size: 15px;
 }
 
 
@@ -270,6 +288,9 @@ input[type="email"]
     color: white;
     font-family: "Roboto", sans-serif;
     text-align: center;
+    box-sizing: border-box;
+    font-size: 16px;
+    
 }
 
 
@@ -299,9 +320,6 @@ input[type="email"]
     border-radius: 20px 20px 20px 20px;
     box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
-    box-sizing: border-box;
- 
-
 }
 
 
@@ -313,17 +331,15 @@ input[type="email"]
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     width: 70%;
     height: 100%;
-   
     color: white;
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
     border-radius: 20px 20px 20px 20px;
     box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
-    box-sizing: border-box;
+
 }
 
 

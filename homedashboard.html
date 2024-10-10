@@ -5,13 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homedashboard</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-    <div class="dashbord-container">
-        <img src="./images/logo.png" class="logo">
-        <div class="body-home">
+
+    <div class="ft_container">
+        <div class="header">
+            <div class="ft-box">
+                <img src="./images/logo.png" class="logo">
+            </div>
+        </div>
+        <div class="content">
             <aside class="sidebar">
                 <nav class="menu">
                     <ul>
@@ -24,12 +30,12 @@
                 </nav>
             </aside>
 
-            <main class="content">
-                <div class="header">
+            <main class="content1">
+                <div class="header1">
                     <div class="head">
                         <div class="profile">
                             <h2>Welcome, Full Name</h2>
-                            <div class="progress">
+                            <div class="ft_progress">
                                 <div class="bar" style="width: 100%;">
                                     <span class="xp">500 xp</span>
                                     <span class="level">Level 1</span>
@@ -41,10 +47,33 @@
                             <button class="play">Play now</button>
                         </div>
                     </div>
-                    <div class="img_prof">
-                        <img src="./images/profile.jpg" class="prof">
-                        <span class="online-status"></span>
+                    <div class="header-left-side">
+                        <div class="img_prof">
+                            <img src="./images/profile.jpg" class="prof">
+                            <!-- <span class="online-status"></span> -->
+                        </div>
+                        <div id="with-bootstrap">
+                            <button id="showFormBtn" class="message-btn1" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                <!-- <span class="nft">notification</span> -->
+                                <!-- <img src="./images/1c384ad7-e334-4aac-bce6-557c21a6bf7e.png" class="nf"> -->
+                                <!-- <img src="./images/notification.png" class="nf"> -->
+                                 <div class="notif1">
+                                        <span class="nft">Notification</span>
+                                        <div class="nf">
+                                            <img src="./images/bell.png">
+                                            <span class="badge bg-danger">9</span>
+                                        </div>
+                                        
+                                    
+                                 </div>
+                                
+                            </button>
+                        </div>
                     </div>
+
+
+
                 </div>
 
                 <!---->
@@ -99,7 +128,6 @@
                         </div>
 
                         <div class="box">
-
                             <div class="ranking">
                                 <div class="rank">
                                     <span class="rank1">#10</span>
@@ -142,8 +170,61 @@
                     </div>
                 </section>
             </main>
+            </div>
         </div>
     </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal-dialog">
+            <div class="modal-content hidden-scrollbar">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="formContainer">
+                        <p class="notf">Confirm or delete ?</p>
+                        <div class="d-flex">
+                            <div class="name_notf">
+                                <img src="./images/prof.jpg" alt="Player 1" class="img_led">
+                                <p class="name_invit">FullName</p>
+                            </div>
+                            <button id="confirmBtn" class="btn btn-success me-2">Confirm</button>
+                            <button id="deleteBtn" class="btn btn-danger">Delete</button>
+                        </div>
+
+                        <div class="d-flex">
+                            <div class="name_notf">
+                                <img src="./images/prof.jpg" alt="Player 1" class="img_led">
+                                <p class="name_invit">FullName</p>
+                            </div>
+                            <button id="confirmBtn" class="btn btn-success me-2">Confirm</button>
+                            <button id="deleteBtn" class="btn btn-danger">Delete</button>
+                        </div>
+
+                        <div class="d-flex">
+                            <div class="name_notf">
+                                <img src="./images/prof.jpg" alt="Player 1" class="img_led">
+                                <p class="name_invit">FullName</p>
+                            </div>
+                            <button id="confirmBtn" class="btn btn-success me-2">Confirm</button>
+                            <button id="deleteBtn" class="btn btn-danger">Delete</button>
+                        </div>
+
+                        <div class="d-flex">
+                            <div class="name_notf">
+                                <img src="./images/prof.jpg" alt="Player 1" class="img_led">
+                                <p class="name_invit">FullName</p>
+                            </div>
+                            <button id="confirmBtn" class="btn btn-success me-2">Confirm</button>
+                            <button id="deleteBtn" class="btn btn-danger">Delete</button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./js/script.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

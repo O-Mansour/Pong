@@ -1,144 +1,12 @@
-
-body
-{
+/* body {
     margin: 0px;
     padding: 0px;
     height: 100vh;
     width: 100%;
-  
 }
 
-/*
-.gred
-{
-   
-    background: linear-gradient(to right, #453827, #3992A5);
-    width: 1629.26px;
-    height: 1769.09px;
-    top: 623.06px;
-    left: 349px;
-   
-    scale: crop;
-}
-    
-    width: 1920px;
-    height: 1280px;
-    top: -540px;
-    left: 625px;
-    color: #000000;
-
-
-    height: 93.55px;
-    top: 45px;
-    left: 145px;
-    background-image: url(../images/background_image_body.jpeg);
-     background-image: linear-gradient(to right, #453827, #3992A5);
-    width: 140px;
-   
-
-    background: linear-gradient(to right, #453827, #3992A5), 
-    url(../images/background_image_body.jpeg);
-     background: linear-gradient(to right, #453827, #3992A5);
-
-     --
-        <button>Login</button>
-            <button>Sign in with intra</button>
-           
-
-    margin: right 100px;
-
-    background-image: linear-gradient(to right, #453827, #3992A5);
-
-    background:linear-gradient(to right, #453827, #3992A5),url(../images/background_image_body.jpeg);
-
-.container 
-{
-    background: 
-    linear-gradient(to right, 
-    rgba(69, 56, 39, 0.2) 30%, 
-    rgba(69, 56, 39, 0.2) 50%,
-    transparent 60%
-    ),
-    radial-gradient(circle at 95% center, 
-        rgba(57, 146, 165, 0.5) 35%, 
-        rgba(64, 8, 153, 0) 70%
-    ),
-        url(../images/background_image_body.jpeg);
-
-    background-size: cover;
-    height: 100vh;
-    width: 100%;
-    background-repeat: no-repeat;
-    
-    overflow: hidden;
-}
-
-
-.container  #title1  
-{
-    position: absolute;
-    text-align: right;
-    margin-top: 600.78px;
-    margin: 300.78px 0 0 50vw;
-    transform: rotate(10deg);
-    font-weight: 800;
-    font-size:100px;
-}
-
-.login-box .log .l1 {
-
-    text-align: center;
-    display: block;
-    margin-top: 0px;
-    padding-top: 0px;
-}
-
-.login-box .log .l2 {
-    text-align: center;
-    display: block;
-    font-size: 1.17em;
-    margin-top: 0px;
-    padding-top: 0px;
-}
-
-.intra-login 
-{
-    top: 20%;
-    width: 85%;
-    height: 5%;
-    padding: 14px 16px 14px 16px;
-    margin: 10px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(to right, #3b2d2d, #00747a);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
-}
-
-svg{
-
-    font-weight: bold;
-    margin-right: 50%;
-    line-height: 1;
-    width: 200px;
-    height: 20px;
-
-    padding: 0px 16px 0px 2px;
-
-}
-
-
-padding: 19px 25px;
-
-
-    */
-
-
-.container 
-{
-    background:url(../images/new_background.webp);
+.ft_container {
+    background: url(../images/new_background.webp);
     background-size: cover;
     height: 100vh;
     width: 100%;
@@ -146,26 +14,24 @@ padding: 19px 25px;
     overflow: hidden;
 }
 
-.logo{
+.logo {
     width: 140px;
     margin: 30px 70px;
-}
+} */
 
-
-     
 .login-box,
 .signup-box,
-.forgotpassword-box 
-{
+.forgotpassword-box {
     display: flex;
     align-items: center;
     flex-direction: column;
     height: fit-content;
     width: 290px;
     position: absolute;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     top: 50%;
-    right: 55%;
+    /* right: 55%; */
+    margin-left: 15%;
     border-radius: 10px;
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
@@ -182,29 +48,32 @@ input[type="email"] {
     outline: none;
 }
 
-.login-box .signup-box{
-    
-    font-family: 'Poppins',sans-serif;
+.login-box .signup-box {
+
+    font-family: 'Poppins', sans-serif;
     color: #ffffff;
     letter-spacing: 0.5px;
     outline: none;
     border: none;
 }
 
-.login-box .signup-box h3, 
-.login-box .signup-box h6 {
+.login-box 
+.signup-box  
+.l1
+.login-box 
+.signup-box 
+.l1{
     font-size: 32px;
     font-weight: 500;
     line-height: 42px;
     text-align: center;
-  
 }
 
- input[type="text"],
- input[type="password"],
- input[type="email"]
- {
 
+/* input[type="text"],
+ /* input[type="password"], */
+/* input[type="email"]
+ {
     width: 80%;
     height: 5px;
     padding: 14px 16px 14px 16px;
@@ -213,18 +82,101 @@ input[type="email"] {
     border-radius: 5px;
     background: rgba(234, 228, 228, 0.1);
     color: white;
- }
+ } */
 
-::placeholder{
+
+input[type="password"],
+.pass_eyy .o {
+
+    position: relative;
+    width: 80%;
+    height: 5px;
+    padding: 14px 16px 14px 16px;
+    margin: 10px 0px 10px 0px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(234, 228, 228, 0.1);
+    color: white;
+    left: 5%;
+}
+
+.pass_eyy
+.click_eye
+{
+ border: none;
+ background: none;
+ width: 2%;
+ position:absolute;
+ height:30px;
+ top: 30%;
+ right: 13%;
+ transform: translate(-50%);
+ font-size: 20px;
+ cursor:pointer;
+
+}
+
+input[type="password"]
+{
+    font-weight: 400;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="email"]
+{
+    width: 80%;
+    height: 5px;
+    padding: 14px 16px 14px 16px;
+    margin: 10px 0px 10px 0px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(234, 228, 228, 0.1);
+    color: white;
+}
+
+.eye .o
+{
+    color: #ffffff;
+    width: 15px;
+}
+
+.pass_eyy
+{
+    width: 100%;
+}
+
+.pass_eyy
+.click_eye
+.eye1 {
+
+    position: absolute;
+    top: 210%;
+    transform: translate(-60%);
+    font-size: 20px;
+}
+
+.pass_eyy
+.click_eye
+.eye2 {
+    position: absolute;
+    top: 360%;
+    transform: translate(-50%);
+    font-size: 20px;
+}
+
+
+::placeholder {
 
     color: #e5e5e5;
 }
 
-button{
+button {
     width: 90%;
     min-height: 35px;
     padding-bottom: 5px;
-    /* height: 8%; */
     padding: 1px 0;
     margin: 10px;
     border: none;
@@ -241,7 +193,7 @@ button{
 }
 
 .forgot-password {
-    color: #a1a1a1;
+    color: #f3eeee;
     font-size: 14px;
     margin-top: 10px;
     text-align: center;
@@ -271,10 +223,12 @@ button{
 .forgotpassword-box .log .l1 {
     text-align: center;
     margin: 0 0 5px 0;
-    font-weight: bold; 
+    font-weight: bold;
     font-size: 1.8rem;
     color: #fff;
+    
 }
+
 
 .login-box .log .l2,
 .signup-box .log .l2,
@@ -282,40 +236,15 @@ button{
     text-align: center;
     margin: 0 0 10px 0;
     font-weight: bold;
-    font-size: 0.21.1rem;
+    /* font-size: 0.21.1rem; */
+    font-size: 0.85rem;
     color: #fff;
+
 }
 
+.check_ {
 
-
-/*
-.login-box .log,
-.signup-box .log
-.forgotpassword-box .log
-{
-    text-align: center;
-    margin-top: 5px;
-    font-family: "Roboto", sans-serif;
-    .l1{
-        text-align: center;
-        margin: 0 0 5px 0;
-        font-weight: 300;
-        font-size: 1.8rem;
-        color: #fff;
-        font-weight: bold;
-    }
-    .l2{
-        text-align: center;
-        margin: 0 0 10px 0;
-        font-weight: 100;
-        font-size: 1rem;
-        font-weight: bold;
-    }
-}
-*/
-
-.check_{
-
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -323,9 +252,15 @@ button{
     margin: 0 8px;
     font-size: 0.8rem;
     color: white;
+    margin-left: 5%;
 }
 
-.or:before, .or:after {
+.check_ label {
+    margin-left: 4px;
+}
+
+.or:before,
+.or:after {
     content: '';
     height: 1px;
     width: 45%;
@@ -343,41 +278,42 @@ button{
 }
 
 
-.signup {
-
-    padding: 15px 0;
-    font-size: 0.8rem;
-    color: #a1a1a1;
-    text-align: center;
-    
-}
-
-.login
+.signup,
+.login 
 {
+
+    padding: 15px 0;
+    font-size: 0.8rem;
+    color: #f5f3f3;
+    text-align: center;
+
+}
+
+/* .login {
     padding: 15px 0;
     font-size: 0.8rem;
     color: #a1a1a1;
     text-align: center;
-}
-
-
+} */
 
 .intra-login svg {
+
     vertical-align: middle;
 }
 
 .intra-login svg {
-    width: 30px; 
+    width: 30px;
     margin: 0 10px;
 }
 
-.login a{
+.login a {
+
     color: #ecf5f6;
     text-decoration: none;
 }
 
-.login a:hover {
-    
+.login a:hover 
+{
     text-decoration: underline;
 }
 
@@ -391,7 +327,7 @@ button{
 }
 
 input[type="checkbox"] {
-    accent-color: #00747a;    
+    accent-color: #00747a;
 }
 
 a {
@@ -401,3 +337,19 @@ a {
 .reset-pass {
     margin-bottom: 90px;
 }
+
+
+/* 
+@media only screen and (max-width: 900px) {
+    .login-box{
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .login-box{
+        margin: 0 auto;
+    }
+} */
+
+

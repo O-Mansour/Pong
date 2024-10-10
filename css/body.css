@@ -1,12 +1,23 @@
 
-body{
-
-    margin:0px;
-    padding: 0px;
-    height: 100vh; 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: unset;
+    line-height: normal;
+    
 }
 
-.dashbord-container
+
+body {
+    margin: 0px;
+    padding: 0px;
+    min-height: 100vh;
+    width: 100%;
+    min-width: 360px;
+}
+
+
+.ft_container
 {
     background:url(../images/new_background2.webp);
     background-size: cover;
@@ -16,21 +27,27 @@ body{
     overflow: hidden;
 }
 
-.logo{
 
-    width: 140px;
-    margin: 20px 70px 0 ;
+.ft_container_0
+{
+    background: url(../images/new_background.webp);
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    background-repeat: no-repeat;
+    overflow: hidden;
 }
 
-.body-home
-{
+
+
+.content {
     display: flex;
     width: 100%;
     height: 80%;
 }
 
-.dashbord-container .content
-{
+.ft_container .content1 {
+
     width: 90%;
     height: 100%;
     min-width: 600px;
@@ -39,4 +56,13 @@ body{
     background: rgba(109, 96, 96, 0.1);
     border-radius: 20px 20px 20px 20px;
     box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
+}
+
+/*************Genral code***************/
+.ft-box {
+    max-width: 90%;
+    /* margin: 0 auto; */
+ 
+    margin: 0 5%;
+
 }
