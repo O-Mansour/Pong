@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 # to send msgs for the user in the frontend
 from django.contrib import messages
@@ -101,3 +101,26 @@ def profile(request, pk):
 	# user_object = User.objects.get(username=pk)
 	# user_profile = Profile.objects.get(user=user_object)
 	return render(request, 'profile.html')
+
+# api
+
+from .serializers import ProfileSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+
+@api_view(['GET', 'POST'])
+def profile_list(request):
+	if request.method == 'GET':
+		queryset = Profile.objects.all()
+		serializer = ProfileSerializer(queryset, many=True)
+		return Response(serializer.data)
+	elif request.method == 'POST':
+		# to be continued
+		return Response('ok')
+
+@api_view()
+def profile_detail(request, id):
+	profile = get_object_or_404(Profile, pk=id)
+	serializer = ProfileSerializer(profile)
+	return Response(serializer.data)

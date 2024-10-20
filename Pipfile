@@ -9,6 +9,7 @@ pillow = "*"
 requests = "*"
 django-allauth = "*"
 psycopg2 = "*"
+djangorestframework = "*"
 
 [dev-packages]
 
