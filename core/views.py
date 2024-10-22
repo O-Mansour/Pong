@@ -109,18 +109,20 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-@api_view(['GET', 'POST'])
-def profile_list(request):
-	if request.method == 'GET':
-		queryset = Profile.objects.all()
-		serializer = ProfileSerializer(queryset, many=True)
-		return Response(serializer.data)
-	elif request.method == 'POST':
-		# to be continued
-		return Response('ok')
-
 @api_view()
+def profile_list(request):
+	queryset = Profile.objects.all()
+	serializer = ProfileSerializer(queryset, many=True)
+	return Response(serializer.data)
+
+@api_view(['GET', 'PUT'])
 def profile_detail(request, id):
 	profile = get_object_or_404(Profile, pk=id)
-	serializer = ProfileSerializer(profile)
-	return Response(serializer.data)
+	if request.method == 'GET':
+		serializer = ProfileSerializer(profile)
+		return Response(serializer.data)
+	elif request.method == 'PUT':
+		serializer = ProfileSerializer(profile, data=request.data, context={'request': request})
+		serializer.is_valid(raise_exception=True)
+		serializer.save()
+		return Response(serializer.data)
