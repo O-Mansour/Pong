@@ -115,7 +115,7 @@ def profile_list(request):
 	serializer = ProfileSerializer(queryset, many=True)
 	return Response(serializer.data)
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def profile_detail(request, id):
 	profile = get_object_or_404(Profile, pk=id)
 	if request.method == 'GET':
@@ -126,3 +126,6 @@ def profile_detail(request, id):
 		serializer.is_valid(raise_exception=True)
 		serializer.save()
 		return Response(serializer.data)
+	elif request.method == 'DELETE':
+		profile.delete()
+		return Response(status=status.HTTP_204_NO_CONTENT)
