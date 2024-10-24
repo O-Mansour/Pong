@@ -108,24 +108,12 @@ from .serializers import ProfileSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.viewsets import ModelViewSet
 
-@api_view()
-def profile_list(request):
+class ProfileViewSet(ModelViewSet):
 	queryset = Profile.objects.all()
-	serializer = ProfileSerializer(queryset, many=True)
-	return Response(serializer.data)
+	serializer_class = ProfileSerializer
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def profile_detail(request, id):
-	profile = get_object_or_404(Profile, pk=id)
-	if request.method == 'GET':
-		serializer = ProfileSerializer(profile)
-		return Response(serializer.data)
-	elif request.method == 'PUT':
-		serializer = ProfileSerializer(profile, data=request.data, context={'request': request})
-		serializer.is_valid(raise_exception=True)
-		serializer.save()
-		return Response(serializer.data)
-	elif request.method == 'DELETE':
-		profile.delete()
-		return Response(status=status.HTTP_204_NO_CONTENT)
+	# may delete it
+	def get_serializer_context(self):
+		return {'request': self.request}

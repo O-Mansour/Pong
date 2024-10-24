@@ -1,6 +1,11 @@
 from django.urls import path
+from django.urls.conf import include
 from django.contrib.auth import views as auth_views
 from . import views
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('profiles', views.ProfileViewSet)
 
 urlpatterns = [
 	path('', views.dashboard, name='dashboard'),
@@ -9,8 +14,7 @@ urlpatterns = [
 	path('logout', views.logout, name='logout'),
 	# path('profile/<str:pk>', views.profile, name='profile'),
 	path('settings', views.settings, name='settings'),
-	path('profiles/', views.profile_list),
-	path('profiles/<int:id>/', views.profile_detail),
+	path('', include(router.urls)),
 
 	path('forgotpassword', auth_views.PasswordResetView.as_view(template_name='forgetpassword.html'), name='forgotpassword'),
 	path('password_reset_done', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
