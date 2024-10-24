@@ -10,6 +10,7 @@ requests = "*"
 django-allauth = "*"
 psycopg2 = "*"
 djangorestframework = "*"
+django-filter = "*"
 
 [dev-packages]
 
