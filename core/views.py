@@ -107,22 +107,19 @@ def profile(request, pk):
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import ProfileSerializer
-from .pagination import DefaultPagination
+# from .pagination import DefaultPagination
 
-class ProfileViewSet(ModelViewSet):
-	http_method_names = ['get', 'patch', 'delete']
+class ProfileViewSet(GenericViewSet, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin):
 	queryset = Profile.objects.all()
 	serializer_class = ProfileSerializer
 
-	filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-	filterset_fields = ['is_online']
-	search_fields = ['user__username']
-	ordering_fields = ['user__date_joined', 'wins']
-	pagination_class = DefaultPagination
-
-	def get_serializer_context(self):
-		return {'request': self.request}
+	# filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+	# filterset_fields = ['is_online']
+	# search_fields = ['user__username']
+	# ordering_fields = ['user__date_joined', 'wins']
+	# pagination_class = DefaultPagination

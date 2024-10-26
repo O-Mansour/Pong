@@ -1,11 +1,11 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.conf import settings
+# from django.contrib.auth import get_user_model
 
-User = get_user_model()
+# User = get_user_model()
 
-# Create your models here.
 class Profile(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	profileimg = models.ImageField(upload_to='profile_images', default='default_pfp.jpg')
 	wins = models.PositiveIntegerField(default=0)
 	losses = models.PositiveIntegerField(default=0)

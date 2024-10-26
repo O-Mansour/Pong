@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.google',
 
     'oauth2_42',
+    'djoser',
 
 ]
 
@@ -193,3 +194,22 @@ ACCOUNT_EMAIL_REQUIRED = True
 # this will show the email verification text in the console (for testing)
 # In production this should be changed to a real email backend to send the verification email to the user
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+}
+
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5OTc3Mjk2LCJpYXQiOjE3Mjk4OTA4OTYsImp0aSI6Ijk4ZmNkYzIyM2M4MjRlODdiMzk3Y2E1ZDRiN2ZjY2U4IiwidXNlcl9pZCI6NH0.BHzHLSwbQzInTtcbXVsp4taeaop9t3JMOKib0Vtkd8Y

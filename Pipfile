@@ -11,6 +11,8 @@ django-allauth = "*"
 psycopg2 = "*"
 djangorestframework = "*"
 django-filter = "*"
+djoser = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

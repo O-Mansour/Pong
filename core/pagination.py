@@ -1,4 +1,6 @@
-from rest_framework.pagination import PageNumberPagination
+# from rest_framework.pagination import PageNumberPagination
 
-class DefaultPagination(PageNumberPagination):
-	page_size = 10
+# class DefaultPagination(PageNumberPagination):
+# 	page_size = 10
+
+# may delete this later
