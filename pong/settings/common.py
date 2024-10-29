@@ -14,19 +14,11 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0kuvujmviyb^l0n$b_n=o)syf3*n5ul1#7&#b1jqs5i4nwc1s+'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -88,25 +80,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'pong.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pong_db',
-        'USER': 'omansour',
-        'PASSWORD': '12345678',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -151,7 +124,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #Oauth
 SITE_ID = 4 # Need to pay attention here
@@ -202,14 +175,14 @@ REST_FRAMEWORK = {
     ),
 }
 
-SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
-}
-
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('JWT',),
 }
 
-# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI5OTc3Mjk2LCJpYXQiOjE3Mjk4OTA4OTYsImp0aSI6Ijk4ZmNkYzIyM2M4MjRlODdiMzk3Y2E1ZDRiN2ZjY2U4IiwidXNlcl9pZCI6NH0.BHzHLSwbQzInTtcbXVsp4taeaop9t3JMOKib0Vtkd8Y
+# {
+#     "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMDEyNzk1MiwiaWF0IjoxNzMwMDQxNTUyLCJqdGkiOiIwNzg0OWFiNjFmYmE0ODZhYTM3ZjBlYjY0MTFmMTVlNyIsInVzZXJfaWQiOjR9.E39hZ0cKXQxW3UNZNg-We7gEMnHwWYn3ZU9pWGFfyOE",
+#     "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMwMTI3OTUyLCJpYXQiOjE3MzAwNDE1NTIsImp0aSI6ImFhMGZmZmVmNGI1MzRiZDZiOWVmZTc4ZjcwMTk1ZDBiIiwidXNlcl9pZCI6NH0.hmWjQuaSo2nH42n5BLzsqqrWgsixRWizpxurTTNlDmI"
+# }

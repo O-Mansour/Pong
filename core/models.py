@@ -1,12 +1,15 @@
 from django.db import models
 from django.conf import settings
+from .validators import validate_size
 # from django.contrib.auth import get_user_model
 
 # User = get_user_model()
 
 class Profile(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-	profileimg = models.ImageField(upload_to='profile_images', default='default_pfp.jpg')
+	profileimg = models.ImageField(upload_to='profile_images',
+								default='default_pfp.jpg',
+								validators=[validate_size])
 	wins = models.PositiveIntegerField(default=0)
 	losses = models.PositiveIntegerField(default=0)
 	is_online = models.BooleanField(default=False)
