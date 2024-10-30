@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homedashboard</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    
+</head>
+
+<body>
+    <main>
+
+        <home-dashboard-page>
+        </home-dashboard-page>
+
+        <!-- <login-page></login-page> -->
+
+        <!-- <forget-password-page>
+        </forget-password-page> -->
+
+
+        <!-- <profile></profile> -->
+        <!-- <setting></setting> -->
+
+        <!-- <login-signup></login-signup> -->
+
+    </main>
+
+    <template id="login-page">
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+        <div class="ft_container_0">
+            <div class="header">
+                <div class="ft-box">
+                    <img src="./images/logo.png" class="logo">
+                </div>
+            </div>
+            <div class="content">
+                <div class="ft-box">
+                    <form class="login-box" action="#" method="POST">
+                        <div class="log">
+                            <h3 class="l1">Login</h3>
+                            <h5 class="l2">Welcome back !</h5>
+                        </div>
+                        <input type="text" placeholder="Username" id="username">
+                        <div class="pass_eyy">
+                            <input type="password" placeholder="Password" id="password" class="o">
+                            <button class="click_eye">
+                                <img src="./images/Vector.png" alt="Home" class="eye">
+                            </button>
+                        </div>
+                        <div class="check_">
+                            <input class="check" type="checkbox" id="veh" name="veh" value="Bike" checked>
+                            <label for="veh"> Remember me </label><br>
+                        </div>
+                        <button id="frontside" type="submit">Login</button>
+                        <a href="/forgetpassword.html" class="forgot-password">Forgot password ?</a>
+                        <div class="or">Or</div>
+                        <button class="intra-login"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
+                                viewBox="0 0 137.6 96.6" fill="#fff" stroke="transparent" width="40" height="32">
+                                <path
+                                    d="M229.2 443.9h50.7v25.4h25.3v-45.9h-50.6l50.6-50.7h-25.3l-50.7 50.7zM316.1 398.1l25.3-25.4h-25.3z"
+                                    fill="#fff" transform="translate(-229.2 -372.7)"></path>
+                                <path
+                                    d="m341.4 398.1-25.3 25.3v25.3h25.3v-25.3l25.4-25.3v-25.4h-25.4zM366.8 423.4l-25.4 25.3h25.4z"
+                                    fill="#fff" transform="translate(-229.2 -372.7)"></path>
+                            </svg>
+                            <span>Sign in with intra</span></button>
+                        <p class="signup">Don’t have an account ? <a href="/signup.html">Signup</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!--  -->
+
+    <template id="login-signup">
+        <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+        <div class="ft_container_0">
+            <div class="header">
+                <div class="ft-box">
+                    <img src="./images/logo.png" class="logo">
+                </div>
+            </div>
+            <div class="content">
+                <div class="ft-box">
+                    <form class="signup-box" action="#" method="POST">
+                        <div class="log">
+                            <h3 class="l1">Signup</h3>
+                            <h6 class="l2">Just some details to get you in ...</h6>
+                        </div>
+                        <input type="text" placeholder="Username" id="username">
+                        <input type="email" placeholder="Email" id="username">
+                        <div class="pass_eyy">
+                            <input type="password" placeholder="Password" id="password" class="o">
+                            <button class="click_eye">
+                                <img src="./images/Vector.png" alt="Home" class="eye1" class="o">
+                            </button>
+                        </div>
+                        <div class="pass_eyy">
+                            <input type="password" placeholder="Confirm password" id="password" class="o">
+                            <button class="click_eye">
+                                <img src="./images/Vector.png" alt="Home" class="eye2">
+                            </button>
+                        </div>
+                        <button id="rightside" type="submit">Signup</button>
+                        <p class="login">Already registered? <a href="/login.html">Login</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!--  -->
+    <template id="login-forgetpassword">
+        <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+        <div class="ft_container_0">
+            <div class="header">
+                <div class="ft-box">
+                    <img src="./images/logo.png" class="logo">
+                </div>
+            </div>
+            <div class="content">
+                <div class="ft-box">
+                    <form class="forgotpassword-box" action="#" method="POST">
+                        <div class="log">
+                            <h3 class="l1">Forgot password ?</h3>
+                            <h6 class="l2">Again ? let's see if we can fix this</h6>
+                        </div>
+                        <input required type="email" placeholder="Enter your email" id="uemail">
+                        <button id="leftside" class="reset-pass" type="submit">Reset password</button>
+                        <div class="or">Or</div>
+                        <button class="intra-login" onclick="goToIntra()"> <svg xmlns="http://www.w3.org/2000/svg"
+                                xml:space="preserve" viewBox="0 0 137.6 96.6" fill="#fff" stroke="transparent"
+                                width="40" height="32">
+                                <path
+                                    d="M229.2 443.9h50.7v25.4h25.3v-45.9h-50.6l50.6-50.7h-25.3l-50.7 50.7zM316.1 398.1l25.3-25.4h-25.3z"
+                                    fill="#fff" transform="translate(-229.2 -372.7)"></path>
+                                <path
+                                    d="m341.4 398.1-25.3 25.3v25.3h25.3v-25.3l25.4-25.3v-25.4h-25.4zM366.8 423.4l-25.4 25.3h25.4z"
+                                    fill="#fff" transform="translate(-229.2 -372.7)"></path>
+                            </svg>
+                            Sign in with intra</button>
+                        <p class="signup">Don’t have an account ? <a href="/signup.html">Signup</a></p>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </template>
+
+    <!-- homedadhbord -->
+
+    <template id="home-dashboard">
+        <div class="ft_container">
+            <div class="header">
+                <div class="ft-box">
+                    <img src="./images/logo.png" class="logo">
+                </div>
+            </div>
+            <div class="content">
+
+                <aside class="sidebar">
+                    <nav class="menu">
+                        <ul>
+                            <li><a href="#"><img src="./images/Home Page.svg" alt="Home"></a></li>
+                            <li><a href="#"><img src="./images/User Male.png" alt="Friends"></a></li>
+                            <li><a href="#"><img src="./images/Stadium.png" alt="Games"></a></li>
+                            <li><a href="#"><img src="./images/Chat.png" alt="msg"></a></li>
+                            <li><a href="#"><img src="./images/Services.png" alt="Setting"></a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <main class="content1">
+                    <div class="header1">
+                        <div class="head">
+                            <div class="profile">
+                                <h2>Welcome, Full Name</h2>
+                                <div class="ft_progress">
+                                    <div class="bar" style="width: 100%;">
+                                        <span class="xp">500 xp</span>
+                                        <span class="level">Level 1</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="actions">
+                                <button class="meg">Messages</button>
+                                <button class="play">Play now</button>
+                            </div>
+                        </div>
+                        <div class="header-left-side">
+                            <div class="img_prof">
+                                <img src="./images/profile.jpg" class="prof">
+                                <!-- <span class="online-status"></span> -->
+                            </div>
+                            <div id="with-bootstrap">
+                                <button id="showFormBtn" class="message-btn1" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal" >
+                                    <!-- <span class="nft">notification</span> -->
+                                    <!-- <img src="./images/1c384ad7-e334-4aac-bce6-557c21a6bf7e.png" class="nf"> -->
+                                    <!-- <img src="./images/notification.png" class="nf"> -->
+                                    <div class="notif1">
+                                        <span class="nft">Notification</span>
+                                        <div class="nf">
+                                            <img src="./images/bell.png" class="tbell">
+                                            <span class="badge bg-danger">9</span>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!---->
+
+                    <section class="stats">
+                        <h1>Play Pong Online on the #1 Site!</h1>
+                        <div class="stats-view">
+                            <div class="stat1">
+                                <span class="number">1504</span>
+                                <span class="total">Total Games</span>
+                            </div>
+                            <div class="stat2">
+                                <span class="number">104</span>
+                                <span class="total">Games Today</span>
+                            </div>
+                            <div class="stat3">
+                                <span class="number">10</span>
+                                <span class="total">Playing Now</span>
+                            </div>
+                        </div>
+
+                        <!---->
+
+                        <div class="p1">
+                            <div class="mtch">
+
+                                <div class="matches">
+                                    <div class="matches-plyes">
+                                        <span class="m1">100</span>
+                                        <div class="m2">Matches Played</div>
+                                    </div>
+                                    <div class="matches-plyes">
+                                        <span class="m1">65</span>
+                                        <div class="m2">Winning Matches</div>
+                                    </div>
+                                </div>
+
+                                <div class="chart-container">
+                                    <div class="labels">
+                                        <div class="label">
+                                            <div class="label-color loss"></div>Loss
+                                        </div>
+                                        <div class="label">
+                                            <div class="label-color win"></div>Win
+                                        </div>
+                                    </div>
+                                    <div class="chart" style="--per: 60%">
+                                        <div class="percentage loss">5%</div>
+                                        <div class="percentage win">30%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box">
+                                <div class="ranking">
+                                    <div class="rank">
+                                        <span class="rank1">#10</span>
+                                        <div class="r1">your rank</div>
+                                    </div>
+                                    <div class="rank">
+                                        <span class="rank1">#106</span>
+                                        <div class="r1">Total players</div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="leadebord-box"> -->
+
+                                <div class="leadebord">
+                                    <div class="leader">
+                                        <h1>#1</h1>
+                                        <img src="./images/prof.jpg" alt="Player1" class="img_leader">
+                                        <span class="leader-name">Full Name</span>
+                                        <div class="leader-username">@username</div>
+                                        <button class="add-friend-btn">Add Friend</button>
+                                    </div>
+                                    <div class="leader">
+                                        <h1>#2</h1>
+                                        <img src="./images/prof.jpg" alt="Player 1" class="img_leader">
+                                        <span class="leader-name">Full Name</span>
+                                        <div class="leader-username">@username</div>
+                                        <button class="add-friend-btn">Add Friend</button>
+                                    </div>
+                                    <div class="leader">
+                                        <h1>#3</h1>
+                                        <img src="./images/prof.jpg" alt="Player 1" class="img_leader">
+                                        <span class="leader-name">Full Name</span>
+                                        <div class="leader-username">@username</div>
+                                        <button class="message-btn">Message</button>
+                                    </div>
+                                </div>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content hidden-scrollbar">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="formContainer">
+                            <p class="notf">Confirm or delete ?</p>
+                            <div class="d-flex">
+                                <div class="name_notf">
+                                    <img src="./images/prof.jpg" alt="Player 1" class="img_led">
+                                    <p class="name_invit">FullName</p>
+                                </div>
+                                <button id="confirmBtn" class="btn btn-success me-2">Confirm</button>
+                                <button id="deleteBtn" class="btn btn-danger">Delete</button>
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="name_notf">
+                                    <img src="./images/prof.jpg" alt="Player 1" class="img_led">
+                                    <p class="name_invit">FullName</p>
+                                </div>
+                                <button id="confirmBtn" class="btn btn-success me-2">Confirm</button>
+                                <button id="deleteBtn" class="btn btn-danger">Delete</button>
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="name_notf">
+                                    <img src="./images/prof.jpg" alt="Player 1" class="img_led">
+                                    <p class="name_invit">FullName</p>
+                                </div>
+                                <button id="confirmBtn" class="btn btn-success me-2">Confirm</button>
+                                <button id="deleteBtn" class="btn btn-danger">Delete</button>
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="name_notf">
+                                    <img src="./images/prof.jpg" alt="Player 1" class="img_led">
+                                    <p class="name_invit">FullName</p>
+                                </div>
+                                <button id="confirmBtn" class="btn btn-success me-2">Confirm</button>
+                                <button id="deleteBtn" class="btn btn-danger">Delete</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+        <script src="./js/bootstrap.bundle.min.js" defer></script>
+    </template>
+
+    <!-- profile -->
+
+    <template id="profile">
+        <div class="ft_container">
+            <div class="header">
+                <div class="ft-box">
+                    <img src="./images/logo.png" class="logo">
+                </div>
+            </div>
+            <div class="content">
+                <aside class="sidebar">
+                    <nav class="menu">
+                        <ul>
+                            <li><a href="#"><img src="./images/Home Page.svg" alt="Home"></a></li>
+                            <li><a href="#"><img src="./images/User Male.png" alt="Friends"></a></li>
+                            <li><a href="#"><img src="./images/Stadium.png" alt="Games"></a></li>
+                            <li><a href="#"><img src="./images/Chat.png" alt="msg"></a></li>
+                            <li><a href="#"><img src="./images/Services.png" alt="Setting"></a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <main class="content1">
+                    <!-- Firstname Lastname -->
+                    <div class="header_1">
+                        <div class="tournam_profile">
+                            <div class="user-info">
+                                <div class="img_prof_2">
+                                    <img src="./images/profile.jpg" class="prof_1">
+                                    <span class="online-status_1"></span>
+                                </div>
+                                <!-- <div class="f_l_join"> -->
+
+                                <h5 class="firstL">Firstname Lastname</h5>
+                                <p class="username">@username</p>
+                                <p class="joined">Joined 22/08/2024</p>
+                                <!-- </div> -->
+                            </div>
+                            <div class="tournaments">
+                                <div class="tourn">
+                                    <span class="t1">10<br></span>
+                                    <div class="t2">Tournaments played</div>
+                                </div>
+                                <div class="tourn">
+                                    <span class="t1">2</span>
+                                    <div class="t2"> Tournaments Won</div>
+                                </div>
+                                <div class="tourn">
+                                    <span class="t1">#10</span>
+                                    <div class="t2">Leaderboard position</div>
+                                </div>
+                                <div class="tourn">
+                                    <span class="t1">22</span>
+                                    <div class="t2">Current Friends</div>
+                                </div>
+                            </div>
+
+                            <div class="progress_2">
+                                <div class="bar2" style="width: 100%;">
+                                    <span class="xp2">500 xp</span>
+                                    <span class="level2">Level 1</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box_p2 hidden-scrollbar">
+                            <div class="Friend_list ">
+                                <h1 class="title_friends">Friends List</h1>
+
+                                <div class="leader_1">
+                                    <img src="./images/prof.jpg" alt="Player1" class="img_leader1">
+                                    <span class="leader-name_1">Full Name</span>
+                                    <div class="leader-username_1">@username</div>
+                                    <button class="message-btn_1">Message</button>
+                                </div>
+
+                                <div class="leader_1">
+                                    <img src="./images/prof.jpg" alt="Player1" class="img_leader1">
+                                    <span class="leader-name_1">Full Name</span>
+                                    <div class="leader-username_1">@username</div>
+                                    <button class="message-btn_1">Message</button>
+                                </div>
+
+                                <div class="leader_1">
+                                    <img src="./images/prof.jpg" alt="Player1" class="img_leader1">
+                                    <span class="leader-name_1">Full Name</span>
+                                    <div class="leader-username_1">@username</div>
+                                    <button class="message-btn_1">Message</button>
+                                </div>
+
+                                <div class="leader_1">
+                                    <img src="./images/prof.jpg" alt="Player1" class="img_leader1">
+                                    <span class="leader-name_1">Full Name</span>
+                                    <div class="leader-username_1">@username</div>
+                                    <button class="message-btn_1">Message</button>
+                                </div>
+
+                                <div class="leader_1">
+                                    <img src="./images/prof.jpg" alt="Player1" class="img_leader1">
+                                    <span class="leader-name_1">Full Name</span>
+                                    <div class="leader-username_1">@username</div>
+                                    <button class="message-btn_1">Message</button>
+                                </div>
+
+                                <div class="leader_1">
+                                    <img src="./images/prof.jpg" alt="Player1" class="img_leader1">
+                                    <span class="leader-name_1">Full Name</span>
+                                    <div class="leader-username_1">@username</div>
+                                    <button class="message-btn_1">Message</button>
+                                </div>
+
+                                <div class="leader_1">
+                                    <img src="./images/prof.jpg" alt="Player1" class="img_leader1">
+                                    <span class="leader-name_1">Full Name</span>
+                                    <div class="leader-username_1">@username</div>
+                                    <button class="message-btn_1">Message</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- firend list -->
+
+
+                    <!-- matches played -->
+                    <div class="p2">
+                        <div class="mtch1">
+                            <div class="matches2">
+                                <div class="matches-plyes_1">
+                                    <span class="m1_1">100</span>
+                                    <div class="m2_2">Matches Played</div>
+                                </div>
+                                <div class="matches-plyes_1">
+                                    <span class="m1_1">65</span>
+                                    <div class="m2_2">Winning Matches</div>
+                                </div>
+                            </div>
+
+                            <!--  -->
+
+                            <!--  -->
+
+                            <div class="chart-container_1">
+                                <div class="labels_1">
+                                    <div class="lab">
+                                        <div class="lab-colorr losss"></div>Loss
+                                    </div>
+                                    <div class="lab">
+                                        <div class="lab-colorr winn"></div>Win
+                                    </div>
+                                </div>
+                                <div class="charts" style="--per: 60%">
+
+                                    <div class="percentagee loss">30%</div>
+                                    <div class="percentagee winn">70%</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Match history -->
+                        <div class="list_ho  hidden-scrollbar">
+                            <div class="list_hostory">
+                                <h1 class="title_host">Match History</h1>
+                                <div class="history_1">
+                                    <span class="vs">VS</span>
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_vs1">
+                                    <span class="opp_user">opp_username</span>
+                                    <div>
+                                        <img src="./images/accueil(1).png" alt="Player2" class="img_valide">
+                                        <span class="opp_win">Win</span>
+                                    </div>
+                                    <span class="date"> 22/08/24 </span>
+                                </div>
+
+                                <div class="progress_3">
+                                    <div class="bar3" style="width: 100%;"></div>
+                                </div>
+
+                                <div class="history_1">
+                                    <span class="vs">VS</span>
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_vs1">
+                                    <span class="opp_user">opp_username</span>
+                                    <div>
+                                        <img src="./images/accueil(1).png" alt="Player2" class="img_valide">
+                                        <span class="opp_win">Win</span>
+                                    </div>
+                                    <span class="date">22/08/24</span>
+                                </div>
+                                <div class="progress_3">
+                                    <div class="bar3" style="width: 100%;"></div>
+                                </div>
+                                <div class="history_1">
+                                    <span class="vs">VS</span>
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_vs1">
+                                    <span class="opp_user">opp_username</span>
+                                    <div>
+                                        <img src="./images/accueil(1).png" alt="Player2" class="img_valide">
+                                        <span class="opp_win">Win</span>
+                                    </div>
+                                    <span class="date">22/08/24</span>
+                                </div>
+                                <div class="progress_3">
+                                    <div class="bar3" style="width: 100%;"></div>
+                                </div>
+                                <div class="history_1">
+                                    <span class="vs">VS</span>
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_vs1">
+                                    <span class="opp_user">opp_username</span>
+                                    <div>
+                                        <img src="./images/accueil(1).png" alt="Player2" class="img_valide">
+                                        <span class="opp_win">Win</span>
+                                    </div>
+                                    <span class="date">22/08/24</span>
+                                </div>
+                                <div class="progress_3">
+                                    <div class="bar3" style="width: 100%;"></div>
+                                </div>
+                                <div class="history_1">
+                                    <span class="vs">VS</span>
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_vs1">
+                                    <span class="opp_user">opp_username</span>
+                                    <div>
+                                        <img src="./images/accueil(1).png" alt="Player2" class="img_valide">
+                                        <span class="opp_win">Win</span>
+                                    </div>
+                                    <span class="date">22/08/24</span>
+                                </div>
+                                <div class="progress_3">
+                                    <div class="bar3" style="width: 100%;"></div>
+                                </div>
+
+                                <div class="history_1">
+                                    <span class="vs">VS</span>
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_vs1">
+                                    <span class="opp_user">opp_username</span>
+                                    <div>
+                                        <img src="./images/Close.png" alt="Player2" class="img_close">
+                                        <span class="opp_loss">Loss</span>
+                                    </div>
+                                    <span class="date">22/08/24</span>
+                                </div>
+
+                                <div class="progress_3">
+                                    <div class="bar3" style="width: 100%;"></div>
+                                </div>
+
+                                <div class="history_1">
+                                    <span class="vs">VS</span>
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_vs1">
+                                    <span class="opp_user">opp_username</span>
+                                    <div>
+                                        <img src="./images/Close.png" alt="Player2" class="img_close">
+                                        <span class="opp_loss">Loss</span>
+                                    </div>
+                                    <span class="date">22/08/24</span>
+                                </div>
+
+                                <div class="progress_3">
+                                    <div class="bar3" style="width: 100%;"></div>
+                                </div>
+
+                                <div class="history_1">
+                                    <span class="vs">VS</span>
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_vs1">
+                                    <span class="opp_user">opp_username</span>
+                                    <div>
+                                        <img src="./images/Close.png" alt="Player2" class="img_close">
+                                        <span class="opp_loss">Loss</span>
+                                    </div>
+                                    <span class="date">22/08/24</span>
+                                </div>
+
+                                <div class="progress_3">
+                                    <div class="bar3" style="width: 100%;"></div>
+                                </div>
+
+                                <div class="history_1">
+                                    <span class="vs">VS</span>
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_vs1">
+                                    <span class="opp_user">opp_username</span>
+                                    <div>
+                                        <img src="./images/Close.png" alt="Player2" class="img_close">
+                                        <span class="opp_loss">Loss</span>
+                                    </div>
+                                    <span class="date">22/08/24</span>
+                                </div>
+
+                                <div class="progress_3">
+                                    <div class="bar3" style="width: 100%;"></div>
+                                </div>
+
+                                <div class="history_1">
+                                    <span class="vs">VS</span>
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_vs1">
+                                    <span class="opp_user">opp_username</span>
+                                    <div>
+                                        <img src="./images/Close.png" alt="Player2" class="img_close">
+                                        <span class="opp_loss">Loss</span>
+                                    </div>
+                                    <span class="date">22/08/24</span>
+                                </div>
+
+                                <div class="progress_3">
+                                    <div class="bar3" style="width: 100%;"></div>
+                                </div>
+
+                                <div class="history_1">
+                                    <span class="vs">VS</span>
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_vs1">
+                                    <span class="opp_user">opp_username</span>
+                                    <div>
+                                        <img src="./images/Close.png" alt="Player2" class="img_close">
+                                        <span class="opp_loss">Loss</span>
+                                    </div>
+                                    <span class="date">22/08/24</span>
+                                </div>
+
+                                <div class="progress_3">
+                                    <div class="bar3" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+        </template>
+
+    <!-- setting -->
+
+    <template id="setting">
+        <div class="ft_container">
+            <div class="header">
+                <div class="ft-box">
+                    <img src="./images/logo.png" class="logo">
+                </div>
+            </div>
+            <div class="content">
+                <aside class="sidebar">
+                    <nav class="menu">
+                        <ul>
+                            <li><a href="#"><img src="./images/Home Page.svg" alt="Home"></a></li>
+                            <li><a href="#"><img src="./images/User Male.png" alt="Friends"></a></li>
+                            <li><a href="#"><img src="./images/Stadium.png" alt="Games"></a></li>
+                            <li><a href="#"><img src="./images/Chat.png" alt="msg"></a></li>
+                            <li><a href="#"><img src="./images/Services.png" alt="Setting"></a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <main class="content1">
+                    <div class="con">
+                        <div class="header_2">
+                            <div class="hed_1">
+                                <div class="change_1">
+                                    <img src="./images/prof.jpg" alt="Player2" class="img_change">
+                                    <button class="chg1"><a href="#"></a> Change Picture</button>
+                                    <!--infos click in button in option change photo profile-->
+                                    <select class="chge_select" id="ch" required>
+                                        <option value="">Select language</option>
+                                        <option value="english">English</option>
+                                        <option value="french">French</option>
+                                    </select>
+                                </div>
+                                <button class="logee">Logout<img src="./images/Logout.png" alt="Home"></button>
+                            </div>
+                        </div>
+
+                        <div class="acc-settings">
+                            <div class="title10">
+                                Change Account<br />
+                                Informations
+                            </div>
+                            <form class="textchange">
+                                <input type="text" placeholder="Firstname">
+                                <input type="text" placeholder="Lastname">
+                                <input type="text" placeholder="Username">
+                                <input type="email" placeholder="Email">
+                                <button class="update-btn">Update</button>
+                            </form>
+                        </div>
+
+                        <div class="p3">
+                            <div class="pass-settings">
+                                <h3 class="change_op5">Change Password</h3>
+                                <form class="textp1">
+                                    <input type="password" placeholder="Old Password">
+                                    <input type="password" placeholder="New Password">
+                                    <button class="btn_ch">Change</button>
+                                </form>
+                            </div>
+                            <div class="game-set">
+                                <h3 class="chge_gamee">Game Settings</h3>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    </template>
+</body>
+<script src="./components/login-page/index.js" type="module"></script>
+<script src="./components/signup-page/index.js" type="module"></script>
+<script src="./components/forget-password-page/index.js" type="module"></script>
+<script src="./components/home-dashboard-page/index.js" type="module"></script>
+<script src="./components/profile-page/index.js" type="module"></script>
+<script src="./components/setting-page/index.js" type="module"></script>
+<script src="./js/bootstrap.bundle.min.js"></script>
+
+</html>

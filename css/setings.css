@@ -200,6 +200,8 @@
     -webkit-text-stroke: 0px #3992A5; 
 }
 
+
+
 .game-set,
 .hge_gamee
 {
@@ -258,6 +260,8 @@
     width: 80%;
 }
 
+
+
 .textp1 input[type="password"]
 {
     font-weight: 400;
@@ -266,6 +270,8 @@
     font-size: 14px;
 
 }
+
+
 
 .textchange,
 input[type="text"],
@@ -321,8 +327,6 @@ input[type="email"]
     box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
 }
-
-
 
 .game-set
 {

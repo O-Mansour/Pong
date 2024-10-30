@@ -309,9 +309,9 @@
     -ms-overflow-style: none;
 }
 
+
 .box_p2
 {
-
     overflow: auto;
     display: flex;
     justify-content: space-around;
@@ -323,16 +323,11 @@
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
     box-sizing: border-box;
     padding: 5px 10%;
-
-
 }
-
-
 
 .meg:hover {
     background: #34291c;
 }
-
 
 
 .Friend_list 
