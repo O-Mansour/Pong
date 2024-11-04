@@ -23,13 +23,13 @@
     margin: 0px 0px 0px 0px;
 }
 
-.sidebar .menu ul li a 
+.sidebar .menu ul li my-link 
 {
     padding: 20px;
     display: block;
 }
 
-.sidebar .menu ul li a img
+.sidebar .menu ul li my-link img
 {
     width: 30px;
     display: block;

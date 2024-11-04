@@ -3,5 +3,4 @@ import API from "./API.js";  // access to all properties and methods within the 
 export   async function loadData()
 {
     app.store.menu = await API.fetchMenu();
-    
 }

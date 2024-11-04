@@ -1,11 +1,11 @@
-export class HomeDashboard extends  HTMLElement
+export class Gamee extends  HTMLElement
 {
     constructor()
     {
         super();
-        this.root= this.attachShadow({mode:'open'});
-        const styles = document.createElement("style");
-        this.root.appendChild(styles);
+        // this.root= this.attachShadow({mode:'open'});
+        // const styles = document.createElement("style");
+        // this.root.appendChild(styles);// 
 
     //    async  function loadcss(){
 
@@ -19,10 +19,11 @@ export class HomeDashboard extends  HTMLElement
      // when the component is attached to the dom 
     connectedCallback()
     {
-        const template = document.getElementById("home-dashboard");
+        const template = document.getElementById("page-game");
         const content = template.content.cloneNode(true);
-        this.root.appendChild(content);
+        this.appendChild(content);
+        
     }
 }
 
-customElements.define("home-dashboard-page", HomeDashboard);
+customElements.define("game-page", Gamee);

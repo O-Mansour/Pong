@@ -38,6 +38,7 @@ const API = {
 
         const result = await fetch (API.url);
         await result.json();
+
     }
 }
 

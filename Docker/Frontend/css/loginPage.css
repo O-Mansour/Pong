@@ -1,3 +1,5 @@
+
+
 /* body {
     margin: 0px;
     padding: 0px;
@@ -197,7 +199,6 @@ button {
     font-size: 14px;
     margin-top: 10px;
     text-align: center;
-
 }
 
 .or {
@@ -306,7 +307,8 @@ button {
     margin: 0 10px;
 }
 
-.login a {
+.login my-link, 
+.login my-link {
 
     color: #ecf5f6;
     text-decoration: none;
@@ -318,6 +320,18 @@ button {
 }
 
 .signup a {
+    color: #ecf5f6;
+    text-decoration: none;
+}
+
+.forget-pass a
+{
+    color: #ecf5f6;
+    text-decoration: none;
+}
+.signup-box,
+.login a
+{
     color: #ecf5f6;
     text-decoration: none;
 }
