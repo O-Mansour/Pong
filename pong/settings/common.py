@@ -137,26 +137,6 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-# SOCIALACCOUNT_PROVIDERS = {
-#     'oauth2_42': {
-#         # For each OAuth based provider, either add a ``SocialApp``
-#         # (``socialaccount`` app) containing the required client
-#         # credentials, or list them here:
-#         'SCOPE': [
-#             "profile",
-#             "email"
-#         ],
-#         'AUTH_PARAMS': {
-#             "access_type": "online"
-#         }
-#         # 'APP': {
-#         #     'client_id': '747259468527-a9vpin8vgou8l5g9k34svc6dprcnu19v.apps.googleusercontent.com',
-#         #     'secret': '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',
-#         #     'key': ''
-#         # }
-#     }
-# }
-
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
@@ -181,8 +161,3 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_HEADER_TYPES': ('JWT',),
 }
-
-# {
-#     "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMDEyNzk1MiwiaWF0IjoxNzMwMDQxNTUyLCJqdGkiOiIwNzg0OWFiNjFmYmE0ODZhYTM3ZjBlYjY0MTFmMTVlNyIsInVzZXJfaWQiOjR9.E39hZ0cKXQxW3UNZNg-We7gEMnHwWYn3ZU9pWGFfyOE",
-#     "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMwMTI3OTUyLCJpYXQiOjE3MzAwNDE1NTIsImp0aSI6ImFhMGZmZmVmNGI1MzRiZDZiOWVmZTc4ZjcwMTk1ZDBiIiwidXNlcl9pZCI6NH0.hmWjQuaSo2nH42n5BLzsqqrWgsixRWizpxurTTNlDmI"
-# }

@@ -6,6 +6,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register('profiles', views.ProfileViewSet)
+router.register('friendships', views.FriendshipViewSet, basename='friendship')
 
 urlpatterns = [
 	path('', views.dashboard, name='dashboard'),

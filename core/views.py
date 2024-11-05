@@ -5,7 +5,7 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Profile
+from .models import Profile, Friendship
 
 # Create your views here.
 
@@ -110,8 +110,11 @@ from rest_framework import status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.serializers import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import ProfileSerializer
+from .serializers import ProfileSerializer, FriendshipSerializer
+from django.db.models import Q
+
 # from .pagination import DefaultPagination
 
 class ProfileViewSet(ModelViewSet):
@@ -135,3 +138,72 @@ class ProfileViewSet(ModelViewSet):
 			serializer.is_valid(raise_exception=True)
 			serializer.save()
 		return Response(serializer.data)
+
+class FriendshipViewSet(ModelViewSet):
+	serializer_class = FriendshipSerializer
+	permission_classes = [IsAuthenticated]
+
+	def get_queryset(self):
+		return Friendship.objects.filter(
+			Q(sender=self.request.user) | Q(receiver=self.request.user)
+		)
+
+	def perform_create(self, serializer):
+		receiver = serializer.validated_data['receiver']
+		
+		# Prevent self-friendship
+		if receiver == self.request.user:
+			raise ValidationError("You cannot send a friendship request to yourself.")
+
+		# Check if friendship already exists
+		if Friendship.objects.filter(
+			(Q(sender=self.request.user) & Q(receiver=receiver)) |
+			(Q(sender=receiver) & Q(receiver=self.request.user))
+		).exists():
+			raise ValidationError("Friendship request already exists.")
+			
+		serializer.save(sender=self.request.user)
+
+	@action(detail=True, methods=['GET', 'PUT'])
+	def accept(self, request, pk=None):
+		friendship = self.get_object()
+		if friendship.receiver != request.user:
+			return Response(
+				{'error': 'You can only accept requests sent to you'},
+				status=status.HTTP_403_FORBIDDEN
+			)
+		if friendship.status != 'P':
+			return Response(
+				{'error': 'Can only accept pending requests'},
+				status=status.HTTP_400_BAD_REQUEST
+			)
+
+		friendship.status = 'A'
+		friendship.save()
+		return Response(FriendshipSerializer(friendship).data)
+
+	@action(detail=True, methods=['GET', 'PUT'])
+	def reject(self, request, pk=None):
+		friendship = self.get_object()
+		if friendship.receiver != request.user:
+			return Response(
+				{'error': 'You can only reject requests sent to you'},
+				status=status.HTTP_403_FORBIDDEN
+			)
+		if friendship.status != 'P':
+			return Response(
+				{'error': 'Can only reject pending requests'},
+				status=status.HTTP_400_BAD_REQUEST
+			)
+
+		friendship.status = 'R'
+		friendship.save()
+		return Response(FriendshipSerializer(friendship).data)
+
+	@action(detail=False, methods=['GET'])
+	def friends(self, request):
+		accepted_friendships = Friendship.objects.filter(
+			(Q(sender=request.user) | Q(receiver=request.user)),
+			status='A'
+		)
+		return Response(FriendshipSerializer(accepted_friendships, many=True).data)
