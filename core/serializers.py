@@ -13,7 +13,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 		model = Profile
 		fields = ['id', 'user_id', 'username', 'firstname', 'lastname', 'email',
 				 'date_joined', 'profileimg', 'wins', 'losses', 'is_online',
-				 'level', 'rank']
+				 'level', 'rank', 'tour_played', 'tour_won']
 
 class FriendshipSerializer(serializers.ModelSerializer):
 	class Meta:

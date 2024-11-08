@@ -8,7 +8,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pong_db',
-        'USER': 'omansour',
+        'USER': 'postgres',
         'PASSWORD': '12345678',
         'HOST': 'localhost',
         'PORT': '5432',
