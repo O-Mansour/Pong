@@ -38,7 +38,6 @@ const routes = new Map([
         Title: "not found",
         Element: "error-page"
     }]
-    
 ]);
 const Router = {
 
@@ -77,7 +76,6 @@ const Router = {
             const pageElement = document.createElement(routes.get(route).Element);  //Creates a new instance of the component specified by Element (e.g., <home-dashboard-page>).
             cache.innerHTML = "";  //Replaces any existing content in <main> with this new component
             cache.appendChild(pageElement);
-
         }
         else
         {
