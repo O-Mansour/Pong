@@ -11,6 +11,7 @@ class Profile(models.Model):
 	losses = models.PositiveIntegerField(default=0)
 	is_online = models.BooleanField(default=False)
 	level = models.PositiveIntegerField(default=1)
+	xps = models.PositiveIntegerField(default=0)
 	rank = models.PositiveIntegerField(null=True, blank=True)
 	tour_played = models.PositiveIntegerField(default=0)
 	tour_won = models.PositiveIntegerField(default=0)

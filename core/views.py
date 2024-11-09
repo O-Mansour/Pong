@@ -206,4 +206,15 @@ class FriendshipViewSet(ModelViewSet):
 			(Q(sender=request.user) | Q(receiver=request.user)),
 			status='A'
 		)
-		return Response(FriendshipSerializer(accepted_friendships, many=True).data)
+		# return Response(FriendshipSerializer(accepted_friendships, many=True).data)
+		friends_data = []
+		for friendship in accepted_friendships:
+			if friendship.sender == request.user:
+				friend = friendship.receiver
+			else:
+				friend = friendship.sender
+			# Serialize the friend's profile
+			friend_profile = ProfileSerializer(friend.profile).data
+			friends_data.append(friend_profile)
+
+		return Response(friends_data)
