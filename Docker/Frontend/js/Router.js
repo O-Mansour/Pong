@@ -29,6 +29,10 @@ const routes = new Map([
     ["/user",{
         Title: "Profile",
         Element: "profile-page"
+        // onLoad: async () => {
+        //     // The component will handle the data fetching itself
+        //     console.log("Profile page loaded");
+        // }
     }],
     ["/setting", {
         Title: "setting",
@@ -76,6 +80,9 @@ const Router = {
             const pageElement = document.createElement(routes.get(route).Element);  //Creates a new instance of the component specified by Element (e.g., <home-dashboard-page>).
             cache.innerHTML = "";  //Replaces any existing content in <main> with this new component
             cache.appendChild(pageElement);
+
+            // if (routes.get(route).onLoad)
+            //     routes.get(route).onLoad();
         }
         else
         {
