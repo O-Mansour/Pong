@@ -253,8 +253,8 @@
 
     content: "";
     display: block;
-    width: 50%; 
-    height: 100%;
+    width: var(--xp);
+    height:100%;
     background-color: #3992A5;
 
 }
@@ -558,7 +558,7 @@
     background-color: #3992A5;
 }
 
-.percentagee.loss
+.percentagee_loss
 {
     position: absolute;
     top: 0;
@@ -575,7 +575,7 @@
     /* z-index: 1; */
 }
 
-.percentagee.winn   
+.percentagee_winn   
 {
     position: absolute;
     top: 0;
