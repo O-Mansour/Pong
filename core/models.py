@@ -19,6 +19,15 @@ class Profile(models.Model):
 	def __str__(self):
 		return f"{self.user.username}'s Profile"
 
+class Match(models.Model):
+	player = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='played_match')
+	opponent = models.ForeignKey(Profile, on_delete=models.CASCADE)
+	won = models.BooleanField()
+	date_played = models.DateTimeField()
+
+	def __str__(self):
+		return f"{self.player} VS {self.opponent}"
+
 class Friendship(models.Model):
 	STATUS_CHOICES = (
 		('A', 'Accepted'),

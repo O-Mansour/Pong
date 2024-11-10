@@ -5,7 +5,7 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Profile, Friendship
+from .models import Profile, Friendship, Match
 
 # Create your views here.
 
@@ -112,7 +112,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.serializers import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import ProfileSerializer, FriendshipSerializer
+from .serializers import ProfileSerializer, FriendshipSerializer, MatchSerializer
 from django.db.models import Q
 
 # from .pagination import DefaultPagination
@@ -218,3 +218,18 @@ class FriendshipViewSet(ModelViewSet):
 			friends_data.append(friend_profile)
 
 		return Response(friends_data)
+
+class MatchViewSet(ModelViewSet):
+	serializer_class = MatchSerializer
+	permission_classes = [IsAuthenticated]
+
+	def get_queryset(self):
+		return Match.objects.filter(player=self.request.user.profile)
+
+	def perform_create(self, serializer):
+		opponent = serializer.validated_data['opponent']
+		
+		if opponent == self.request.user.profile:
+			raise ValidationError("You cannot play a match with yourself.")
+
+		serializer.save(player=self.request.user.profile)

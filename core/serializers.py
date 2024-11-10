@@ -1,4 +1,4 @@
-from .models import Profile, Friendship
+from .models import Profile, Friendship, Match
 from rest_framework import serializers
 from django.db.models import Q
 
@@ -23,6 +23,28 @@ class ProfileSerializer(serializers.ModelSerializer):
 			status='A'
 		).count()
 		return current_friends
+
+class ProfileSimpleSerializer(serializers.ModelSerializer):
+	username = serializers.CharField(source='user.username', read_only=True)
+	firstname = serializers.CharField(source='user.first_name', read_only=True)
+	lastname = serializers.CharField(source='user.last_name', read_only=True)
+
+	class Meta:
+		model = Profile
+		fields = ['username', 'firstname', 'lastname', 'profileimg']
+
+class MatchSerializer(serializers.ModelSerializer):
+	opponent_profile = ProfileSimpleSerializer(source='opponent', read_only=True)
+	date_played = serializers.DateTimeField(format="%d/%m/%y")
+
+	class Meta:
+		model = Match
+		fields = [
+			'opponent',
+			'opponent_profile',
+			'won',
+			'date_played'
+		]
 
 class FriendshipSerializer(serializers.ModelSerializer):
 	sender_profile = ProfileSerializer(source='sender.profile', read_only=True)
