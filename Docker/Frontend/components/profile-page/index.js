@@ -14,7 +14,7 @@ export class Profile extends HTMLElement {
 
   async fetchProfileData() {
     try {
-      const response = await fetch('http://localhost:8000/profiles/me/');
+      const response = await fetch('http://localhost:8000/api/profiles/me/');
       const data = await response.json();
       console.log("Profile data received:", data);
       const usernameElement = document.getElementById('fetched_username');
@@ -90,7 +90,7 @@ export class Profile extends HTMLElement {
 
   async fetchFriendsList() {
     try {
-      const response = await fetch('http://localhost:8000/friendships/friends');
+      const response = await fetch('http://localhost:8000/api/friendships/friends');
       const friendsData = await response.json();
       const friendsList = document.querySelector('.Friend_list');
 
@@ -117,7 +117,7 @@ export class Profile extends HTMLElement {
 
   async fetchMatchHistory() {
     try {
-      const response = await fetch('http://localhost:8000/matches');
+      const response = await fetch('http://localhost:8000/api/matches');
       const historyData = await response.json();
 
       const historyList = document.querySelector('.list_hostory');

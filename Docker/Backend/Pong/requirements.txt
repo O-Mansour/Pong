@@ -1,0 +1,11 @@
+django
+pillow
+requests
+django-allauth
+psycopg2
+djangorestframework
+django-filter
+djoser
+djangorestframework-simplejwt
+gunicorn
+django-cors-headers
