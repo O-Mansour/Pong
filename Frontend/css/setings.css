@@ -1,0 +1,377 @@
+
+.header_2
+{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.change_1 .chg1
+{
+
+    /* width: 100%; */
+    width: 130%;
+    border-radius: 5px;
+    cursor: pointer;
+    background: none;
+    background-color: #3992A5;
+    color: white;
+    font-family: "Roboto", sans-serif;
+     text-align: center;
+}
+
+.change_1 .chge_select
+{
+    width: 130%;
+    height: 35px;
+    border-radius: 5px;
+    cursor: pointer;
+    background: none;
+    background-color: #3992A5;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    font-weight:bold;
+}
+
+.chge_select option[value=""]
+{
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    background-color: #3992A5;
+    color: white;
+}
+
+.change_1 .img_change
+{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    width: 120px;
+    height: 120px;
+    border: none;
+    border-radius: 15px;
+}
+
+
+.hed_1 .logee:hover
+{
+    background: #34291c;
+}
+
+.acc-settings .update-btn:hover
+{
+    background: #07414e;
+}
+
+.header_2 .hed_1 .change_1 .chg1:hover
+{
+    background: #07414e;
+}
+
+
+.pass-settings .btn_ch:hover
+{
+    background: #07414e;
+}
+
+
+
+.hed_1 .logee
+{
+    width: 40%;
+    border-radius: 6px;
+    cursor: pointer;
+    background: none;
+    background-color: #453827;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    padding-left: 5%;
+    margin: 0 !important;
+    position: absolute;
+    transform: translateY(100%);
+    bottom: 0;
+    box-sizing: border-box;
+}
+
+.logee img 
+{
+    vertical-align: middle;
+}
+
+.logee img
+{
+    width: 20px; 
+    margin: 0 10px;
+}
+
+.con
+{
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.acc-settings
+{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 70%;
+    max-height: 600px;
+    backdrop-filter: blur(10px);
+    background: rgba(109, 96, 96, 0.1);
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
+    background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
+    box-sizing: border-box;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.title10
+{
+    text-align: center;
+    /* margin-top: 40px; */
+    font-weight: 800; 
+    font-size: 1.4rem;
+    font-family: "Roboto", sans-serif;
+    text-shadow: 
+    1px 1px 0 #3992A5, 
+    -1px -1px 0 #3992A5, 
+    1px -1px 0 #3992A5, 
+    -1px 1px 0 #3992A5;
+    -webkit-text-stroke: 0px #3992A5; 
+    color: #fff;
+}
+
+.lop1{
+
+    text-align: center;
+    margin: 0 0 5px 0;
+    font-weight: 800; 
+    font-size: 1.4rem;
+    color: #fff;
+    
+}
+
+.title10,
+.lop1.lop2
+{
+
+   text-shadow: 
+    1px 1px 0 #3992A5, 
+    -1px -1px 0 #3992A5, 
+    1px -1px 0 #3992A5, 
+    -1px 1px 0 #3992A5;
+    -webkit-text-stroke: 0px #3992A5; 
+}
+
+/* .lop2
+{
+  
+    text-align: center;
+    margin: 0 0 30px 0;  /* ?*/
+/*    
+    font-weight: 700;
+    font-size: 1.3rem; */
+    /* color: #fff;
+} */ 
+
+.pass-settings,
+.change_op5
+{
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    font-weight: 800; 
+    font-size: 1.4rem;
+    color: #fff;
+    text-shadow: 
+    1px 1px 0 #3992A5, 
+    -1px -1px 0 #3992A5, 
+    1px -1px 0 #3992A5, 
+    -1px 1px 0 #3992A5;
+    -webkit-text-stroke: 0px #3992A5; 
+}
+
+
+
+.game-set,
+.hge_gamee
+{
+    text-align: center;
+    margin-top: 40px;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    margin: 5px 0 5px 0;
+    font-weight: 800; 
+    font-size: 1.4rem;
+
+    color: #fff;
+    text-shadow: 
+    1px 1px 0 #3992A5, 
+    -1px -1px 0 #3992A5, 
+    1px -1px 0 #3992A5, 
+    -1px 1px 0 #3992A5;
+    -webkit-text-stroke: 0px #3992A5; 
+}
+
+
+
+.textchange .update-btn
+{
+    width: 40%;
+    border-radius: 5px;
+    cursor: pointer;
+    background: none;
+    background-color: #3992A5;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    margin-top: 29px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+
+.textchange
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+
+}
+
+
+.textp1
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+
+
+
+.textp1 input[type="password"]
+{
+    font-weight: 400;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+
+}
+
+
+
+.textchange,
+input[type="text"],
+input[type="email"]
+{
+ 
+    font-weight: 400;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+}
+
+.btn_ch
+{
+    width: 30%;
+    border-radius: 5px;
+    cursor: pointer;
+    background: none;
+    background-color: #3992A5;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 16px;
+    
+}
+
+
+.p3
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+    width: 60%;
+    height: 70%;   /* wech mekhshach tkon ?*/
+    /* height: ; */
+}
+
+.pass-settings
+{
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background: rgba(109, 96, 96, 0.1);
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
+    background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
+}
+
+.game-set
+{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+    color: white;
+    backdrop-filter: blur(10px);
+    background: rgba(109, 96, 96, 0.1);
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
+    background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
+
+}
+
+
+
+.change_1 {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    gap: 5%;
+   
+}
+
+.hed_1 {
+
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.header_2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

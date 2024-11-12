@@ -1,0 +1,61 @@
+services:
+  frontend:
+    image: frontend
+    container_name: front
+    build:
+      context: ./Frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - pong-network
+    volumes:
+      - front_volume:/usr/share/nginx/html
+
+  backend:
+    image: backend
+    container_name: back
+    build:
+      context: ./Backend
+    ports:
+      - "8000:8000"
+    networks:
+      - pong-network
+    volumes:
+      - back_volume:/backend
+    depends_on:
+      - database
+    env_file: .env
+
+  database:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    networks:
+      - pong-network
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    env_file: .env
+
+networks:
+  pong-network:
+    driver: bridge
+
+volumes:
+  front_volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/data/frontend
+  back_volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/data/backend
+  postgres_volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/data/postgres

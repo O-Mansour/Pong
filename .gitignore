@@ -1,1 +1,5 @@
+__pycache__/
+db.sqlite3
 media/
+!media/default_pfp.jpg
+.vscode
