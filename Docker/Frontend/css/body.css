@@ -14,6 +14,7 @@ body {
     min-height: 100vh;
     width: 100%;
     min-width: 360px;
+    /* min-width: 1920px; */
 }
 
 
@@ -39,7 +40,6 @@ body {
 }
 
 
-
 .content {
     display: flex;
     width: 100%;
@@ -47,7 +47,6 @@ body {
 }
 
 .ft_container .content1 {
-
     width: 90%;
     height: 100%;
     min-width: 600px;
@@ -56,7 +55,15 @@ body {
     background: rgba(109, 96, 96, 0.1);
     border-radius: 20px 20px 20px 20px;
     box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
+
+/* .ft_container .content1 > div:nth-child(2){
+    flex: 0 0 41%;
+} */
+
 
 /*************Genral code***************/
 .ft-box {

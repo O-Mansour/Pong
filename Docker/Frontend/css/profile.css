@@ -56,6 +56,10 @@
     margin: 0;
 }
 
+.joined span {
+    margin-left: 7px; 
+}
+
 .user-info .joined
 {
     grid-row: 1 / 2;
@@ -129,8 +133,6 @@
     column-gap: 2%;
     padding-right: 5%;
     padding-left: 5%;
-    padding-bottom: 2%;
-    margin-top: 2%;
 }
 
 .header_1 .tournam_profile .user-info .username
@@ -188,7 +190,8 @@
 
 .tournaments .tourn
 {
-    padding: 10px;
+    padding: 20px;
+    /* padding: 10px; */
     font-size: 14px;
     text-align: center;
 }
@@ -270,7 +273,6 @@
     color: white;
     font-size: 12px;
     font-family: "Roboto", sans-serif;
- 
     position: absolute;
     top:0;
     left: 0;
@@ -297,8 +299,9 @@
 {
     display: grid;
     grid-template-columns: 49% 49%;
-    column-gap: 2%;
+    column-gap: 3%;
     padding: 0 5%;  /* padding left and rghit l parent  not chaild*/
+    /* height: 40%; */
    
 }
 
@@ -349,14 +352,10 @@
 {
 
     display: grid;
-
-    
-    grid-template-columns: auto 1fr  1fr;
+    grid-template-columns: auto 1fr  auto;
     grid-template-rows: 25px 25px;
     column-gap: 5%;
     margin: 10px 0;
- 
-
 }
   
 
@@ -371,7 +370,6 @@
 .leader_1 .leader-name_1,
 .leader_1 .leader-username_1 {
     display:  flex;
-
 }
 
 
@@ -446,7 +444,7 @@
 
 .message-btn_1
 {
-    width: 110px;
+    /* width: 110px; */
     height: 18px;
     background: none;
     padding: 8px 16px;
@@ -476,19 +474,36 @@
     align-items: center;
 }
 
+.charts:active {
+    background-color: #453827;
+    scale: 1.2;
+} 
+
 .charts {
 
     /* width: 150px;
     height: 150px; */
 
-    width: 50%;
-    height: 70%;
-    justify-content: center;
+    /* width: 50%;
+    /* height: 60%; */
+    /* justify-content: center;
     
     background: conic-gradient(#3992A5 0% var(--per), #453827 var(--per) 100%);
  
     border-radius: 50%;
     position: relative;
+    padding-top: 50%; */ 
+
+
+    width: 40%;
+    justify-content: center;
+    background: conic-gradient(#3992A5 0% var(--per), #453827 var(--per) 100%);
+    border-radius: 50%;
+    position: relative;
+    padding-top: 40%;
+
+
+
 }
 
 .charts::before {
@@ -497,8 +512,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60%;
-    height: 60%;
+    /* width: 65%;
+    height: 65%; */
+
+    width: 70%;
+    height: 70%;
+
     background-color: #252f30;
     border-radius: 50%;
 }
@@ -529,6 +548,7 @@
     font-family: "Roboto", sans-serif;
     font-weight: 700;
     text-align: center;
+    padding-top: 5%
     
     
 }
@@ -597,8 +617,6 @@
 {
     display: flex;
     width: 100%;
-    height: 100%;
-    max-height: 260px;
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
     border-radius: 20px 20px 20px 20px;
@@ -607,10 +625,12 @@
     
 }
 
+/* 
 .list_hostory
 {
-    padding: 0 5%; /* padding l child -> left and right*/
-}
+    padding: 0 5%; /* padding l child -> left and right
+}*/
+ 
 
 .matches2
 {
@@ -621,7 +641,11 @@
 
 .mtch1 .matches2
 {
+    /* margin-top: 20px; */
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .mtch1 .matches2 .matches-plyes_1
@@ -664,8 +688,10 @@
 
 .matches-plyes_1 .m2_2
 {
+
+
     color: white;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 400;
     font-family: "Roboto", sans-serif;
 }
@@ -681,11 +707,19 @@
 
 .list_ho{
 
-    /* justify-content: space-around; */
+    justify-content: space-around;
     overflow: auto;
+    /* width: 100%;
+    height: 160%;
+    max-height: 300px; */
+
+    /* width: 100%;
+    height: 180%;
+    max-height: 300%; */
+
     width: 100%;
-    height: 100%;
-    max-height: 260px;
+
+    display: flex;
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
     border-radius: 20px 20px 20px 20px;
@@ -708,7 +742,7 @@
     -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5;
     text-align: center;
-    
+    /* margin: 0 90px; */
     margin-top: 1px;
 }
 
@@ -820,7 +854,11 @@
     grid-template-rows: 50px;
     grid-template-columns: 50px 50px 1fr minmax(auto, 1fr) auto;
     column-gap: 3%;
-    width: 100%;
+    width: 600px;
+
+/* 
+    grid-template-columns: 50px 5fr 50px auto 50px; */
+
 }
 
 

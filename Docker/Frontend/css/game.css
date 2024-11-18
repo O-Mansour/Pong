@@ -1,0 +1,162 @@
+.game1
+{
+    display: grid;
+    grid-template-columns: 49% 49%;
+    column-gap: 3%;
+    padding: 0 5%;
+}
+
+.content1.game1 ,
+.vers_1
+{
+   
+        justify-content: space-around;
+        overflow: auto;
+        width: 100%;
+        height: 100%;
+        max-height: 500px;
+        width: 100%;
+        display: flex;
+        backdrop-filter: blur(10px);
+        background: rgba(109, 96, 96, 0.1);
+        border-radius: 20px 20px 20px 20px;
+        box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
+        background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
+        padding: 10px 0px;
+        box-sizing: border-box;
+    
+}
+
+.content1.game1 ,
+.vers_4
+{
+    justify-content: space-around;
+        overflow: auto;
+        width: 100%;
+        height: 100%;
+        max-height: 500px;
+        width: 100%;
+        display: flex;
+        backdrop-filter: blur(10px);
+        background: rgba(109, 96, 96, 0.1);
+        border-radius: 20px 20px 20px 20px;
+        box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
+        background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
+        padding: 10px 0px;
+        box-sizing: border-box;
+}
+
+
+.game_mode
+{
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    text-shadow:
+        1px 1px 0 #3992A5,
+        -1px -1px 0 #3992A5,
+        1px -1px 0 #3992A5,
+        -1px 1px 0 #3992A5;
+    -webkit-text-stroke: 0px #3992A5;
+    text-align: center;
+}
+
+
+.vers_1 .vss_1 {
+
+    display: flex;
+    width: 70%;
+    height: 16%;
+    padding-left: 12%;
+
+    /* width: 53%;
+    height: 46%;
+    padding-top: 7%; */
+}
+
+.to_4
+ul {
+    list-style-type: none; 
+    padding: 0; 
+    margin: 0; 
+  }
+
+  .sig_game
+  ul{
+    list-style-type: none; 
+    padding: 0; 
+    margin: 0; 
+  }
+
+.click_vers
+{
+    display: flex;
+    justify-content: center;
+}
+
+.to_4
+ul li my-link,
+.vss_4
+{
+
+width: 53%;
+height: 46%;
+padding-top: 10%;
+
+}
+
+
+
+.vers_1 .sig_game ,
+.clc_game
+{
+    color: white;
+    font-size: 30px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    text-shadow: 1px 1px 0 #3992A5, -1px -1px 0 #3992A5, 1px -1px 0 #3992A5, -1px 1px 0 #3992A5;
+    -webkit-text-stroke: 0px #3992A5;
+    text-align: center;
+
+}
+
+
+.vers_1 .sig_game,
+ .single_game
+{
+    
+    color: white;
+    font-size: 30px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    color: #3992A5;
+    text-align: center;
+}
+
+
+.vers_4 .to_4,
+.tous_4
+{
+    color: white;
+    font-size: 30px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    text-shadow: 1px 1px 0 #3992A5, -1px -1px 0 #3992A5, 1px -1px 0 #3992A5, -1px 1px 0 #3992A5;
+    -webkit-text-stroke: 0px #3992A5;
+    text-align: center;
+}
+
+
+.vers_4 .to_4,
+.tous_plys
+{
+    color: white;
+    font-size: 30px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    color: #3992A5;
+    text-align: center;
+}

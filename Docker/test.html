@@ -13,3 +13,89 @@ go()	Loads a specific URL from the history list
     }
 </script>
 
+document.addEventListener("DOMContentLoaded", () => {
+  const apiUrl = "http://localhost:8000/api/notifications"; // Replace with your API endpoint
+  const formContainer = document.getElementById("formContainer");
+
+  // Fetch notification data
+  fetch(apiUrl)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(data => {
+          // Clear any existing content in the container
+          formContainer.innerHTML = `<p class="notf">Confirm or delete?</p>`;
+
+          // Populate the modal with notifications
+          data.forEach(notification => {
+              const senderProfile = notification.sender_profile;
+
+              const notificationRow = document.createElement("div");
+              notificationRow.classList.add("d-flex", "align-items-center", "mb-3");
+
+              notificationRow.innerHTML = `
+                  <div class="name_notf me-2 d-flex align-items-center">
+                      <img src="${senderProfile.profileimg || './images/prof.jpg'}" 
+                           alt="${senderProfile.firstname || 'Player'}" 
+                           class="img_led">
+                      <p class="name_invit ms-2">${senderProfile.firstname || ''} ${senderProfile.lastname || ''}</p>
+                  </div>
+                  <button class="btn btn-success me-2" data-id="${notification.id}" onclick="handleConfirm(${notification.id})">Confirm</button>
+                  <button class="btn btn-danger" data-id="${notification.id}" onclick="handleDelete(${notification.id})">Delete</button>
+              `;
+
+              // Append the row to the form container
+              formContainer.appendChild(notificationRow);
+          });
+      })
+      .catch(error => {
+          console.error("Error fetching notifications:", error);
+      });
+});
+
+// Function to handle "Confirm" button clicks
+function handleConfirm(notificationId) {
+  console.log(`Confirmed notification ID: ${notificationId}`);
+  // Add code to send a confirmation API request
+  fetch(`http://localhost:8000/api/notifications/${notificationId}/confirm`, {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+  })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          console.log(`Notification ID ${notificationId} confirmed successfully.`);
+          // Optionally, refresh the notifications or update UI
+      })
+      .catch(error => {
+          console.error("Error confirming notification:", error);
+      });
+}
+
+// Function to handle "Delete" button clicks
+function handleDelete(notificationId) {
+  console.log(`Deleted notification ID: ${notificationId}`);
+  // Add code to send a deletion API request
+  fetch(`http://localhost:8000/api/notifications/${notificationId}/delete`, {
+      method: "DELETE",
+      headers: {
+          "Content-Type": "application/json",
+      },
+  })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          console.log(`Notification ID ${notificationId} deleted successfully.`);
+          // Optionally, refresh the notifications or update UI
+      })
+      .catch(error => {
+          console.error("Error deleting notification:", error);
+      });
+}

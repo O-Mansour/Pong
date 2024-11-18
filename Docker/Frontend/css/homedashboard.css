@@ -15,27 +15,30 @@
 }
 
 .stats h1 {
-
-    text-align: center;
+    /* text-align: center; */
     color: white;
     font-family: "Roboto", sans-serif;
     font-size: 35px;
-    text-shadow:
-        1px 1px 0 #3992A5,
-        -1px -1px 0 #3992A5,
-        1px -1px 0 #3992A5,
-        -1px 1px 0 #3992A5;
+    text-shadow: 1px 1px 0 #3992A5, -1px -1px 0 #3992A5, 1px -1px 0 #3992A5, -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: space-evenly;
 }
+
 
 .stats-view {
 
     display: flex;
     justify-content: center;
     margin-bottom: 2%;
+    padding-top: 2%;
     /*justify-content: space-around;*/
 }
 
+.stats {
+    padding-bottom: 40%;
+}
 
 .stat1,
 .stat2,
@@ -250,6 +253,7 @@
 
 .ranking {
 
+
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -257,7 +261,8 @@
     align-items: center;
     gap: 15px;
     /* margin-top: 10px; */
-    margin-left: 3%;
+    margin-left: 8%;
+
 }
 
 .ranking .rank {
@@ -339,9 +344,10 @@
 .leader {
 
     display: grid;
-    grid-template-columns: 50px 50px minmax(70px, 1fr) auto;
+    grid-template-columns: 50px 50px minmax(220px, 1fr) auto;
     grid-template-rows: 25px 25px;
     column-gap: 10px;
+
   
 }
 
@@ -492,6 +498,14 @@
     /* margin-bottom: 10px; */
 }
 
+.ft_progress::before {
+    content: "";
+    display: block;
+    width: var(--xp);
+    height: 100%;
+    background-color: #3992A5;
+}
+
 .content .sidebar .content1 {
     margin-top: 0%;
 }
@@ -507,19 +521,7 @@
     background-color: #453827;
     border-radius: 4px;
     position: relative;
-
 }
-
-
-.ft_progress::before {
-    content: "";
-    display: block;
-    width: 50%;
-    height: 100%;
-    background-color: #3992A5;
-}
-
-
 .xp {
 
     color: white;
@@ -552,16 +554,20 @@
     margin-bottom: 70%;
 }
 
+
 .p1 {
-    display: grid;
-    grid-template-columns: 49% 49%;
-    column-gap: 2%;
+        display: grid;
+        grid-template-columns: 49% 49%;
+        column-gap: 2%;
+        padding-top: 2%;
 }
 
+/* 
 .stats
 {
    padding-bottom: 10%;
-}
+} */
+ 
 
 .box {
 
@@ -581,24 +587,25 @@
 
 
 .mtch {
+        display: flex;
+        width: 93%;
+        height: 100%;
+        margin-left: 42px;
+        /* margin: 0px 3%; */
+        backdrop-filter: blur(10px);
+        background: rgba(109, 96, 96, 0.1);
+        border-radius: 20px 20px 20px 20px;
+        box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
+        background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
 
-    display: flex;
-    width: 93%;
-    height: 100%;
-    margin-left: 30px;
-    /* margin: 0px 3%; */
-    backdrop-filter: blur(10px);
-    background: rgba(109, 96, 96, 0.1);
-    border-radius: 20px 20px 20px 20px;
-    box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
-    background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
+   
 }
 
 
 .chart:active {
     background-color: #453827;
     scale: 1.2;
-}
+} 
 
 .chart-container {
 
@@ -614,17 +621,24 @@
 
 .chart {
 
-    width: 50%;
+    /* width: 50%;
     height: 70%;
     justify-content: center;
     background: conic-gradient(#3992A5 0% var(--per), #453827 var(--per) 100%);
     border-radius: 50%;
+    position: relative; */
+
+    width: 40%;
+    justify-content: center;
+    background: conic-gradient(#3992A5 0% var(--per), #453827 var(--per) 100%);
+    border-radius: 50%;
     position: relative;
+    padding-top: 40%;
 }
 
 
 .chart::before {
-
+/* 
     content: '';
     position: absolute;
     top: 50%;
@@ -632,6 +646,21 @@
     transform: translate(-50%, -50%);
     width: 60%;
     height: 60%;
+    background-color: #252f30;
+    border-radius: 50%; */
+
+
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* width: 65%;
+    height: 65%; */
+
+    width: 70%;
+    height: 70%;
+
     background-color: #252f30;
     border-radius: 50%;
 }
@@ -687,7 +716,7 @@
     background-color: #3992A5;
 }
 
-.percentage.loss {
+.percentage_loss {
     position: absolute;
     top: 0;
     left: 0;
@@ -702,7 +731,7 @@
     padding: 5%;
 }
 
-.percentage.win {
+.percentage_win {
     position: absolute;
     top: 0;
     right: 0;

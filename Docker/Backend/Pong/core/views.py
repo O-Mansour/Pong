@@ -219,6 +219,20 @@ class FriendshipViewSet(ModelViewSet):
 
 		return Response(friends_data)
 
+	# need some tests
+	@action(detail=False, methods=['GET'])
+	def requests(self, request):
+		pending_friendships = Friendship.objects.filter(
+			(Q(receiver=request.user)), status='P')
+		requests_data = []
+		for friendship in pending_friendships:
+			friend = friendship.sender
+			# Serialize the friend's profile
+			friend_profile = ProfileSerializer(friend.profile).data
+			requests_data.append(friend_profile)
+
+		return Response(requests_data)
+
 class MatchViewSet(ModelViewSet):
 	serializer_class = MatchSerializer
 	permission_classes = [IsAuthenticated]

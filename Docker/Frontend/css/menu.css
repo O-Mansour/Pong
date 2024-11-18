@@ -13,25 +13,31 @@
     flex-direction: column;
 }
 
-.sidebar .menu ul {
+.sidebar .menu ul 
+{
     padding: 0px;
     margin: 20px 0;
 }
 
+
 .sidebar .menu ul li
 {
-    margin: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px; 
 }
 
 .sidebar .menu ul li my-link 
 {
-    padding: 20px;
+    /* padding: 20px; */
+    /* padding: 40px; */
+    padding: 40px 20px;
+
     display: block;
 }
 
 .sidebar .menu ul li my-link img
 {
-    width: 30px;
+    /* width: 50%; */
+    width: 90%;
     display: block;
 }
 
@@ -46,11 +52,15 @@ Pseudo-elements: The content property only works with pseudo-elements like ::bef
     content: '';
     height: 5px;
     background-color: transparent;
-    border-radius: 10px;
-    width: 30px;
+    border-radius: 20px;
+    width: 34px;
     display: block;
 }
 
 .sidebar .menu  a:hover::after, .sidebar .menu  a.active::after {
+
     background-color:#3992A5;
+
 }
+
+

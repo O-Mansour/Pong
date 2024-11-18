@@ -14,16 +14,6 @@
 <body>
 
     <main>
-
-        <!-- <login-page></login-page>  -->
-         <!-- <home-dashboard-page>
-        </home-dashboard-page>   -->
-        <!-- <forget-password-page>
-        </forget-password-page> -->
-        <!-- <profile></profile> -->
-        <!-- <setting></setting> -->
-        <!-- <login-signup></login-signup> -->
-
     </main>
 
     <template id="login-page">
@@ -53,7 +43,7 @@
                             <label for="veh"> Remember me </label><br>
                         </div>
                         <button id="frontside" type="submit">Login</button>
-                       <p class="forget-pass"><my-link  href="/#/forgetpassword" class="forgot-password">Forgot password ?</my-link></p>
+                       <p class="forget-pass"><my-link  href="/forgetpassword" class="forgot-password">Forgot password ?</my-link></p>
 
                         <div class="or">Or</div>
                         <button class="intra-login"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
@@ -66,7 +56,7 @@
                                     fill="#fff" transform="translate(-229.2 -372.7)"></path>
                             </svg>
                             <span>Sign in with intra</span></button>
-                        <p class="signup">Don’t have an account ? <my-link href="/#/sign-up">Signup</my-link></p>
+                        <p class="signup">Don’t have an account ? <my-link href="/sign-up">Signup</my-link></p>
                     </form>
                 </div>
             </div>
@@ -105,7 +95,7 @@
                         </div>
                         <button id="rightside" type="submit">Signup</button>
                         <!-- <p class="login">Already registered? <my-link href="/">Login</my-link></p> -->
-                        <p class="login">Already registered? <my-link href="/#/">Login</my-link></p>
+                        <p class="login">Already registered? <my-link href="/">Login</my-link></p>
                     </form>
                 </div>
             </div>
@@ -143,7 +133,7 @@
                                     fill="#fff" transform="translate(-229.2 -372.7)"></path>
                             </svg>
                             Sign in with intra</button>
-                        <p class="signup">Don’t have an account ? <my-link href="#/signup">Signup</my-link></p>
+                        <p class="signup">Don’t have an account ? <my-link href="/signup">Signup</my-link></p>
                     </form>
                 </div>
             </div>
@@ -164,11 +154,11 @@
                 <aside class="sidebar">
                     <nav class="menu">
                         <ul>
-                            <li><my-link href="#/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
-                            <li><my-link href="#/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
-                            <li><my-link href=""><img src="./images/Stadium.png" alt="Games"></my-link></li>
-                            <li><my-link href=""><img src="./images/Chat.png" alt="msg"></my-link></li>
-                            <li><my-link href="#/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
+                            <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
+                            <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
+                            <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                            <!-- <li><my-link href=""><img src="./images/Chat.png" alt="msg"></my-link></li> -->
+                            <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
                         </ul>
                     </nav>
                 </aside>
@@ -177,37 +167,32 @@
                     <div class="header1">
                         <div class="head">
                             <div class="profile">
-                                <h2>Welcome, Full Name</h2>
+                                <h2>Welcome, <span id="fetched_fullname"></span></h2>
                                 <div class="ft_progress">
-                                    <div class="bar" style="width: 100%;">
-                                        <span class="xp">500 xp</span>
-                                        <span class="level">Level 1</span>
-                                    </div>
+                                    <!-- <div class="bar" style="width: 100%;"> -->
+                                        <span class="xp"><span id="fetched_xp"></span> xp</span>
+                                        <span class="level">Level <span id="fetched_level"></span></span>
+                                    <!-- </div> -->
                                 </div>
                             </div>
                             <div class="actions">
-                                <button class="meg">Messages</button>
-                                <button class="play">Play now</button>
+                                <button class="meg" onclick="window.location.href='/setting'">Settings</button>
+                                <button class="play" onclick="window.location.href='/game'">Play Now</button>
                             </div>
                         </div>
                         <div class="header-left-side">
                             <div class="img_prof">
-                                <img src="./images/profile.jpg" class="prof">
+                                <img  class="prof">
                                 <!-- <span class="online-status"></span> -->
                             </div>
                             <div id="with-bootstrap">
                                 <button id="showFormBtn" class="message-btn1" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal" >
-
-                                    <!-- <span class="nft">notification</span> -->
-                                    <!-- <img src="./images/1c384ad7-e334-4aac-bce6-557c21a6bf7e.png" class="nf"> -->
-                                    <!-- <img src="./images/notification.png" class="nf"> -->
-
                                     <div class="notif1">
                                         <span class="nft">Notification</span>
                                         <div class="nf">
                                             <img src="./images/bell.png" class="tbell">
-                                            <span class="badge bg-danger">9</span>
+                                            <span class="badge bg-danger"></span>
                                         </div>
                                     </div>
                                 </button>
@@ -221,15 +206,15 @@
                         <h1>Play Pong Online on the #1 Site!</h1>
                         <div class="stats-view">
                             <div class="stat1">
-                                <span class="number">1504</span>
+                                <span class="number"><span id="fetched_total_game"></span></span>
                                 <span class="total">Total Games</span>
                             </div>
                             <div class="stat2">
-                                <span class="number">104</span>
+                                <span class="number"><span id="fetched_game_tody"></span></span>
                                 <span class="total">Games Today</span>
                             </div>
                             <div class="stat3">
-                                <span class="number">10</span>
+                                <span class="number"><span id="fetched_playin_now"></span></span>
                                 <span class="total">Playing Now</span>
                             </div>
                         </div>
@@ -241,11 +226,11 @@
 
                                 <div class="matches">
                                     <div class="matches-plyes">
-                                        <span class="m1">100</span>
+                                        <span class="m1"><span id="fetched_matches_played"></span></span>
                                         <div class="m2">Matches Played</div>
                                     </div>
                                     <div class="matches-plyes">
-                                        <span class="m1">65</span>
+                                        <span class="m1"><span id="fetched_matches_won"></span></span>
                                         <div class="m2">Winning Matches</div>
                                     </div>
                                 </div>
@@ -259,9 +244,9 @@
                                             <div class="label-color win"></div>Win
                                         </div>
                                     </div>
-                                    <div class="chart" style="--per: 60%">
-                                        <div class="percentage loss">5%</div>
-                                        <div class="percentage win">30%</div>
+                                    <div class="chart">
+                                        <div class="percentage_loss">yyyyy</div>
+                                        <div class="percentage_win"></div>
                                     </div>
                                 </div>
                             </div>
@@ -269,11 +254,11 @@
                             <div class="box">
                                 <div class="ranking">
                                     <div class="rank">
-                                        <span class="rank1">#10</span>
+                                        <span class="rank1"><span id="fetched_yourrank"></span></span>
                                         <div class="r1">your rank</div>
                                     </div>
                                     <div class="rank">
-                                        <span class="rank1">#106</span>
+                                        <span class="rank1"><span id="fetched_total_players"></span></span>
                                         <div class="r1">Total players</div>
                                     </div>
                                 </div>
@@ -281,13 +266,14 @@
                                 <!-- <div class="leadebord-box"> -->
 
                                 <div class="leadebord">
-                                    <div class="leader">
+
+                                    <!-- <div class="leader">
                                         <h1>#1</h1>
                                         <img src="./images/prof.jpg" alt="Player1" class="img_leader">
                                         <span class="leader-name">Full Name</span>
                                         <div class="leader-username">@username</div>
                                         <button class="add-friend-btn">Add Friend</button>
-                                    </div>
+                                    </div> 
                                     <div class="leader">
                                         <h1>#2</h1>
                                         <img src="./images/prof.jpg" alt="Player 1" class="img_leader">
@@ -300,8 +286,10 @@
                                         <img src="./images/prof.jpg" alt="Player 1" class="img_leader">
                                         <span class="leader-name">Full Name</span>
                                         <div class="leader-username">@username</div>
+                                        <button class="add-friend-btn">Add Friend</button>
                                         <button class="message-btn">Message</button>
-                                    </div>
+                                    </div>   -->
+                                 
                                 </div>
                                 <!-- </div> -->
                             </div>
@@ -320,7 +308,7 @@
                     <div class="modal-body">
                         <div id="formContainer">
                             <p class="notf">Confirm or delete ?</p>
-                            <div class="d-flex">
+                            <!-- <div class="d-flex">
                                 <div class="name_notf">
                                     <img src="./images/prof.jpg" alt="Player 1" class="img_led">
                                     <p class="name_invit">FullName</p>
@@ -354,7 +342,7 @@
                                 </div>
                                 <button id="confirmBtn" class="btn btn-success me-2">Confirm</button>
                                 <button id="deleteBtn" class="btn btn-danger">Delete</button>
-                            </div>
+                            </div> -->
 
                         </div>
                     </div>
@@ -375,11 +363,11 @@
                 <aside class="sidebar">
                     <nav class="menu">
                         <ul>
-                            <li><my-link href="#/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
-                            <li><my-link href="#/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
-                            <li><my-link href="#"><img src="./images/Stadium.png" alt="Games"></my-link></li>
-                            <li><my-link href="#"><img src="./images/Chat.png" alt="msg"></my-link></li>
-                            <li><my-link href="#/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
+                            <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
+                            <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
+                            <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                            <!-- <li><my-link href="#"><img src="./images/Chat.png" alt="msg"></my-link></li> -->
+                            <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
                         </ul>
                     </nav>
                 </aside>
@@ -400,9 +388,10 @@
                                 <!-- </div> -->
                             </div>
                             <div class="tournaments">
-                                <div class="tourn">
+                                  <div class="tourn">
                                     <span class="t1"><span id="fetched_tour_played"></span><br></span>
-                                    <div class="t2">Tournaments played</div>
+                                    <div class="t2">Tournaments played</div> 
+                                    
                                 </div>
                                 <div class="tourn">
                                     <span class="t1"><span id="fetched_tour_won"></span></span>
@@ -452,7 +441,7 @@
                             <!--  -->
 
                             <!--  -->
-
+           
                             <div class="chart-container_1">
                                 <div class="labels_1">
                                     <div class="lab">
@@ -467,14 +456,11 @@
                                     <div class="percentagee_winn"></div>
                                 </div>
                             </div>
-
-
-
                         </div>
                         <!-- Match history -->
                         <div class="list_ho  hidden-scrollbar">
                             <div class="list_hostory">
-                                <h1 class="title_host">Match History</h1>
+                                    <h1 class="title_host">Match History</h1>
                                 <!-- Match history data -->
                             </div>
                         </div>
@@ -494,11 +480,11 @@
             <aside class="sidebar">
                 <nav class="menu">
                     <ul>
-                        <li><my-link href="#/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
-                        <li><my-link href="#/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
-                        <li><my-link href="#/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
-                        <li><my-link href="#"><img src="./images/Chat.png" alt="msg"></my-link></li>
-                        <li><my-link href="#/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
+                        <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
+                        <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
+                        <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                        <!-- <li><my-link href="#"><img src="./images/Chat.png" alt="msg"></my-link></li> -->
+                        <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
                     </ul>
                 </nav>
             </aside>
@@ -739,7 +725,107 @@
     </template>
 
     <template id="page-game">
-        <!-- game-->
+       <!-- <canvas id="game-canva"></canvas> -->
+       <div class="ft_container">
+            <div class="header">
+                <div class="ft-box">
+                    <img src="./images/logo.png" class="logo">
+                </div>
+            </div>
+            <div class="content">
+                <aside class="sidebar">
+                    <nav class="menu">
+                        <ul>
+                            <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
+                            <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
+                            <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                            <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <main class="content1">
+                    <h1 class="game_mode"> Mode selection game </h1>
+                    <div class="game1">
+                        <div class="vers_1 hidden-scrollbar">
+                            <div class="sig_game">
+                                <h1 class="clc_game">Classic Game</h1>
+                                <h2 class="single_game">1 VS 1 Game </h2>
+                               <ul><li> <my-link href="/twoplyer"><img src="./images/versus.png" alt="" class="vss_1"></my-link></li></ul>
+                               
+                            </div>
+                       
+                        </div>
+                        <div class="vers_4 hidden-scrollbar">
+                          <div class="to_4">
+                            <h1 class="tous_4">Tournament</h1>
+                            <h2 class="tous_plys">Play a tournament</h2>
+                            <ul> <li><my-link href="/tournament"><img src="./images/poker.png" alt="" class="vss_4"></my-link></li> </ul>
+                            <!-- <ul> <li><my-link href="/tournament"><img src="./images/tournament (5).png" alt="" class="vss_4"></my-link></li> </ul>  -->
+                          
+                          </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+    </template>
+
+
+    <template id="page-gamevers">
+        <!-- <canvas id="game-canva"></canvas> -->
+        <div class="ft_container">
+             <div class="header">
+                 <div class="ft-box">
+                     <img src="./images/logo.png" class="logo">
+                 </div>
+             </div>
+             <div class="content">
+
+                 <aside class="sidebar">
+                     <nav class="menu">
+                         <ul>
+                             <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
+                             <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
+                             <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                             <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
+                         </ul>
+                     </nav>
+                 </aside>
+
+                 <main class="content1">
+                    <!-- code twoplyer-->
+                 </main>
+             </div>
+         </div>
+     </template>
+
+    <template id="page-game4vers">
+        <!-- <canvas id="game-canva"></canvas> -->
+        <div class="ft_container">
+             <div class="header">
+                 <div class="ft-box">
+                     <img src="./images/logo.png" class="logo">
+                 </div>
+             </div>
+             <div class="content">
+                 <aside class="sidebar">
+                     <nav class="menu">
+                         <ul>
+                             <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
+                             <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
+                             <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                             <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
+                         </ul>
+                     </nav>
+                 </aside>
+ 
+                 <main class="content1">
+                    <!-- code tournament -->
+                 </main>
+             </div>
+         </div>
     </template>
 
 </body>
@@ -753,7 +839,11 @@
 <script src="./components/error-page/index.js" type="module"></script>
 <script src="./js/Router.js" type="module"></script>
 <script src="./components/link/index.js" type="module"></script>
+<script src="./components/ponggame-game/index.js" type="module"></script>
+<script src="./components/vers1-game/index.js" type="module"></script>
+<script src="./components/vers4-game/index.js" type="module"></script>
 <script src="./js/erorrpage.js" type="module"></script>
 <script src="./js/bootstrap.bundle.min.js"></script>
+
 
 </html>
