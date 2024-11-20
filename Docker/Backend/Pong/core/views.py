@@ -112,7 +112,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.serializers import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import ProfileSerializer, FriendshipSerializer, MatchSerializer
+from .serializers import ProfileSerializer, FriendshipSerializer, MatchSerializer, FriendshipRequestsSerializer
 from django.db.models import Q
 
 # from .pagination import DefaultPagination
@@ -224,14 +224,7 @@ class FriendshipViewSet(ModelViewSet):
 	def requests(self, request):
 		pending_friendships = Friendship.objects.filter(
 			(Q(receiver=request.user)), status='P')
-		requests_data = []
-		for friendship in pending_friendships:
-			friend = friendship.sender
-			# Serialize the friend's profile
-			friend_profile = ProfileSerializer(friend.profile).data
-			requests_data.append(friend_profile)
-
-		return Response(requests_data)
+		return Response(FriendshipRequestsSerializer(pending_friendships, many=True).data)
 
 class MatchViewSet(ModelViewSet):
 	serializer_class = MatchSerializer

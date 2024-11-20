@@ -157,16 +157,19 @@
     justify-content: end;
 }
 
-
 .meg,
 .play {
+
+
 
     background: none;
     border: none;
     border-radius: 5px;
     font-family: "Roboto", sans-serif;
-    padding-left: 30px;
-    padding-right: 30px;
+    /* padding-left: 30px; */
+    /* padding-right: 30px; */
+    width: 100px;
+    padding: 0px 10px;
 }
 
 /* hover button */
@@ -803,6 +806,25 @@
 }
 
 /******/
+.reject_accept
+{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.controle_B
+{
+margin-top: 5%;
+display: flex;
+flex-direction: row;
+width: 100%;
+margin-right: 5%;
+
+}
 
 .modal-body {
     padding-top: 0;
@@ -813,7 +835,11 @@
     padding-bottom: 0;
     border-bottom: none;
 }
-
+/* .d-flex
+{
+    display: flex;
+    flex-direction: row;
+} */
 
 .d-flex .name_notf .img_led
 {
@@ -825,7 +851,7 @@
 .d-flex .name_notf .name_invit
 {
     color: white;
-    font-size: 12px;
+    font-size: 10px;
     font-family: "Roboto", sans-serif;
     text-align: center;
     font-weight: 700;
@@ -844,6 +870,24 @@
 {
     display: flex;
     align-items: center;
+}
+
+.acp_reject
+{
+    /* display: flex;
+    justify-content: center; */
+    /* padding-top: 5%; */
+    margin-right: 20%;
+    text-align: center;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    font-size: 20px;
+    text-shadow:
+        1px 1px 0 #3992A5,
+        -1px -1px 0 #3992A5,
+        1px -1px 0 #3992A5,
+        -1px 1px 0 #3992A5;
+    -webkit-text-stroke: 0px #3992A5;
 }
 .btn.btn-success.me-2 {
 
@@ -923,13 +967,14 @@
     text-align: center;
     color: white;
     font-family: "Roboto", sans-serif;
-    font-size: 35px;
+    font-size: 25px;
     text-shadow:
         1px 1px 0 #3992A5,
         -1px -1px 0 #3992A5,
         1px -1px 0 #3992A5,
         -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5;
+    margin-right: 4%;
 }
 
 

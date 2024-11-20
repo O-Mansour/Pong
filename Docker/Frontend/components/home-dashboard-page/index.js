@@ -13,10 +13,8 @@ export class HomeDashboard extends  HTMLElement
         this.appendChild(content);
         this.fetchDashbordData();
         this.fetchNotfication();
-        // this.fetchPlayNow();
-
     }
-
+  
   async fetchDashbordData() {
     try {
       const response = await fetch(`http://localhost:8000/api/profiles/me/`);
@@ -49,67 +47,66 @@ export class HomeDashboard extends  HTMLElement
         && Element_gametoday && Element_playin_now && Element_yourrank  && Element_totalPlayers
         )
       {
-      fullnameElement.textContent = `${data.firstname} ${data.lastname}`;
+          fullnameElement.textContent = `${data.firstname} ${data.lastname}`;
 
-      // xps and leval
-        xpElement.textContent = data.xps;
-        levelElement.textContent = data.level;
-          let progressPercentage = 0;
-          const maxXp = 100;
-          if (data.xps > 0)
-            progressPercentage = (data.xps / maxXp) * 100;
-        document.querySelector('.ft_progress').style = `--xp:${progressPercentage}%`;
+          // xps and leval
+            xpElement.textContent = data.xps;
+            levelElement.textContent = data.level;
+              let progressPercentage = 0;
+              const maxXp = 100;
+              if (data.xps > 0)
+                progressPercentage = (data.xps / maxXp) * 100;
+            document.querySelector('.ft_progress').style = `--xp:${progressPercentage}%`;
 
-      //image
-      imgElement.src = `http://localhost:8000${data.profileimg}`;
+          //image
+          imgElement.src = `http://localhost:8000${data.profileimg}`;
 
 
-      matches_played.textContent = data.wins + data.losses;
-      matches_won.textContent = data.wins;
-      // Calculate win and loss percentages
-       let winPercentage = 100;
-       if (data.wins + data.losses > 0)
-         winPercentage = Math.ceil((data.wins / (data.wins + data.losses)) * 100);
-       const lossPercentage = 100 - winPercentage;
- 
-       document.querySelector('.chart').style = `--per:${winPercentage}%`;
-       document.querySelector('.percentage_loss').textContent = lossPercentage + '%';
-       document.querySelector('.percentage_win').textContent = winPercentage + '%';
-
+          matches_played.textContent = data.wins + data.losses;
+          matches_won.textContent = data.wins;
+          // Calculate win and loss percentages
+          let winPercentage = 100;
+          if (data.wins + data.losses > 0)
+            winPercentage = Math.ceil((data.wins / (data.wins + data.losses)) * 100);
+          const lossPercentage = 100 - winPercentage;
     
+          document.querySelector('.chart').style = `--per:${winPercentage}%`;
+          document.querySelector('.percentage_loss').textContent = lossPercentage + '%';
+          document.querySelector('.percentage_win').textContent = winPercentage + '%';
 
-      // need to change that later
-      if (data.total_games != null) {
-        Element_totalgame.textContent = data.total_games;
-      } else {
+          // need to change that later
 
-        Element_totalgame.textContent = '0';
-      }
-      if (data.games_today != null) {
-        Element_gametoday.textContent = data.games_today;
-      } else {
-        Element_gametoday.textContent = '0';
-      }
+          if (data.total_games != null) {
+            Element_totalgame.textContent = data.total_games;
+          } else {
 
-      if (data.playing_now != null) {
-        Element_playin_now.textContent = data.playing_now;
-      } else {
-        Element_playin_now.textContent = '0';
-      }
-      // Update total players
-      if (data.total_players != null) {
-        Element_totalPlayers.textContent = data.total_players;
-      } else {
-        Element_totalPlayers.textContent = '0';
-      }
+            Element_totalgame.textContent = '0';
+          }
+          if (data.games_today != null) {
+            Element_gametoday.textContent = data.games_today;
+          } else {
+            Element_gametoday.textContent = '0';
+          }
 
-       // Update your rank
-       if (data.rank == null){
-        Element_yourrank.style.fontSize = "18px";
-        Element_yourrank.textContent = "Not ranked yet";
-      }
-      else
-        Element_yourrank.textContent = '#' + data.rank;
+          if (data.playing_now != null) {
+            Element_playin_now.textContent = data.playing_now;
+          } else {
+            Element_playin_now.textContent = '0';
+          }
+          // Update total players
+          if (data.total_players != null) {
+            Element_totalPlayers.textContent = data.total_players;
+          } else {
+            Element_totalPlayers.textContent = '0';
+          }
+
+          // Update your rank
+          if (data.rank == null){
+            Element_yourrank.style.fontSize = "18px";
+            Element_yourrank.textContent = "Not ranked yet";
+          }
+          else
+            Element_yourrank.textContent = '#' + data.rank;
     }
 
       // const leade_bord = document.querySelector('.leadebord');
@@ -142,31 +139,53 @@ export class HomeDashboard extends  HTMLElement
       if (NotifData.length)
         badge.textContent = NotifData.length;
       else
-        badge.textContent = 0;
-
-      
+        badge.style.display = 'none';
       NotifData.forEach(sender => {
         // Create a new notification row
         const notificationRow = document.createElement("div");
         notificationRow.classList.add("d-flex");
 
- 
         notificationRow.innerHTML = `
             <div class="name_notf">
-                <img src="http://localhost:8000${sender.profileimg}" class="img_led">
-                <p class="name_invit">${sender.firstname} ${sender.lastname}</p>
+                <img src="http://localhost:8000${sender.sender_profile.profileimg}" class="img_led">
+                <p class="name_invit">${sender.sender_profile.firstname} ${sender.sender_profile.lastname}</p>
             </div>
-            <button id="confirmBtn" class="btn btn-success me-2" >Confirm</button>
-            <button id="deleteBtn" class="btn btn-danger">Delete</button>
+          
+            <div class="reject_accept">
+                   <p class="acp_reject"> Wants to be your friend </p>
+                <div class="controle_B">
+                  <button id="accept_request" class="btn btn-success me-2" >Accept</button>
+                  <button id="reject_request" class="btn btn-danger">Reject</button>
+                </div>
+            </div>
         `;
-        // Append the row to the form container
+        
         formContainer.appendChild(notificationRow);
+
+        document.querySelector("#accept_request").addEventListener('click', async (event) => {
+          try {
+            await fetch(`http://localhost:8000/api/friendships/${sender.id}/accept/`);
+            document.querySelector("#accept_request").textContent = "Accepted";
+          } catch(err) {
+              console.log("failed to accept", err.message);
+          }
+        });
+
+        document.querySelector("#reject_request").addEventListener('click', async (event) => {
+          try {
+            await fetch(`http://localhost:8000/api/friendships/${sender.id}/reject/`);
+            document.querySelector("#reject_request").textContent = "Rejected";
+          }catch(err) {
+            console.log("failed to reject", err.message);
+          }
+        });
       });
+
     } catch (error) {
       console.error('Error fetching dashboard:', error);
     }
   }
-  
+
 }
 
 customElements.define("home-dashboard-page", HomeDashboard);
