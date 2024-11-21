@@ -55,9 +55,16 @@ class FriendshipSerializer(serializers.ModelSerializer):
 		fields = ['id', 'sender', 'receiver', 'status', 'sender_profile', 'receiver_profile']
 		read_only_fields = ['sender', 'status']
 
-class FriendshipRequestsSerializer(serializers.ModelSerializer):
+class FriendshipRequestsReceivedSerializer(serializers.ModelSerializer):
 	sender_profile = ProfileSerializer(source='sender.profile', read_only=True)
 
 	class Meta:
 		model = Friendship
 		fields = ['id', 'sender_profile']
+
+class FriendshipRequestsSentSerializer(serializers.ModelSerializer):
+	receiver_profile = ProfileSerializer(source='receiver.profile', read_only=True)
+
+	class Meta:
+		model = Friendship
+		fields = ['id', 'receiver_profile']

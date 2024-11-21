@@ -280,15 +280,13 @@
 
 .mtch .matches .matches-plyes {
     width: 70%;
-    height: 19%;
+    height: 23%;
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
     border-radius: 22px 22px 22px 22px;
     box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
-
 }
-
 
 .mtch .matches-plyes {
     padding: 30px 29px 30px 15px;
@@ -331,27 +329,24 @@
 }
 
 .leadebord {
-
     display: flex;
     flex-direction: column;
-    align-items: center;
+     align-items: center;
     justify-content: space-around;
-    height: 100%;
+    height: 250px;
     width: 100%;
-    gap: 1px;
+    gap: 40px;
     overflow: auto;
     margin-left: 3%;
-    /* border: solid #37C25E; */
+    padding: 10px 0px;
 }
 
 .leader {
-
     display: grid;
     grid-template-columns: 50px 50px minmax(220px, 1fr) auto;
     grid-template-rows: 25px 25px;
     column-gap: 10px;
-
-  
+    padding-top: 7px;
 }
 
 .leader h1,
@@ -573,10 +568,9 @@
  
 
 .box {
-
     display: flex;
     justify-content: space-around;
-    width: 97%;
+    width: 95%;
     height: 100%;
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
@@ -585,7 +579,6 @@
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
     padding: 20px 10px;
     box-sizing: border-box;
-
 }
 
 
@@ -818,12 +811,10 @@
 
 .controle_B
 {
-margin-top: 5%;
-display: flex;
-flex-direction: row;
-width: 100%;
-margin-right: 5%;
-
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-right: 5%;
 }
 
 .modal-body {
@@ -859,6 +850,7 @@ margin-right: 5%;
 
 }
 
+.box
 .hidden-scrollbar
 {
     overflow: auto;
@@ -874,21 +866,14 @@ margin-right: 5%;
 
 .acp_reject
 {
-    /* display: flex;
-    justify-content: center; */
-    /* padding-top: 5%; */
-    margin-right: 20%;
+    margin-right: 39%;
     text-align: center;
     color: white;
     font-family: "Roboto", sans-serif;
-    font-size: 20px;
-    text-shadow:
-        1px 1px 0 #3992A5,
-        -1px -1px 0 #3992A5,
-        1px -1px 0 #3992A5,
-        -1px 1px 0 #3992A5;
-    -webkit-text-stroke: 0px #3992A5;
+    font-size: 19px;
+    margin-top: 33px;
 }
+
 .btn.btn-success.me-2 {
 
     width: 120%;

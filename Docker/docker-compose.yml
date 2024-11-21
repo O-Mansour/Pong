@@ -10,6 +10,7 @@ services:
       - pong-network
     volumes:
       - front_volume:/usr/share/nginx/html
+    restart: always
 
   backend:
     image: backend
@@ -25,6 +26,7 @@ services:
     depends_on:
       - database
     env_file: .env
+    restart: always
 
   database:
     image: postgres:13
@@ -35,6 +37,7 @@ services:
     volumes:
       - postgres_volume:/var/lib/postgresql/data
     env_file: .env
+    restart: always
 
 networks:
   pong-network:
@@ -46,16 +49,16 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ~/Documents/oussama/Docker/Frontend
+      device: ./Frontend
   back_volume:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ~/Documents/oussama/Docker/Backend/Pong
+      device: ./Backend/Pong
   postgres_volume:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ~/data/postgres
+      device: /home/omansour/Desktop/postgres2
