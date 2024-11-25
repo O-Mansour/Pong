@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
     <!-- <script src="./js/bootstrap.bundle.min.js"></script> -->
+   
 </head>
 
 <body>
@@ -154,6 +155,7 @@
                 <aside class="sidebar">
                     <nav class="menu">
                         <ul>
+                        
                             <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
                             <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
                             <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
@@ -530,26 +532,28 @@
                         <div class="header_2">
                             <div class="hed_1">
                                 <div class="change_1">
-                                    <img src="./images/prof.jpg" alt="Player2" class="img_change">
-                                    <button class="chg1"><a href="#"></a> Change Picture</button>
+                                    <img class="img_change">
+                                    <button class="chg1" type="button">Change Picture</button>
+                                    <input type="file" id="fileInput" style="display: none;" accept="image/jpeg">
                                     <!--infos click in button in option change photo profile-->
-                                    <select class="chge_select" id="ch" required>
-                                        <option value="">Select language</option>
-                                        <option value="english">English</option>
-                                        <option value="french">French</option>
+                                    <select class="chge_select" id="ch"  onclick="changeLanguage('en')"  required>
+                                        <option value="" id="select_1" >Select language</option> 
+                                        <option value="english" onclick="changeLanguage('en')" >English</option>
+                                        <option value="french" onclick="changeLanguage('fr')">French</option>
+                                        <option value="french">espagne</option>
                                     </select>
                                 </div>
                                 <button class="logee">Logout<img src="./images/Logout.png" alt="Home"></button>
                             </div>
                         </div>
-
+                
                         <div class="acc-settings">
-                            <div class="title10">
+                            <div class="title10" id="chang_accont">
                                 Change Account<br />
                                 Informations
                             </div>
                             <form class="textchange">
-                                <input type="text" placeholder="Firstname">
+                                <input type="text" placeholder="Firstname" id="">
                                 <input type="text" placeholder="Lastname">
                                 <input type="text" placeholder="Username">
                                 <input type="email" placeholder="Email">
@@ -864,6 +868,12 @@
          </div>
     </template>
 
+    <!-- <template id="langage-id">
+        
+    <script src="https://unpkg.com/i18next/i18next.js"></script>
+    </template> -->
+
+
 </body>
 
 <script src="./components/login-page/index.js" type="module"></script>
@@ -880,6 +890,15 @@
 <script src="./components/vers4-game/index.js" type="module"></script>
 <script src="./js/erorrpage.js" type="module"></script>
 <script src="./js/bootstrap.bundle.min.js"></script>
+
+
+<!-- 
+<script src="./components/langage-page/index.js"></script> -->
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/21.11.2/i18next.min.js" 
+integrity="sha512-QVKFbd86uF/pLcf/BojOagMbFXQUynkIHf1nCxi2eG92HrfXkH9iV+eOQRQn4BoC1E8lZYFtfh8Klcg/mb2llQ==" crossorigin="anonymous" 
+referrerpolicy="no-referrer"></script> -->
+
 
 
 </html>

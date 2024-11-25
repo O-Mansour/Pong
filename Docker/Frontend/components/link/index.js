@@ -1,4 +1,4 @@
-const event = new Event("mylink");
+export const event = new Event("mylink");
 
 export class link extends  HTMLElement
 {
@@ -26,7 +26,7 @@ export class link extends  HTMLElement
     }
 }
 
-customElements.define("my-link", link);
+customElements.define("my-link", link);  
 
 
 //The <my-link> component creates a link element that changes the browser’s URL when 

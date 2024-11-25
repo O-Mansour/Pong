@@ -42,7 +42,6 @@ export class Profile extends HTMLElement {
         tour_wonElement && matches_played && matches_won && friendsElement &&
         xpElement && imgElement && onlineElement) 
         {
-
         usernameElement.textContent = data.username;
         fullnameElement.textContent = `${data.firstname} ${data.lastname}`;
         //join date 
