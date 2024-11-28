@@ -203,35 +203,48 @@ class FT_CallbackView(APIView):
 			return Response({'error': 'Failed to get user info'}, status=400)
 			
 		user_data = user_response.json()
-		# Create or get user
-		user, u_created = User.objects.get_or_create(
-			username=user_data['login'],
-			defaults={'email': user_data['email']}
-		)
+		ft_id = user_data['id']  # id for 42 users
 
-		profile, p_created = Profile.objects.get_or_create(user=user)
-		# Download and save profile picture if URL exists
-		profile_picture_url = user_data.get('image', {}).get('versions', {}).get('medium')
-		if profile_picture_url:
-			try:
-				# Download image
-				image_response = requests.get(profile_picture_url)
-				if image_response.status_code == 200:
-					from django.core.files.base import ContentFile
-					
-					# Save the image to profile
-					profile.profileimg.save(
-						f'{user.username}_profile.jpg', # filename
-						ContentFile(image_response.content),
-						save=True
-					)
-			except Exception as e:
-				print(f"Error saving profile picture: {str(e)}")
+
+		# Match the user based on ft_id, not username
+		profile = Profile.objects.filter(ft_id=ft_id).first()
+
+		if profile:
+			# If profile exists, update user details
+			user = profile.user
+			user.first_name = user_data.get('first_name', user.first_name)
+			user.last_name = user_data.get('last_name', user.last_name)
+			user.email = user_data.get('email', user.email)
+			user.save()
+		else:
+			# Create a new user and profile if none exists
+			user = User.objects.create_user(
+				username=user_data['login'],
+				first_name=user_data['first_name'],
+				last_name=user_data['last_name'],
+				email=user_data['email']
+			)
+			profile = Profile.objects.create(user=user, ft_id=ft_id)
+
+			# Download and save profile picture if URL exists
+			profile_picture_url = user_data.get('image', {}).get('versions', {}).get('medium')
+			if profile_picture_url:
+				try:
+					# Download image
+					image_response = requests.get(profile_picture_url)
+					if image_response.status_code == 200:
+						from django.core.files.base import ContentFile
+						# Save the image to profile
+						profile.profileimg.save(
+							f'{user.username}_profile.jpg', # filename
+							ContentFile(image_response.content),
+							save=True
+						)
+				except Exception as e:
+					print(f"Error saving profile picture: {str(e)}")
 		
 		# Generate JWT
 		refresh = RefreshToken.for_user(user)
-		
-		# Redirect to frontend with token
 		return JsonResponse({
 			'refresh_token': str(refresh),
 			'access_token': str(refresh.access_token),
