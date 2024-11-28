@@ -46,16 +46,16 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ~/data/frontend
+      device: ./Frontend
   back_volume:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ~/data/backend
+      device: ./Backend/Pong
   postgres_volume:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ~/data/postgres
+      device: /home/omansour/Desktop/postgres

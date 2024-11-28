@@ -2,7 +2,7 @@
 
 # Wait for the database to be ready
 echo "Waiting for database..."
-until python manage.py migrate > /dev/null 2>&1; do
+until python manage.py migrate; do
   sleep 1
 done
 echo "Database is ready!"

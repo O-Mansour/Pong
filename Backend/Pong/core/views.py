@@ -1,109 +1,3 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User, auth
-# to send msgs for the user in the frontend
-from django.contrib import messages
-
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from .models import Profile, Friendship, Match
-
-# Create your views here.
-
-@login_required(login_url='login')
-def dashboard(request):
-	return render(request, 'homedashboard.html')
-
-@login_required(login_url='login')
-def settings(request):
-	return render(request, 'settings.html')
-
-def login(request):
-	if request.method == 'POST':
-		username = request.POST['username']
-		password = request.POST['password']
-
-		user = auth.authenticate(username=username, password=password)
-		if user is not None:
-			auth.login(request, user)
-			return redirect('/')
-		else:
-			messages.info(request, 'Invalid Credentials')
-			return redirect('login')
-	else:
-		return render(request, 'login.html')
-
-def forgotpassword(request):
-	# if request.method == 'POST':
-	# 	username = request.POST['username']
-	# 	password = request.POST['password']
-
-	# 	user = auth.authenticate(username=username, password=password)
-	# 	if user is not None:
-	# 		auth.login(request, user)
-	# 		return redirect('/')
-	# 	else:
-	# 		messages.info(request, 'Invalid Credentials')
-	# 		return redirect('login')
-	# else:# if request.method == 'POST':
-	# 	username = request.POST['username']
-	# 	password = request.POST['password']
-
-	# 	user = auth.authenticate(username=username, password=password)
-	# 	if user is not None:
-	# 		auth.login(request, user)
-	# 		return redirect('/')
-	# 	else:
-	# 		messages.info(request, 'Invalid Credentials')
-	# 		return redirect('login')
-	# else:
-		return render(request, 'forgetpassword.html')
-
-@login_required(login_url='login')
-def logout(request):
-	auth.logout(request)
-	return redirect('login')
-
-def signup(request):
-	if request.method == 'POST':
-		username = request.POST['username']
-		email = request.POST['email']
-		password = request.POST['password']
-		confirm_pass = request.POST['confirm_pass']
-
-		if password == confirm_pass:
-			if User.objects.filter(email=email).exists():
-				messages.info(request, 'Email is already used')
-				return redirect('signup')
-			elif User.objects.filter(username=username).exists():
-				messages.info(request, 'Username is already Taken')
-				return redirect('signup')
-			else:
-				user = User.objects.create_user(username=username, email=email, password=password)
-				user.save()
-
-				# log the user in and redirect to dashboard
-
-				#create a profile object
-				user_model = User.objects.get(username=username)
-				new_profile = Profile.objects.create(user=user_model)
-				new_profile.save()
-				return redirect('login')
-		else:
-			messages.info(request, 'Passwords Not Matching')
-			return redirect('signup')
-	else:
-		return render(request, 'signup.html')
-
-@login_required(login_url='login')
-def profile(request, pk):
-	#will finish it lateeeeer
-
-	# user_object = User.objects.get(username=pk)
-	# user_profile = Profile.objects.get(user=user_object)
-	return render(request, 'profile.html')
-
-# api
-
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
@@ -112,10 +6,18 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.serializers import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import ProfileSerializer, FriendshipSerializer, MatchSerializer
 from django.db.models import Q
-
+from .serializers import ProfileSerializer, FriendshipSerializer, MatchSerializer, UserSerializer
+from .models import Profile, Friendship, Match
 # from .pagination import DefaultPagination
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.conf import settings
+import requests
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+
+from django.http import JsonResponse
 
 class ProfileViewSet(ModelViewSet):
 	queryset = Profile.objects.all()
@@ -233,3 +135,114 @@ class MatchViewSet(ModelViewSet):
 			raise ValidationError("You cannot play a match with yourself.")
 
 		serializer.save(player=self.request.user.profile)
+
+class RegistrationView(APIView):
+	def post(self, request):
+		serializer = UserSerializer(data=request.data)
+		if serializer.is_valid():
+			user = serializer.save()
+			refresh = RefreshToken.for_user(user)
+			return Response({
+				'refresh': str(refresh),
+				'access': str(refresh.access_token),
+			})
+		return Response(serializer.errors, status=400)
+
+class LoginView(APIView):
+	def post(self, request):
+		username = request.data.get('username')
+		password = request.data.get('password')
+		user = authenticate(username=username, password=password)
+		
+		if user:
+			refresh = RefreshToken.for_user(user)
+			return Response({
+				'refresh': str(refresh),
+				'access': str(refresh.access_token),
+			})
+		return Response({'error': 'Invalid credentials'}, status=401)
+
+class FT_LoginView(APIView):
+	def get(self, request):
+		redirect_uri = settings.SITE_URL
+		return Response({
+			'authorization_url': f"https://api.intra.42.fr/oauth/authorize?client_id={settings.FT_CLIENT_ID}&redirect_uri={redirect_uri}&response_type=code"
+		})
+
+class FT_CallbackView(APIView):
+	def get(self, request):
+		code = request.GET.get('code')
+		if not code:
+			return Response({'error': 'Authorization code not found.'}, status=400)
+		
+		# Exchange code for token
+		token_response = requests.post(
+			'https://api.intra.42.fr/oauth/token',
+			data={
+				'grant_type': 'authorization_code',
+				'client_id': settings.FT_CLIENT_ID,
+				'client_secret': settings.FT_CLIENT_SECRET,
+				'code': code,
+				'redirect_uri': settings.SITE_URL
+			}
+		)
+
+		if token_response.status_code != 200:
+			return Response({'error': 'Failed to obtain token'}, status=400)
+			
+		tokens = token_response.json()
+		access_token = tokens.get('access_token')
+		refresh_token = tokens.get('refresh_token')
+		
+		# Fetch user information from 42 API
+		user_response = requests.get(
+			'https://api.intra.42.fr/v2/me',
+			headers={'Authorization': f'Bearer {access_token}'}
+		)
+		if user_response.status_code != 200:
+			return Response({'error': 'Failed to get user info'}, status=400)
+			
+		user_data = user_response.json()
+		# Create or get user
+		user, u_created = User.objects.get_or_create(
+			username=user_data['login'],
+			defaults={'email': user_data['email']}
+		)
+
+		profile, p_created = Profile.objects.get_or_create(user=user)
+		# Download and save profile picture if URL exists
+		profile_picture_url = user_data.get('image', {}).get('versions', {}).get('medium')
+		if profile_picture_url:
+			try:
+				# Download image
+				image_response = requests.get(profile_picture_url)
+				if image_response.status_code == 200:
+					from django.core.files.base import ContentFile
+					
+					# Save the image to profile
+					profile.profileimg.save(
+						f'{user.username}_profile.jpg', # filename
+						ContentFile(image_response.content),
+						save=True
+					)
+			except Exception as e:
+				print(f"Error saving profile picture: {str(e)}")
+		
+		# Generate JWT
+		refresh = RefreshToken.for_user(user)
+		
+		# Redirect to frontend with token
+		return JsonResponse({
+			'refresh_token': str(refresh),
+			'access_token': str(refresh.access_token),
+		})
+
+class LogoutView(APIView):
+	def post(self, request):
+		try:
+			refresh_token = request.data["refresh_token"]
+			token = RefreshToken(refresh_token)
+			token.blacklist()
+			return Response(status=status.HTTP_205_RESET_CONTENT)
+		except Exception:
+			return Response(status=status.HTTP_400_BAD_REQUEST)

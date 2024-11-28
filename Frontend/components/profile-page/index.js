@@ -14,7 +14,12 @@ export class Profile extends HTMLElement {
 
   async fetchProfileData() {
     try {
-      const response = await fetch('http://localhost:8000/api/profiles/me/');
+      const response = await fetch('http://localhost:8000/api/profiles/me/', {
+        method: 'GET',
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access_token')}`
+        }
+      });
       const data = await response.json();
       console.log("Profile data received:", data);
       const usernameElement = document.getElementById('fetched_username');
@@ -90,7 +95,12 @@ export class Profile extends HTMLElement {
 
   async fetchFriendsList() {
     try {
-      const response = await fetch('http://localhost:8000/api/friendships/friends');
+      const response = await fetch('http://localhost:8000/api/friendships/friends', {
+        method: 'GET',
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access_token')}`
+        }
+      });
       const friendsData = await response.json();
       const friendsList = document.querySelector('.Friend_list');
 
@@ -117,7 +127,12 @@ export class Profile extends HTMLElement {
 
   async fetchMatchHistory() {
     try {
-      const response = await fetch('http://localhost:8000/api/matches');
+      const response = await fetch('http://localhost:8000/api/matches', {
+        method: 'GET',
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access_token')}`
+        }
+      });
       const historyData = await response.json();
 
       const historyList = document.querySelector('.list_hostory');
