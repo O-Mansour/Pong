@@ -1,4 +1,4 @@
-var monkeySVG = Snap("#monkey_404");
+// var monkeySVG = Snap("#monkey_404");
 
 var tail = monkeySVG.select("#tail");
 

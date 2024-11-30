@@ -68,7 +68,7 @@ export class LoginPage extends HTMLElement
 
         try {
             await this.login(username, password);
-            window.location.href = '/#/home';
+            window.location.href = '/home';
         } catch (error) {
             this.errorMessage.textContent = error.message;
             this.errorMessage.style.display = 'block';
@@ -123,7 +123,7 @@ export class LoginPage extends HTMLElement
                     localStorage.setItem('refresh_token', data.refresh_token);
 
                     // Redirect to the authenticated area
-                    window.location.href = '/#/home';
+                    window.location.href = '/home';
                 } else {
                     throw new Error(data.error || 'Failed to authenticate with 42.');
                 }

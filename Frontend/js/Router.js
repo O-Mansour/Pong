@@ -1,4 +1,4 @@
-const rout = ['', '/', '/home', '/user', '/settings', '/404', '/forgetpassword', '/sign-up']
+const rout = ['', '/', '/home', '/user', '/settings', '/404', '/forgetpassword', '/sign-up' ,'/game','/twoplyer','/tournament']
 
 const routes = new Map([
 
@@ -38,6 +38,19 @@ const routes = new Map([
         Title: "setting",
         Element: "setting-page"
     }],
+    ["/game", {
+        Title: "game",
+        Element: "ponggame-game"
+    }],
+    ["/twoplyer", {
+        Title: "game",
+        Element: "vers1-game"
+    }],
+    ["/tournament", {
+        Title: "game",
+        Element: "vers4-game"
+    }],
+    
     ["/404",{
         Title: "not found",
         Element: "error-page"
@@ -68,7 +81,7 @@ const Router = {
    go:() => {
     
         // const route = location.pathname;  // Gets the current path from the browser’s location (e.g., "/home", "/user")
-        let route = window.location.hash.split('#').pop();
+        let route = window.location.pathname;
        
         // Handles navigation to different routes and page content loading
         console.log(`Going to ${route}`, route.length); //next step well we need to call router go  so he can to the route

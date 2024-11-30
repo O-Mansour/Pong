@@ -20,17 +20,17 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 
 class ProfileViewSet(ModelViewSet):
-	queryset = Profile.objects.all()
+	queryset = Profile.objects.order_by('-level', '-xps')
 	serializer_class = ProfileSerializer
-	permission_classes = [IsAdminUser]
+	permission_classes = [IsAuthenticated]
 
 	# filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
 	# filterset_fields = ['is_online']
 	# search_fields = ['user__username']
-	# ordering_fields = ['user__date_joined', 'wins']
+	# ordering_fields = ['level', 'xps']
 	# pagination_class = DefaultPagination
 
-	@action(detail=False, methods=['GET', 'PUT'], permission_classes=[IsAuthenticated])
+	@action(detail=False, methods=['GET', 'PUT'])
 	def me(self, request):
 		(profile, created) = Profile.objects.get_or_create(user_id=request.user.id)
 		if request.method == 'GET':
@@ -57,14 +57,22 @@ class FriendshipViewSet(ModelViewSet):
 		if receiver == self.request.user:
 			raise ValidationError("You cannot send a friendship request to yourself.")
 
-		# Check if friendship already exists
-		if Friendship.objects.filter(
+		# Check for existing non-accepted friendship requests
+		existing_friendship = Friendship.objects.filter(
 			(Q(sender=self.request.user) & Q(receiver=receiver)) |
 			(Q(sender=receiver) & Q(receiver=self.request.user))
-		).exists():
-			raise ValidationError("Friendship request already exists.")
-			
-		serializer.save(sender=self.request.user)
+		).exclude(status='A')  # Exclude accepted friendships
+
+		if existing_friendship.exists():
+			# Check if all existing requests are rejected
+			if all(friendship.status == 'R' for friendship in existing_friendship):
+				# Allow new request if all previous were rejected
+				serializer.save(sender=self.request.user)
+			else:
+				raise ValidationError("Friendship request already exists.")
+		else:
+			# No existing requests, create new
+			serializer.save(sender=self.request.user)
 
 	@action(detail=True, methods=['GET', 'PUT'])
 	def accept(self, request, pk=None):
@@ -120,6 +128,19 @@ class FriendshipViewSet(ModelViewSet):
 			friends_data.append(friend_profile)
 
 		return Response(friends_data)
+
+	# need some tests on those requests
+	@action(detail=False, methods=['GET'])
+	def requests_received(self, request):
+		pending_friendships = Friendship.objects.filter(
+			(Q(receiver=request.user)), status='P')
+		return Response(FriendshipRequestsReceivedSerializer(pending_friendships, many=True).data)
+
+	@action(detail=False, methods=['GET'])
+	def requests_sent(self, request):
+		pending_friendships = Friendship.objects.filter(
+			(Q(sender=request.user)), status='P')
+		return Response(FriendshipRequestsSentSerializer(pending_friendships, many=True).data)
 
 class MatchViewSet(ModelViewSet):
 	serializer_class = MatchSerializer
