@@ -2,6 +2,7 @@ from .models import Profile, Friendship, Match
 from rest_framework import serializers
 from django.db.models import Q
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
 
 class ProfileSerializer(serializers.ModelSerializer):
 	user_id = serializers.IntegerField(required=False, read_only=True)
@@ -9,15 +10,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 	firstname = serializers.CharField(source='user.first_name', required=False)
 	lastname = serializers.CharField(source='user.last_name', required=False)
 	email = serializers.EmailField(source='user.email', required=False)
-	password = serializers.CharField(source='user.password', write_only=True, required=False)
+	# password = serializers.CharField(source='user.password', write_only=True, required=False)
 	date_joined = serializers.DateTimeField(source='user.date_joined', format="%Y-%m-%d", read_only=True)
 	current_friends = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Profile
 		fields = ['id', 'user_id', 'username', 'firstname', 'lastname', 'email',
-				 'password', 'date_joined', 'profileimg', 'wins', 'losses', 'is_online',
-				 'level', 'xps', 'rank', 'tour_played', 'tour_won', 'current_friends']
+				 'date_joined', 'profileimg', 'wins', 'losses', 'is_online', 'level',
+				 'xps', 'rank', 'tour_played', 'tour_won', 'current_friends']
 	
 	def get_current_friends(self, obj):
 		current_friends = Friendship.objects.filter(
@@ -135,4 +136,26 @@ class UserSerializer(serializers.ModelSerializer):
 			email=validated_data['email'],
 			password=validated_data['password']
 		)
+		return user
+
+class PasswordSerializer(serializers.Serializer):
+	old_password = serializers.CharField(write_only=True, required=True)
+	new_password = serializers.CharField(write_only=True, required=True)
+
+	def validate_new_password(self, value):
+		# Use Django's built-in password validation
+		validate_password(value)
+		return value
+
+	def validate(self, data):
+		# Check if old password is correct
+		user = self.context['request'].user
+		if not user.check_password(data.get('old_password')):
+			raise serializers.ValidationError({"message": "Old password is incorrect"})
+		return data
+
+	def save(self, **kwargs):
+		user = self.context['request'].user
+		user.set_password(self.validated_data['new_password'])
+		user.save()
 		return user

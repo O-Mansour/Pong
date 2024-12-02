@@ -7,7 +7,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.serializers import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
-from .serializers import ProfileSerializer, FriendshipSerializer, MatchSerializer, UserSerializer
+from .serializers import ProfileSerializer, FriendshipSerializer, MatchSerializer, UserSerializer, PasswordSerializer
 from .models import Profile, Friendship, Match
 # from .pagination import DefaultPagination
 from rest_framework.views import APIView
@@ -40,6 +40,25 @@ class ProfileViewSet(ModelViewSet):
 			serializer.is_valid(raise_exception=True)
 			serializer.save()
 		return Response(serializer.data)
+	
+	@action(detail=False, methods=['POST'])
+	def change_password(self, request):
+		serializer = PasswordSerializer(
+			data=request.data, 
+			context={'request': request}
+		)
+		
+		if serializer.is_valid():
+			serializer.save()
+			return Response(
+				{"message": "Password changed successfully"}, 
+				status=status.HTTP_200_OK
+			)
+		
+		return Response(
+			serializer.errors, 
+			status=status.HTTP_400_BAD_REQUEST
+		)
 
 class FriendshipViewSet(ModelViewSet):
 	serializer_class = FriendshipSerializer

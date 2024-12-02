@@ -88,17 +88,19 @@ export class Setting extends  HTMLElement
                 const oldPassword = document.querySelector('input[placeholder="Old Password"]');
                 const newPassword = document.querySelector('input[placeholder="New Password"]');
 
-                if (!oldPassword.value || !newPassword.value)
+                if (!oldPassword || !newPassword.value)
                     return;
 
                 try {
-                    const response = await fetch('http://localhost:8000/api/profiles/me/', {
-                        method: 'PUT',
+                    const response = await fetch('http://localhost:8000/api/profiles/change_password/', {
+                        method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'Authorization': `JWT ${localStorage.getItem('access_token')}`
                         },
                         body: JSON.stringify({
-                            password: newPassword.value
+                            old_password: oldPassword.value,
+                            new_password: newPassword.value
                         })
                     });
 
@@ -106,7 +108,6 @@ export class Setting extends  HTMLElement
                         const errorData = await response.json();
                         throw new Error(errorData.message || 'Failed to change password');
                     }
-                    const result = await response.json();
                     alert('Password changed successfully');
 
                     // Clear the input fields
@@ -114,10 +115,9 @@ export class Setting extends  HTMLElement
                     newPassword.value = '';
                 } catch (error) {
                     console.error('Error changing password:', error);
+                    alert(error);
                 }
             });
-
-
 
             const changePictureButton = document.querySelector('.chg1');
             const fileInput = document.querySelector('#fileInput');
