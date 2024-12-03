@@ -38,6 +38,7 @@
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
     padding: 20px 30px 20px 30px;
+    /* padding: 49px 30px 20px 30px; */
 }
 
 .login-box,
@@ -312,17 +313,20 @@ button {
 
     color: #ecf5f6;
     text-decoration: none;
+    margin-left: 5px;
 }
 
 .login a:hover 
 {
     text-decoration: underline;
 }
-
-.signup a {
+/* login singup */
+.signup a{
     color: #ecf5f6;
     text-decoration: none;
+    padding-left: 5px;
 }
+
 
 .forget-pass a
 {

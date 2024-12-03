@@ -1,3 +1,5 @@
+import updateLanguageContent from "../../js/lagages.js";
+
 export class Game extends  HTMLElement
 {
     constructor()
@@ -12,7 +14,7 @@ export class Game extends  HTMLElement
         const template = document.getElementById("page-game");
         const content = template.content.cloneNode(true);
         this.appendChild(content);
-        // const canvas = document.getElementById('game-canva')
+        updateLanguageContent();
     }
 }
 

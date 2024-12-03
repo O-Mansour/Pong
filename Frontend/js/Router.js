@@ -10,18 +10,10 @@ const routes = new Map([
         Title: "login",
         Element: "login-page"
     }],
-    ["/forgetpassword",{
-        Title: "forgetpassword",
-        Element: "forget-password-page"
-    }],
     ["/sign-up",{
         Title: "signup",
         Element: "signup-page"
     }],
-    // ["/",{
-    //     Title: "Home",
-    //     Element: "home-dashboard-page"
-    // }],
     ["/home",{
         Title: "Home",
         Element: "home-dashboard-page"

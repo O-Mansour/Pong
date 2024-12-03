@@ -1,3 +1,5 @@
+import updateLanguageContent from "../../js/lagages.js";
+
 export class LoginPage extends HTMLElement
 {
     constructor() {
@@ -11,6 +13,7 @@ export class LoginPage extends HTMLElement
         const template = document.getElementById("login-page");
         const content = template.content.cloneNode(true);
         this.appendChild(content);
+        updateLanguageContent();
 
         // Get form elements after they're added to DOM
         this.loginForm = this.querySelector('.login-box');

@@ -1,3 +1,4 @@
+import updateLanguageContent from "../../js/lagages.js";
 import { event } from "../link/index.js";
 
 export class Setting extends  HTMLElement
@@ -22,19 +23,30 @@ export class Setting extends  HTMLElement
         // this.initTranslations();
         // this.setupLanguageSwitcher();
         this.querySelector('.logee').addEventListener('click', logout);
+
+        document.getElementById("ch")?.addEventListener("change", (event) => {
+    
+            const selectedLang = event.target.value;
+        
+            localStorage.setItem('lang', selectedLang);
+        
+            updateLanguageContent();
+        });
+
+  
+        updateLanguageContent();
+        this.fetchsettingsData();
     }
     async fetchsettingsData() {
         try {
             const response = await fetch('http://localhost:8000/api/profiles/me/'); 
             const data = await response.json(); 
 
-            console.log("Settings data received:", data);
-
             const imgElement= document.querySelector('.img_change');
-            const Elementfirstname =document.querySelector('input[placeholder="Firstname"]');
-            const Elementlastname= document.querySelector('input[placeholder="Lastname"]');
-            const Elementusername = document.querySelector('input[placeholder="Username"]');
-            const Elementemail = document.querySelector('input[placeholder="Email"]');
+            const Elementfirstname =document.querySelector('#firstNameInput');
+            const Elementlastname= document.querySelector('#lastNameInput');
+            const Elementusername = document.querySelector('#usernameInput');
+            const Elementemail = document.querySelector('#emailInput');
 
             if(imgElement && Elementfirstname && Elementlastname && Elementusername && Elementemail)
             {
@@ -168,39 +180,6 @@ export class Setting extends  HTMLElement
         console.error('Error fetching settings:', error); 
         }
     }
-
-// setupLanguageSwitcher() {
-//     // Listen for changes in language selection
-//     const languageSelect = this.querySelector("#languageSelect");
-//     if (languageSelect) {
-//         languageSelect.addEventListener("change", (event) => {
-//             const selectedLanguage = event.target.value;
-//             i18next.changeLanguage(selectedLanguage, (err) => {
-//                 if (err) console.error(err);
-//                 this.updateContent(); // Update UI with the new language
-//             });
-//         });
-//     }
-// }
-
-// updateContent() {
-//     // Dynamically update text content
-//     this.querySelector("#changePictureLabel").textContent = i18next.t("changePicture");
-//     this.querySelector("#logoutLabel").textContent = i18next.t("logout");
-//     this.querySelector("#changeAccountLabel").innerHTML = i18next.t("changeAccount");
-//     this.querySelector("#updateBtnLabel").textContent = i18next.t("update");
-//     this.querySelector("#changePasswordLabel").textContent = i18next.t("changePassword");
-//     this.querySelector("#gameSettingsLabel").textContent = i18next.t("gameSettings");
-
-//     // Update placeholders
-//     this.querySelector("#firstNameInput").placeholder = i18next.t("firstName");
-//     this.querySelector("#lastNameInput").placeholder = i18next.t("lastName");
-//     this.querySelector("#usernameInput").placeholder = i18next.t("username");
-//     this.querySelector("#emailInput").placeholder = i18next.t("email");
-//     this.querySelector("#oldPasswordInput").placeholder = i18next.t("oldPassword");
-//     this.querySelector("#newPasswordInput").placeholder = i18next.t("newPassword");
-// }
-
 }
 
 function logout() {

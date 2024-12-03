@@ -1,3 +1,5 @@
+import updateLanguageContent from "../../js/lagages.js";
+
 export class Profile extends HTMLElement {
   constructor() {
     super();
@@ -8,6 +10,7 @@ export class Profile extends HTMLElement {
     const template = document.getElementById("profile");
     const content = template.content.cloneNode(true);
     this.appendChild(content);
+    updateLanguageContent();
     this.fetchProfileData();
     this.fetchFriendsList();
     this.fetchMatchHistory();
@@ -68,6 +71,9 @@ export class Profile extends HTMLElement {
       if (data.rank == null){
         rankElement.style.fontSize = "18px";
         rankElement.textContent = "Not ranked yet";
+
+        const currLang = localStorage.getItem('lang') || 'en';
+        rankElement.setAttribute('data-i18n', 'notRankedYet1');
       }
       else
         rankElement.textContent = '#' + data.rank;
@@ -89,6 +95,7 @@ export class Profile extends HTMLElement {
       document.querySelector('.percentagee_loss').textContent = lossPercentage + '%';
       document.querySelector('.percentagee_winn').textContent = winPercentage + '%';
 
+      updateLanguageContent();
     } catch (error) {
       console.error('Error fetching profile:', error);
     }
@@ -113,9 +120,10 @@ export class Profile extends HTMLElement {
                 <img src="http://localhost:8000${friend.profileimg}" class="img_leader1">
                 <span class="leader-name_1">${friend.firstname} ${friend.lastname}</span>
                 <div class="leader-username_1">@${friend.username}</div>
-                <button class="message-btn_1">Challenge</button>`;
+                <button class="message-btn_1" data-i18n="changefriend">Challenge</button>`;
 
         friendsList.appendChild(friendDiv);
+        updateLanguageContent();
       });
     } catch (error) {
       console.error('Error fetching friend list:', error);
