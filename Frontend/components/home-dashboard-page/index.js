@@ -95,15 +95,12 @@ export class HomeDashboard extends  HTMLElement
             Element_yourrank.textContent = "Not ranked yet";
 
             // Get the current language from localStorage or default to English
-              // const currLang = localStorage.getItem('lang') || 'en';
-              
-              Element_yourrank.setAttribute('data-i18n', 'notRankedYet');
-              
-
+            // const currLang = localStorage.getItem('lang') || 'en';
+            Element_yourrank.setAttribute('data-i18n', 'notRankedYet');
           }
           else
             Element_yourrank.textContent = '#' + data.rank;
-           
+          updateLanguageContent();
       }
     } catch (error) {
       console.error('Error fetching dashboard :', error);

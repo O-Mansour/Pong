@@ -24,10 +24,6 @@ const  langData = ({
                 notcat:"Notifications",
                 Acpbutton:"Accept",
                 rejectbutton:"Reject",
-                // profile: "My Profile",
-                // pending: "Pending...",
-                // accept: "Accept",
-                // addFriend: "Add Friend",
                 joined: "Joined",
                 tournamentsPlayed: "Tournaments Played",
                 tournamentsWon: "Tournaments Won",
@@ -67,26 +63,22 @@ const  langData = ({
                 addFriend: "Add Friend",
 
                 notRankedYet: "Not ranked yet",
-                notRankedYet1: "Not ranked yet",
                 
                 changefriend: "Challenge",
-
 
                 totalGames: "Total Games",
                 gamesToday: "Games Today",
                 onlineNow: "Online Now"
-             
-                
         },
         fr: {
                 selectLanguage: "Choisissez une langue",
                 changePicture: "Changer l'image",
                 logout: "Se déconnecter",
-                changeAccount: "Modifier le compte<br />Informations",
-                firstName: "Prénom",
-                lastName: "Nom",
-                username: "Nom d'utilisateur",
-                email: "Email",
+                changeAccount: "Modifier les Informations<br/>du compte",
+                // firstName: "Prénom",
+                // lastName: "Nom",
+                // username: "Nom d'utilisateur",
+                // email: "Email",
                 update: "Mettre à jour",
                 changePassword: "Changer le mot de passe",
                 oldPassword: "Ancien mot de passe",
@@ -94,12 +86,11 @@ const  langData = ({
                 gameSettings: "Paramètres de jeu",
                 change: "Changer",
                 welcomeMessage: "Bienvenue,",
-                xp: "points d'expérience",
                 level: "Niveau",
                 settings: "Paramètres",
-                playNow: "Jouer Maintenant",
+                playNow: "Jouer",
                 notifications: "Notifications",
-                playPong: "Jouez à Pong en ligne sur le site #1!",
+                playPong: "Jouez Pong en ligne sur le site #1!",
                 totalGames: "Total des jeux",
                 gamesToday: "Jeux Aujourd'hui",
                 onlineNow: "En ligne maintenant",
@@ -107,20 +98,15 @@ const  langData = ({
                 winningMatches: "Matchs gagnants",
                 loss: "Perte",
                 win: "Gagner",
-                yourRank: "Votre Rang",
+                yourRank: "Votre classement",
                 totalPlayers: "Nombre total de joueurs",
                 notcat: "Notifications",
                 Acpbutton: "Accepter",
                 rejectbutton: "Rejeter",
-                // profile: "Mon Profil",
-                // challenge: "Défier",
-                // pending: "En attente...",
-                // accept: "Accepter",
-                // addFriend: "Ajouter un ami",
                 joined: "Rejoint",
                 tournamentsPlayed: "Tournois joués",
                 tournamentsWon: "Tournois gagnés",
-                leaderboardPosition: "Position sur le tableau",
+                leaderboardPosition: "Votre classement",
                 currentFriends: "Amis actuels",
                 level: "Niveau",
                 friendsList: "Liste d'amis",
@@ -164,15 +150,12 @@ const  langData = ({
                 playTournament: "Jouer un tournoi",
 
                 myProfile: "Mon Profil",
-                challenge: "Défier",
+                challenge: "Défi",
                 pending: "En attente...",
                 accept: "Accepter",
-                addFriend: "Ajouter un ami",
-
+                addFriend: "Ajouter",
                 notRankedYet: "Pas encore classé",
-                notRankedYet1: "Pas encore classé",
-
-                changefriend: "Défier",
+                changefriend: "Défi"
         },
         es: {
                 selectLanguage: "Seleccionar idioma",
@@ -190,7 +173,6 @@ const  langData = ({
                 gameSettings: "Configuración del juego",
                 change: "Cambiar",
                 welcomeMessage: "Bienvenido,",
-                xp: "puntos de experiencia",
                 level: "Nivel",
                 settings: "Configuración",
                 playNow: "Jugar Ahora",
@@ -208,12 +190,7 @@ const  langData = ({
                 notcat: "Notificaciones",
                 Acpbutton: "Aceptar",
                 rejectbutton: "Rechazar",
-                // profile: "Mi Perfil",
-                // challenge: "Desafiar",
-                // pending: "Pendiente...",
-                // accept: "Aceptar",
-                // addFriend: "Agregar Amigo",
-                joined: "Unido",
+                joined: "se unió",
                 tournamentsPlayed: "Torneos jugados",
                 tournamentsWon: "Torneos ganados",
                 leaderboardPosition: "Posición en la tabla",
@@ -250,10 +227,7 @@ const  langData = ({
                 addFriend: "Agregar amigo",
 
                 notRankedYet: "No clasificado aún",
-                notRankedYet1: "No clasificado aún",
-
-                changefriend: "Desafiar",
-
+                changefriend: "Desafiar"
         },
 });
 

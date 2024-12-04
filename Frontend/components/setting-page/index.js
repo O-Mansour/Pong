@@ -6,7 +6,6 @@ export class Setting extends  HTMLElement
     constructor()
     {
         super();
-        
     }
 
     connectedCallback()
@@ -15,13 +14,7 @@ export class Setting extends  HTMLElement
         const content = template.content.cloneNode(true);
         this.appendChild(content);
         this.fetchsettingsData();
-        // this.setupUpdateInfo();
-        // this.setPasswordChange();
 
-
-        // // Initialize content
-        // this.initTranslations();
-        // this.setupLanguageSwitcher();
         this.querySelector('.logee').addEventListener('click', logout);
 
         document.getElementById("ch")?.addEventListener("change", (event) => {

@@ -73,7 +73,7 @@ export class Profile extends HTMLElement {
         rankElement.textContent = "Not ranked yet";
 
         const currLang = localStorage.getItem('lang') || 'en';
-        rankElement.setAttribute('data-i18n', 'notRankedYet1');
+        rankElement.setAttribute('data-i18n', 'notRankedYet');
       }
       else
         rankElement.textContent = '#' + data.rank;

@@ -1,4 +1,5 @@
 import updateLanguageContent from "../../js/lagages.js";
+import { event } from "../link/index.js";
 
 export class LoginPage extends HTMLElement
 {
@@ -15,7 +16,6 @@ export class LoginPage extends HTMLElement
         this.appendChild(content);
         updateLanguageContent();
 
-        // Get form elements after they're added to DOM
         this.loginForm = this.querySelector('.login-box');
         this.errorMessage = this.querySelector('#errorMessage');
         this.intraButton = this.querySelector('.intra-login');
@@ -29,7 +29,7 @@ export class LoginPage extends HTMLElement
 
         document.querySelector('.click_eye').addEventListener('click', () => {
             const passwordInput = document.getElementById('password');
-            if (passwordInput.type === 'password') {
+            if (passwordInput.type == 'password') {
                 passwordInput.type = 'text';
                 document.querySelector('.eye').src = "./images/open_eye.png";
             } else {
@@ -71,7 +71,9 @@ export class LoginPage extends HTMLElement
 
         try {
             await this.login(username, password);
-            window.location.href = '/home';
+            const url = '/home';
+            history.pushState({url}, null, url);
+            document.dispatchEvent(event);
         } catch (error) {
             this.errorMessage.textContent = error.message;
             this.errorMessage.style.display = 'block';
@@ -125,8 +127,9 @@ export class LoginPage extends HTMLElement
                     localStorage.setItem('access_token', data.access_token);
                     localStorage.setItem('refresh_token', data.refresh_token);
 
-                    // Redirect to the authenticated area
-                    window.location.href = '/home';
+                    const url = '/home';
+                    history.pushState({url}, null, url);
+                    document.dispatchEvent(event);
                 } else {
                     throw new Error(data.error || 'Failed to authenticate with 42.');
                 }
