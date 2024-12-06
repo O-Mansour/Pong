@@ -1,5 +1,6 @@
 import updateLanguageContent from "../../js/lagages.js";
 import langData from "../../js/lagages.js";
+import {requireAuth} from "../../js/utils.js";
 
 export class HomeDashboard extends  HTMLElement
 {
@@ -11,18 +12,23 @@ export class HomeDashboard extends  HTMLElement
     
     connectedCallback()
     {
-        const template = document.getElementById("home-dashboard");
-        const content = template.content.cloneNode(true);
-        this.appendChild(content);
-        updateLanguageContent();
-        this.fetchDashbordData();
-        this.fetchNotfication();
-        this.fetchTotalPlayers();
+      requireAuth();
+      const template = document.getElementById("home-dashboard");
+      const content = template.content.cloneNode(true);
+      this.appendChild(content);
+      updateLanguageContent();
+      this.fetchDashbordData();
+      this.fetchNotfication();
+      this.fetchTotalPlayers();
     }
 
   async fetchDashbordData() {
     try {
-      const response = await fetch(`http://localhost:8000/api/profiles/me/`);
+      const response = await fetch(`http://localhost:8000/api/profiles/me/`, {
+        headers: {
+          'Authorization': `JWT ${localStorage.getItem('access_token')}`
+        }
+      });
       const data = await response.json();
 
       const fullnameElement = document.getElementById('fetched_fullname');
@@ -109,7 +115,11 @@ export class HomeDashboard extends  HTMLElement
 
   async fetchNotfication() {
     try {
-      const response = await fetch('http://localhost:8000/api/friendships/requests_received');
+      const response = await fetch('http://localhost:8000/api/friendships/requests_received', {
+        headers: {
+          'Authorization': `JWT ${localStorage.getItem('access_token')}`
+        }
+      });
       const NotifData = await response.json();
       const badge = document.querySelector('.badge');
       const formContainer = document.querySelector("#formContainer");
@@ -150,7 +160,11 @@ export class HomeDashboard extends  HTMLElement
 
         acceptButton.addEventListener('click', async (event) => {
           try {
-            await fetch(`http://localhost:8000/api/friendships/${sender.id}/accept/`);
+            await fetch(`http://localhost:8000/api/friendships/${sender.id}/accept/`, {
+              headers: {
+                'Authorization': `JWT ${localStorage.getItem('access_token')}`
+              }
+            });
             acceptButton.textContent = "Accepted";
             acceptButton.disabled = true;
             rejectButton.disabled = true;
@@ -161,7 +175,11 @@ export class HomeDashboard extends  HTMLElement
 
         rejectButton.addEventListener('click', async (event) => {
           try {
-            await fetch(`http://localhost:8000/api/friendships/${sender.id}/reject/`);
+            await fetch(`http://localhost:8000/api/friendships/${sender.id}/reject/`, {
+              headers: {
+                'Authorization': `JWT ${localStorage.getItem('access_token')}`
+              }
+            });
             rejectButton.textContent = "Rejected";
             acceptButton.disabled = true;
             rejectButton.disabled = true;
@@ -179,21 +197,41 @@ export class HomeDashboard extends  HTMLElement
   async fetchTotalPlayers() {
     try {
     
-      const response = await fetch('http://localhost:8000/api/profiles/me/');
+      const response = await fetch('http://localhost:8000/api/profiles/me/', {
+        headers: {
+          'Authorization': `JWT ${localStorage.getItem('access_token')}`
+        }
+      });
       const data = await response.json();
 
-      const profilesResponse = await fetch('http://localhost:8000/api/profiles/');
+      const profilesResponse = await fetch('http://localhost:8000/api/profiles/', {
+        headers: {
+          'Authorization': `JWT ${localStorage.getItem('access_token')}`
+        }
+      });
       const profilesData = await profilesResponse.json();
 
-      const friendsResponse = await fetch('http://localhost:8000/api/friendships/friends/');
+      const friendsResponse = await fetch('http://localhost:8000/api/friendships/friends/', {
+        headers: {
+          'Authorization': `JWT ${localStorage.getItem('access_token')}`
+        }
+      });
       const friendsData = await friendsResponse.json();
       const friendsIds = friendsData.map(friend => friend.user_id);
 
-      const SentResponse = await fetch('http://localhost:8000/api/friendships/requests_sent');
-      const SentData = await SentResponse.json();
-      const SentIds = SentData.map(pending => pending.receiver_profile.user_id);
+      const SentResponse = await fetch('http://localhost:8000/api/friendships/requests_sent', {
+        headers: {
+          'Authorization': `JWT ${localStorage.getItem('access_token')}`
+        }
+      });
+      const sentData = await SentResponse.json();
+      const sentIds = sentData.map(pending => pending.receiver_profile.user_id);
 
-      const receivedResponse = await fetch('http://localhost:8000/api/friendships/requests_received');
+      const receivedResponse = await fetch('http://localhost:8000/api/friendships/requests_received', {
+        headers: {
+          'Authorization': `JWT ${localStorage.getItem('access_token')}`
+        }
+      });
       const receivedData = await receivedResponse.json();
       const receivedIds = receivedData.map(pending => pending.sender_profile.user_id);
 
@@ -255,6 +293,7 @@ export class HomeDashboard extends  HTMLElement
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
+                  'Authorization': `JWT ${localStorage.getItem('access_token')}`
                 },
                 body: JSON.stringify({ receiver: leader.user_id }),
               });

@@ -1,4 +1,5 @@
 import updateLanguageContent from "../../js/lagages.js";
+import {requireAuth} from "../../js/utils.js";
 
 export class Profile extends HTMLElement {
   constructor() {
@@ -7,6 +8,7 @@ export class Profile extends HTMLElement {
 
   connectedCallback()
   {
+    requireAuth();
     const template = document.getElementById("profile");
     const content = template.content.cloneNode(true);
     this.appendChild(content);
@@ -19,9 +21,8 @@ export class Profile extends HTMLElement {
   async fetchProfileData() {
     try {
       const response = await fetch('http://localhost:8000/api/profiles/me/', {
-        method: 'GET',
         headers: {
-            'Authorization': `JWT ${localStorage.getItem('access_token')}`
+          'Authorization': `JWT ${localStorage.getItem('access_token')}`
         }
       });
       const data = await response.json();
@@ -104,7 +105,6 @@ export class Profile extends HTMLElement {
   async fetchFriendsList() {
     try {
       const response = await fetch('http://localhost:8000/api/friendships/friends', {
-        method: 'GET',
         headers: {
             'Authorization': `JWT ${localStorage.getItem('access_token')}`
         }
@@ -135,7 +135,6 @@ export class Profile extends HTMLElement {
   async fetchMatchHistory() {
     try {
       const response = await fetch('http://localhost:8000/api/matches', {
-        method: 'GET',
         headers: {
             'Authorization': `JWT ${localStorage.getItem('access_token')}`
         }

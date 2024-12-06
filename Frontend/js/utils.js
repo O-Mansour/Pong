@@ -1,3 +1,4 @@
+import { event } from "../components/link/index.js";
 // import jwtDecode from 'jwt-decode';
 
 // export function isTokenExpired(token) {
@@ -10,15 +11,24 @@
 //     }
 // }
 
-export function isAuthenticated() {
+// Redirect to login page if not authenticated
+export function requireAuth() {
     const token = localStorage.getItem('access_token');
-	return !!token;
-    // return token && !isTokenExpired(token); // Token exists and is valid
+    if (!token)
+    {
+        const url = '/';
+        history.pushState({url}, null, url);
+        document.dispatchEvent(event);
+    }
 }
 
-// Redirect to login if not authenticated
-export function requireAuth() {
-    if (!isAuthenticated()) {
-        window.location.href = '/';
+// Redirect to home page if authenticated
+export function alreadyAuth() {
+    const token = localStorage.getItem('access_token');
+    if (token)
+    {
+        const url = '/home';
+        history.pushState({url}, null, url);
+        document.dispatchEvent(event);
     }
 }

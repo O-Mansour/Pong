@@ -7,7 +7,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.serializers import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
-from .serializers import ProfileSerializer, FriendshipSerializer, MatchSerializer, UserSerializer, PasswordSerializer
+from .serializers import ProfileSerializer, FriendshipSerializer, MatchSerializer, UserSerializer, PasswordSerializer, FriendshipRequestsReceivedSerializer, FriendshipRequestsSentSerializer
 from .models import Profile, Friendship, Match
 # from .pagination import DefaultPagination
 from rest_framework.views import APIView

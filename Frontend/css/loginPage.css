@@ -156,7 +156,7 @@ input[type="email"]
 .eye1 {
 
     position: absolute;
-    top: 210%;
+    top: 190%;
     transform: translate(-60%);
     font-size: 20px;
 }
@@ -165,7 +165,7 @@ input[type="email"]
 .click_eye
 .eye2 {
     position: absolute;
-    top: 360%;
+    top: 336%;
     transform: translate(-50%);
     font-size: 20px;
 }

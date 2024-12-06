@@ -1,5 +1,6 @@
 import updateLanguageContent from "../../js/lagages.js";
 import { event } from "../link/index.js";
+import {requireAuth} from "../../js/utils.js";
 
 export class Setting extends  HTMLElement
 {
@@ -10,10 +11,12 @@ export class Setting extends  HTMLElement
 
     connectedCallback()
     {
+        requireAuth();
         const template = document.getElementById("setting");
         const content = template.content.cloneNode(true);
         this.appendChild(content);
         this.fetchsettingsData();
+        updateLanguageContent();
 
         this.querySelector('.logee').addEventListener('click', logout);
 
@@ -25,14 +28,14 @@ export class Setting extends  HTMLElement
         
             updateLanguageContent();
         });
-
-  
-        updateLanguageContent();
-        this.fetchsettingsData();
     }
     async fetchsettingsData() {
         try {
-            const response = await fetch('http://localhost:8000/api/profiles/me/'); 
+            const response = await fetch('http://localhost:8000/api/profiles/me/', {
+                headers: {
+                  'Authorization': `JWT ${localStorage.getItem('access_token')}`
+                }
+            });
             const data = await response.json(); 
 
             const imgElement= document.querySelector('.img_change');
@@ -67,6 +70,7 @@ export class Setting extends  HTMLElement
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': `JWT ${localStorage.getItem('access_token')}`
                     },
                     body: JSON.stringify({
                         firstname: Elementfirstname.value,
@@ -152,6 +156,9 @@ export class Setting extends  HTMLElement
                 try {
                     const response = await fetch('http://localhost:8000/api/profiles/me/', {
                         method: 'PUT',
+                        headers: {
+                            'Authorization': `JWT ${localStorage.getItem('access_token')}`
+                        },
                         body: picData
                     });
             

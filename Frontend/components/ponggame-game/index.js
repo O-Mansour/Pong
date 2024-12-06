@@ -1,4 +1,5 @@
 import updateLanguageContent from "../../js/lagages.js";
+import {requireAuth} from "../../js/utils.js";
 
 export class Game extends  HTMLElement
 {
@@ -11,6 +12,7 @@ export class Game extends  HTMLElement
 
     connectedCallback()
     {
+        requireAuth();
         const template = document.getElementById("page-game");
         const content = template.content.cloneNode(true);
         this.appendChild(content);

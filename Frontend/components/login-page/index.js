@@ -1,5 +1,6 @@
 import updateLanguageContent from "../../js/lagages.js";
 import { event } from "../link/index.js";
+import { alreadyAuth } from "../../js/utils.js";
 
 export class LoginPage extends HTMLElement
 {
@@ -11,6 +12,8 @@ export class LoginPage extends HTMLElement
     }
 
     connectedCallback() {
+        alreadyAuth();
+        
         const template = document.getElementById("login-page");
         const content = template.content.cloneNode(true);
         this.appendChild(content);
@@ -45,23 +48,6 @@ export class LoginPage extends HTMLElement
         this.intraButton.removeEventListener('click', this.handleFTLogin);
     }
 
-    async login(username, password) {
-        const response = await fetch('http://localhost:8000/auth/login/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password })
-        });
-        
-        const data = await response.json();
-        if (response.ok) {
-            localStorage.setItem('access_token', data.access);
-            localStorage.setItem('refresh_token', data.refresh);
-            return data;
-        }
-        throw new Error(data.error || 'Login failed');
-    }
 
     async handleSubmit(e) {
         e.preventDefault();
@@ -70,7 +56,19 @@ export class LoginPage extends HTMLElement
         const password = this.querySelector('#password').value;
 
         try {
-            await this.login(username, password);
+            const response = await fetch('http://localhost:8000/auth/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await response.json();
+            if (!response.ok)
+                throw new Error(data.error || 'Login failed');
+            
+            localStorage.setItem('access_token', data.access);
+            localStorage.setItem('refresh_token', data.refresh);
             const url = '/home';
             history.pushState({url}, null, url);
             document.dispatchEvent(event);

@@ -40,8 +40,8 @@
                                 </button>
                             </div>
                             <div class="check_">
-                                <input class="check" type="checkbox" id="veh" name="veh" value="Bike" checked>
-                                <label for="veh"  data-i18n="remember-me"> Remember me </label><br>
+                                <input class="check" type="checkbox" id="rememberme" name="remember" checked>
+                                <label for="remember"  data-i18n="remember-me"> Remember me </label><br>
                             </div>
                             <button id="frontside" type="submit" data-i18n="login-button">Login</button>
                             <!-- <p class="forget-pass"><my-link  class="forgot-password" >Forgot password ?</span></my-link></p> -->
@@ -79,22 +79,22 @@
                 </div>
                 <div class="content">
                     <div class="ft-box">
-                        <form class="signup-box" action="#" method="POST">
+                        <form class="signup-box">
                             <div class="log">
                                 <h3 class="l1" data-i18n="signup">Signup</h3>
                                 <h6 class="l2" data-i18n="signup-details">Just some details to get you in ...</h6>
                             </div>
                             <input type="text" placeholder="Username" id="username"  data-i18n-placeholder="username">
-                            <input type="email" placeholder="Email" id="username" data-i18n-placeholder="email">
+                            <input type="email" placeholder="Email" id="email" data-i18n-placeholder="email">
                             <div class="pass_eyy">
                                 <input type="password" placeholder="Password" id="password" class="o" data-i18n-placeholder="password_signup">
-                                <button class="click_eye">
+                                <button class="click_eye" type="button">
                                     <img src="./images/closed_eye.png" alt="Home" class="eye1" class="o">
                                 </button>
                             </div>
                             <div class="pass_eyy">
-                                <input type="password" placeholder="Confirm password" id="password" class="o" data-i18n-placeholder="confirm-password">
-                                <button class="click_eye">
+                                <input type="password" placeholder="Confirm password" id="confirm_password" class="o" data-i18n-placeholder="confirm-password">
+                                <button class="click_eye" type="button">
                                     <img src="./images/closed_eye.png" alt="Home" class="eye2">
                                 </button>
                             </div>
@@ -139,7 +139,7 @@
                             </h2>
                             <div class="ft_progress">
                                 <!-- <div class="bar" style="width: 100%;"> -->
-                                    <span class="xp"><span id="fetched_xp"> </span>XPs</span>
+                                    <span class="xp"><span id="fetched_xp"></span> XPs</span>
                                     <span class="level"><span data-i18n="level">Level </span><span id="fetched_level"></span></span>
                                 <!-- </div> -->
                             </div>
@@ -363,7 +363,7 @@
     <div class="ft_container">
         <div class="header">
             <div class="ft-box">
-                <img src="./images/logo.png" class="logo">
+                <my-link href="/home"><img src="./images/logo.png" class="logo"></my-link>
             </div>
         </div>
         <div class="content">
@@ -482,7 +482,7 @@
     <div class="ft_container">
         <div class="header">
             <div class="ft-box">
-                <img src="./images/logo.png" class="logo">
+                <my-link href="/home"><img src="./images/logo.png" class="logo"></my-link>
             </div>
         </div>
         <div class="content">
@@ -739,7 +739,7 @@
    <div class="ft_container">
         <div class="header">
             <div class="ft-box">
-                <img src="./images/logo.png" class="logo">
+                <my-link href="/home"><img src="./images/logo.png" class="logo"></my-link>
             </div>
         </div>
         <div class="content">
