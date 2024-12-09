@@ -1,6 +1,4 @@
-
 const  langData = ({
- 
         en: {
                 selectLanguage: "Select language",
                 changePicture: "Change Picture",
@@ -16,9 +14,9 @@ const  langData = ({
                 newPassword: "New Password", 
                 matchesPlayed: "Matches Played",
                 winningMatches: "Winning Matches",
-                loss: "Loss",
                 welcomeMessage: "Welcome,",
-                win: "Win",
+                loss_1: "Loss",
+                win_2: "Win",
                 yourRank: "Your Rank",
                 totalPlayers: "Total Players",
                 notcat:"Notifications",
@@ -61,14 +59,14 @@ const  langData = ({
                 pending: "Pending...",
                 accept: "Accept",
                 addFriend: "Add Friend",
-
                 notRankedYet: "Not ranked yet",
-                
                 changefriend: "Challenge",
-
                 totalGames: "Total Games",
                 gamesToday: "Games Today",
-                onlineNow: "Online Now"
+                onlineNow: "Online Now",
+                friendsTitle: "Wants to be your friend",
+                login_link: "Login",
+                login_error: "Invalid credentials"
         },
         fr: {
                 selectLanguage: "Choisissez une langue",
@@ -92,8 +90,8 @@ const  langData = ({
                 onlineNow: "En ligne maintenant",
                 matchesPlayed: "Matchs joués",
                 winningMatches: "Matchs gagnants",
-                loss: "Perte",
-                win: "Gagner",
+                loss_1: "Perte",
+                win_2: "Gagner",
                 yourRank: "Votre classement",
                 totalPlayers: "Nombre total de joueurs",
                 notcat: "Notifications",
@@ -107,8 +105,6 @@ const  langData = ({
                 friendsList: "Liste d'amis",
                 matchesPlayed: "Matchs joués",
                 winningMatches: "Matchs gagnés",
-                loss: "Défaite",
-                win: "Victoire",
                 matchHistory: "Historique des matchs",
                 login: "Connexion",
                 "welcome-back": "Bon retour!",
@@ -146,11 +142,17 @@ const  langData = ({
 
                 myProfile: "Mon Profil",
                 challenge: "Défi",
-                pending: "En attente...",
+                pending: "En attente",
                 accept: "Accepter",
                 addFriend: "Ajouter",
                 notRankedYet: "Pas encore classé",
-                changefriend: "Défi"
+                changefriend: "Défi",
+                friendsTitle:"Veut être votre amie",
+
+                password_login:"Mot de passe",
+                password_signup: "Mot de passe",
+                login_link: "Se connecter",
+                login_error:"Identifiants invalides"
         },
         es: {
                 selectLanguage: "Seleccionar idioma",
@@ -178,8 +180,8 @@ const  langData = ({
                 onlineNow: "En línea Ahora",
                 matchesPlayed: "Partidos Jugados",
                 winningMatches: "Partidos Ganados",
-                loss: "Pérdida",
-                win: "Victoria",
+                loss_1: "Pérdida",
+                win_2: "Victoria",
                 yourRank: "Tu Clasificación",
                 totalPlayers: "Jugadores Totales",
                 notcat: "Notificaciones",
@@ -208,34 +210,27 @@ const  langData = ({
                 "dont-have-account": "¿No tienes cuenta?",
                 "signup-link": "Regístrate",
                 signup: "Registrarse",
-
-
-
-                // "signup-details": "Quelques détails pour vous inscrire...",
-                // username: "Nom d'utilisateur",
-                // email: "Email",
-                // password: "Mot de passe",
-                // "confirm-password": "Confirmer le mot de passe",
-                // "signup-button": "S'inscrire",
-                // "already-registered": "Déjà inscrit?",
-                // "login-link": "Se connecter",
-
-
-
+                "signup-button": "Registrarse",
                 modeSelection: "Selección de modo de juego",
                 classicGame: "Juego clásico",
                 singleGame: "1 contra 1",
                 tournament: "Torneo",
                 playTournament: "Jugar un torneo",
-
                 myProfile: "Mi Perfil",
                 challenge: "Desafiar",
                 pending: "Pendiente...",
                 accept: "Aceptar",
                 addFriend: "Agregar",
-
                 notRankedYet: "No clasificado aún",
-                changefriend: "Desafiar"
+                changefriend: "Desafiar",
+                friendsTitle:"Quiere ser tu amigoa",
+                password_login: "Contraseña",
+                "confirm-password": "Confirmar contraseña",
+                password_signup: "Contraseña",
+                "login-link": "Iniciar sesión",
+                 "already-registered":"¿Ya estás registrado",
+                 "signup-details":"Solo algunos detalles para que puedas entrar",
+                login_error: "Credenciales inválidas"
         },
 });
 
@@ -291,12 +286,10 @@ function updateLanguageContent() {
         // const winLossElements = document.querySelectorAll("[data-win-loss]");
         // winLossElements.forEach((el) => {
         // const key = el.getAttribute("data-win-loss");
-        // if (key) el.textContent = langData[currLang]?.[key] || key;
+        // if (key) 
+        //     el.textContent = langData[currLang]?.[key] || key;
         // });
-
-        // js 
-        // <span class="opp_win" data-win-loss="${match.won ? 'win' : 'loss'}">${match.won ? 'Win' : 'Loss'}</span>
-        
+       
         console.log("Language content updated!");
       }
       

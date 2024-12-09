@@ -1,9 +1,4 @@
 
-/* .body-home .content .header_1
-{
-    padding-top: 2%;
-} */
-
 .tournam_profile .user-info
 {
     display: grid;
@@ -22,11 +17,11 @@
 
 }
 
-/*classe -> user-info=> transform: translate(x, y);=> x is the horizontal movement (left/right).
+/* classe -> user-info=> transform: translate(x, y);=> x is the horizontal movement (left/right).
                                  y is the vertical movement (up/down).
     The element is moved up by 50% of its own height (-50% on the Y-axis). 
-    The negative value indicates upward movement.
-*/
+    The negative value indicates upward movement. */
+
 .user-info
 {
     position: absolute;
@@ -161,6 +156,39 @@
 .header_1 .img_prof_2 .online-status_1
 {
 
+    /* width: 25px;
+    height: 25px;
+    background-color:#37C25E; 
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    transform: translate(50%, -50%); */
+
+
+    display: var(--online-status);
+    position: absolute;
+    top: 0;
+    left: 0;
+    translate: 628% -33%;
+    /* background-color: green; */
+    background-color: #37C25E;
+    border-radius: 50%;
+    width: 17px;
+    height: 17px;
+
+
+}
+
+
+.img_prof_1
+{
+    position: relative;
+}
+
+
+/* .leader_1 .img_prof_1 .online-status_2
+{
     width: 25px;
     height: 25px;
     background-color:#37C25E; 
@@ -169,7 +197,12 @@
     top: 0px;
     right: 0px;
     transform: translate(50%, -50%);
-}
+} */
+
+
+
+
+
 
 .tourn
 {
@@ -398,10 +431,30 @@
     width: 50px;
     height: 50px;
     border-radius: 10px;
-    
-
-
 }
+
+
+
+.leader_1 .status_img {
+    grid-row-start: 1;
+    grid-row-end: -1;
+    position: relative;
+}
+
+.leader_1 .active {
+    display: var(--active);
+    position: absolute;
+    top: 0;
+    left: 0;
+    translate: -30% -30%;
+    /* background-color: green; */
+    background-color: #37C25E;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+}
+
+
 
 .leader-name_1
 {
@@ -916,4 +969,18 @@
     align-items: flex-end;
     align-content: flex-end;
     /* vertical-align: text-bottom; */
+}
+
+
+.card_friend {
+    display: grid;
+
+    grid-row: 100px 1fr auto;
+    grid-column: 50px 50px;
+}
+
+
+.card_friend img  {
+    width: 100px;
+    height: 100px;
 }

@@ -144,7 +144,7 @@ export class HomeDashboard extends  HTMLElement
             </div>
           
             <div class="reject_accept">
-                   <p class="acp_reject"> Wants to be your friend </p>
+                   <p class="acp_reject"  data-i18n="friendsTitle"> Wants to be your friend </p>
                 <div class="controle_B">
                   <button id="${acceptButtonId}" class="btn btn-success me-2" data-i18n="Acpbutton">Accept</button>
                   <button id="${rejectButtonId}" class="btn btn-danger" data-i18n="rejectbutton">Reject</button>
@@ -153,6 +153,7 @@ export class HomeDashboard extends  HTMLElement
         `;
         
         formContainer.appendChild(notificationRow);
+      
 
         // Use the unique ID to select each button
         const acceptButton = document.getElementById(acceptButtonId);
@@ -187,6 +188,8 @@ export class HomeDashboard extends  HTMLElement
             console.log("failed to reject", err.message);
           }
         });
+
+        updateLanguageContent();
       });
     } catch (error) {
       console.error('Error fetching dashboard:', error);

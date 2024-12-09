@@ -9,6 +9,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
 from .serializers import ProfileSerializer, FriendshipSerializer, MatchSerializer, UserSerializer, PasswordSerializer, FriendshipRequestsReceivedSerializer, FriendshipRequestsSentSerializer
 from .models import Profile, Friendship, Match
+from .helpers import get_unique_username
 # from .pagination import DefaultPagination
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -258,8 +259,11 @@ class FT_CallbackView(APIView):
 			user.save()
 		else:
 			# Create a new user and profile if none exists
+			base_username = user_data['login']
+			unique_username = get_unique_username(base_username)
+
 			user = User.objects.create_user(
-				username=user_data['login'],
+				username=unique_username,
 				first_name=user_data['first_name'],
 				last_name=user_data['last_name'],
 				email=user_data['email']

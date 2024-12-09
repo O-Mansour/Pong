@@ -117,7 +117,11 @@ export class Profile extends HTMLElement {
         friendDiv.classList.add('leader_1');
 
         friendDiv.innerHTML = `
-                <img src="http://localhost:8000${friend.profileimg}" class="img_leader1">
+
+                <div class="status_img">
+                  <img src="http://localhost:8000${friend.profileimg}" class="img_leader1">
+                  <span class="active" style="--active: block"/>
+                </div>
                 <span class="leader-name_1">${friend.firstname} ${friend.lastname}</span>
                 <div class="leader-username_1">@${friend.username}</div>
                 <button class="message-btn_1" data-i18n="changefriend">Challenge</button>`;
@@ -154,7 +158,7 @@ export class Profile extends HTMLElement {
                   <span class="opp_user">${match.opponent_profile.username}</span>
                   <div>
                       <img src="${match.won ? './images/accueil(1).png' : './images/Close.png'}" class="img_valide">
-                      <span class="opp_win">${match.won ? 'Win' : 'Loss'}</span>
+                      <span class="opp_win" data-i18n="${match.won ? 'win_2' : 'loss_1'}">${match.won ? 'Win' : 'Loss'}</span>
                   </div>
                   <span class="date">${match.date_played}</span>`;
 
@@ -173,3 +177,5 @@ export class Profile extends HTMLElement {
 }
 
 customElements.define("profile-page", Profile);
+
+/* <span class="opp_win">${match.won ? 'Win' : 'Loss'}</span> */

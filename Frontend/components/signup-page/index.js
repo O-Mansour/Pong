@@ -20,27 +20,90 @@ export class LoginSignup extends HTMLElement {
 
         this.querySelector('.signup-box').addEventListener('submit', this.handleSignup);
 
-        document.querySelectorAll('.click_eye')[0].addEventListener('click', () => {
-            const passwordInput = document.getElementById('password');
-            if (passwordInput.type == 'password') {
-                passwordInput.type = 'text';
-                document.querySelector('.eye1').src = "./images/open_eye.png";
-            } else {
-                passwordInput.type = 'password';
-                document.querySelector('.eye1').src = "./images/closed_eye.png";
-            }
-        });
 
-        document.querySelectorAll('.click_eye')[1].addEventListener('click', () => {
-            const passwordInput = document.getElementById('confirm_password');
-            if (passwordInput.type == 'password') {
-                passwordInput.type = 'text';
-                document.querySelector('.eye2').src = "./images/open_eye.png";
-            } else {
-                passwordInput.type = 'password';
-                document.querySelector('.eye2').src = "./images/closed_eye.png";
-            }
-        });
+        const clickEye1 = this.querySelector('.click_eye1');
+        const clickEye2 = this.querySelector('.click_eye2');
+
+        if (clickEye1) {
+            clickEye1.addEventListener('click', () => {
+                const passwordInput = this.querySelector('#password');
+                const eyeIcon = this.querySelector('.eye1');
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeIcon.src = "./images/open_eye.png";
+                } else {
+                    passwordInput.type = 'password';
+                    eyeIcon.src = "./images/closed_eye.png";
+                }
+            });
+        } else {
+            console.error('.click_eye1 button not found in LoginSignup component');
+        }
+
+        if (clickEye2) {
+            clickEye2.addEventListener('click', () => {
+                const confirmPasswordInput = this.querySelector('#confirm_password');
+                const eyeIcon = this.querySelector('.eye2');
+                if (confirmPasswordInput.type === 'password') {
+                    confirmPasswordInput.type = 'text';
+                    eyeIcon.src = "./images/open_eye.png";
+                } else {
+                    confirmPasswordInput.type = 'password';
+                    eyeIcon.src = "./images/closed_eye.png";
+                }
+            });
+        } else {
+            console.error('.click_eye2 button not found in LoginSignup component');
+        }
+    
+
+
+        // document.querySelectorAll('.click_eye')[0].addEventListener('click', () => {
+        //     const passwordInput = document.getElementById('password');
+        //     if (passwordInput.type == 'password') {
+        //         passwordInput.type = 'text';
+        //         document.querySelector('.eye1').src = "./images/open_eye.png";
+        //     } else {
+        //         passwordInput.type = 'password';
+        //         document.querySelector('.eye1').src = "./images/closed_eye.png";
+        //     }
+        // });
+
+        // document.querySelectorAll('.click_eye')[1].addEventListener('click', () => {
+        //     const passwordInput = document.getElementById('confirm_password');
+        //     if (passwordInput.type == 'password') {
+        //         passwordInput.type = 'text';
+        //         document.querySelector('.eye2').src = "./images/open_eye.png";
+        //     } else {
+        //         passwordInput.type = 'password';
+        //         document.querySelector('.eye2').src = "./images/closed_eye.png";
+        //     }
+        // });
+
+
+        // document.querySelector('.click_eye1')[0].addEventListener('click', () => {
+        //     const passwordInput = document.getElementById('password');
+        //     if (passwordInput.type == 'password') {
+        //         passwordInput.type = 'text';
+        //         document.querySelector('.eye1').src = "./images/open_eye.png";
+        //     } else {
+        //         passwordInput.type = 'password';
+        //         document.querySelector('.eye1').src = "./images/closed_eye.png";
+        //     }
+        // });
+
+
+        // document.querySelector('.click_eye2')[1].addEventListener('click', () => {
+        //     const passwordInput = document.getElementById('password');
+        //     if (passwordInput.type == 'password') {
+        //         passwordInput.type = 'text';
+        //         document.querySelector('.eye2').src = "./images/open_eye.png";
+        //     } else {
+        //         passwordInput.type = 'password';
+        //         document.querySelector('.eye2').src = "./images/closed_eye.png";
+        //     }
+        // });
+
     }
 
     // Cleans up the submit event listener to prevent memory leaks

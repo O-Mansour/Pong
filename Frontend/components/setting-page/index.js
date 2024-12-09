@@ -25,6 +25,8 @@ export class Setting extends  HTMLElement
             const selectedLang = event.target.value;
         
             localStorage.setItem('lang', selectedLang);
+            // endpont lagage backend
+            //post request to set langauge in user profile 
         
             updateLanguageContent();
         });
@@ -37,6 +39,8 @@ export class Setting extends  HTMLElement
                 }
             });
             const data = await response.json(); 
+
+            // localStorage.setItem('lang', user lang );
 
             const imgElement= document.querySelector('.img_change');
             const Elementfirstname =document.querySelector('#firstNameInput');

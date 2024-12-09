@@ -73,23 +73,8 @@ input[type="email"] {
 }
 
 
-/* input[type="text"],
- /* input[type="password"], */
-/* input[type="email"]
- {
-    width: 80%;
-    height: 5px;
-    padding: 14px 16px 14px 16px;
-    margin: 10px 0px 10px 0px;
-    border: none;
-    border-radius: 5px;
-    background: rgba(234, 228, 228, 0.1);
-    color: white;
- } */
-
-
 input[type="password"],
-.pass_eyy .o {
+.pass_eyy .o .ope1 .ope2 {
 
     position: relative;
     width: 80%;
@@ -106,7 +91,8 @@ input[type="password"],
 .pass_eyy
 .click_eye
 {
- border: none;
+
+ /* border: none;
  background: none;
  width: 2%;
  position:absolute;
@@ -115,9 +101,85 @@ input[type="password"],
  right: 13%;
  transform: translate(-50%);
  font-size: 20px;
- cursor:pointer;
+ cursor:pointer; */
 
+ 
+    border: none; 
+    background: none;
+    width: 2%;
+    position: absolute;
+    /* height: 30px; */
+    /* top: 31%; */
+    /* right: 13%; */
+    transform: translate(-334%, -13%);
+    font-size: 20px;
+    cursor: pointer;
+
+   
 }
+
+.pass_eyy1
+.click_eye1
+{
+    border: none; 
+    background: none;
+    width: 2%;
+    position: absolute;
+    /* height: 30px; */
+    /* top: 31%; */
+    /* right: 13%; */
+    transform: translate(-334%, -13%);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+.pass_eyy2
+.click_eye2
+{
+    border: none; 
+    background: none;
+    width: 2%;
+    position: absolute;
+    /* height: 30px; */
+    /* top: 31%; */
+    /* right: 13%; */
+    transform: translate(-334%, -13%);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.pass_eyy
+.click_eye
+{
+
+ /* border: none;
+ background: none;
+ width: 2%;
+ position:absolute;
+ height:30px;
+ top: 31%;
+ right: 13%;
+ transform: translate(-50%);
+ font-size: 20px;
+ cursor:pointer; */
+
+ 
+    border: none; 
+    background: none;
+    width: 2%;
+    position: absolute;
+    /* height: 30px; */
+    /* top: 31%; */
+    /* right: 13%; */
+    /* transform: translate(-334%, -13%); */
+    font-size: 20px;
+    cursor: pointer;
+
+   
+}
+
+
 
 input[type="password"]
 {
@@ -140,10 +202,21 @@ input[type="email"]
     color: white;
 }
 
-.eye .o
+/* .eye .o
 {
     color: #ffffff;
     width: 15px;
+} */
+
+
+
+.pass_eyy1
+{
+    width: 100%;
+}
+.pass_eyy2
+{
+    width: 100%;
 }
 
 .pass_eyy
@@ -151,33 +224,46 @@ input[type="email"]
     width: 100%;
 }
 
-.pass_eyy
-.click_eye
+/* .pass_eyy1 .click_eye1 .eye1 {
+    position: absolute;
+    top: 190%;
+    /* transform: translate(-60%); */
+    /* transform: translate(-162%, -695%);
+    font-size: 20px; */
+/* } 
+
+.pass_eyy1
+.click_eye1
 .eye1 {
 
     position: absolute;
     top: 190%;
-    transform: translate(-60%);
+ transform: translate(-60%); 
+     transform: translate(-50%, -651%);
     font-size: 20px;
 }
 
-.pass_eyy
-.click_eye
+.pass_eyy2
+.click_eye2
 .eye2 {
     position: absolute;
     top: 336%;
     transform: translate(-50%);
-    font-size: 20px;
-}
-
+     transform: translate(-50%, -1327%);
+    font-size: 20px; 
+ }
+*/
 
 ::placeholder {
 
     color: #e5e5e5;
 }
 
+
+
+
 button {
-    width: 90%;
+    width: 91%;
     min-height: 35px;
     padding-bottom: 5px;
     padding: 1px 0;
@@ -190,6 +276,7 @@ button {
     cursor: pointer;
     text-align: center;
 }
+
 
 .login-form button:hover {
     opacity: 0.9;

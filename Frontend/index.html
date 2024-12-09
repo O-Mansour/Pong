@@ -28,7 +28,7 @@
                     <div class="ft-box">
                         <form class="login-box">
                             <div class="log">
-                                <div id="errorMessage" style="color: red; display: none;"></div>
+                                <div id="errorMessage" style="color: red; display: none;" data-i18n="login_error"></div>
                                 <h3 class="l1" data-i18n="login">Login</h3>
                                 <h5 class="l2" data-i18n="welcome-back">Welcome back !</h5>
                             </div>
@@ -59,7 +59,7 @@
                                 </svg>
                                 <span data-i18n="sign-in-intra">Sign in with intra</span>
                             </button>
-                            <p class="signup" > Don’t have an account ? 
+                            <p class="signup" > <span data-i18n="dont-have-account"> Don’t have an account ?</span> 
                                 <my-link href="/sign-up"><span data-i18n="signup-link"></span></my-link>
                             </p>
                         </form>
@@ -86,19 +86,19 @@
                             </div>
                             <input type="text" placeholder="Username" id="username"  data-i18n-placeholder="username">
                             <input type="email" placeholder="Email" id="email" data-i18n-placeholder="email">
-                            <div class="pass_eyy">
-                                <input type="password" placeholder="Password" id="password" class="o" data-i18n-placeholder="password_signup">
-                                <button class="click_eye" type="button">
-                                    <img src="./images/closed_eye.png" alt="Home" class="eye1" class="o">
+                            <div class="pass_eyy1">
+                                <input type="password" placeholder="Password" id="password"  data-i18n-placeholder="password_signup" class="ope1">
+                                <button class="click_eye1" type="button">
+                                    <img src="./images/closed_eye.png" class="eye1">
                                 </button>
                             </div>
-                            <div class="pass_eyy">
-                                <input type="password" placeholder="Confirm password" id="confirm_password" class="o" data-i18n-placeholder="confirm-password">
-                                <button class="click_eye" type="button">
-                                    <img src="./images/closed_eye.png" alt="Home" class="eye2">
+                            <div class="pass_eyy2">
+                                <input type="password" placeholder="Confirm password" id="confirm_password" data-i18n-placeholder="confirm-password" class="ope2">
+                                <button class="click_eye2" type="button">
+                                    <img src="./images/closed_eye.png" class="eye2">
                                 </button>
                             </div>
-                            <button id="rightside" type="submit" data-i18n="signup-button">Signup</button>
+                            <button id="rightside" type="submit" data-i18n="signup-button"></button>
                             <p class="login"><span data-i18n="already-registered"></span> <my-link href="/"> <span data-i18n="login-link"></span></my-link></p>
                         </form>
                     </div>
@@ -120,7 +120,6 @@
             <aside class="sidebar">
                 <nav class="menu">
                     <ul>
-                    
                         <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
                         <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
                         <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
@@ -153,6 +152,7 @@
                         <div class="img_prof">
                             <img  class="prof">
                             <!-- <span class="online-status"></span> -->
+                            <span class="online-status" style="--online-status: block"></span>
                         </div>
                         <div id="with-bootstrap">
                             <button id="showFormBtn" class="message-btn1" data-bs-toggle="modal"
@@ -208,11 +208,11 @@
                                 <div class="labels">
                                     <div class="label">
                                         <div class="label-color loss"></div>
-                                        <span data-i18n="loss">Loss</span>
+                                        <span data-i18n="loss_1">Loss</span>
                                     </div>
                                     <div class="label">
                                         <div class="label-color win"></div> 
-                                        <span data-i18n="win">Win</span>
+                                        <span data-i18n="win_2">Win</span>
                                     </div>
                                 </div>
                                 <div class="chart">
@@ -386,7 +386,8 @@
                         <div class="user-info">
                             <div class="img_prof_2">
                                 <img class="prof_1">
-                                <span class="online-status_1"></span>
+                                <!-- <span class="online-status_1"></span> -->
+                                <span class="online-status_1" style="--online-status_1: block"></span>
                             </div>
                             <!-- <div class="f_l_join"> -->
                             <h5 class="firstL"><span id="fetched_fullname"></span></h5>
@@ -453,11 +454,11 @@
                             <div class="labels_1">
                                 <div class="lab">
                                     <div class="lab-colorr losss"></div>
-                                    <span data-i18n="loss">Loss</span>
+                                    <span data-i18n="loss_1">Loss</span>
                                 </div>
                                 <div class="lab">
                                     <div class="lab-colorr winn"></div>
-                                    <span data-i18n="win">Win</span>
+                                    <span data-i18n="win_2">Win</span>
                                 </div>
                             </div>
                             <div class="charts">

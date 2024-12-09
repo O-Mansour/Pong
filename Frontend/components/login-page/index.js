@@ -1,6 +1,7 @@
 import updateLanguageContent from "../../js/lagages.js";
 import { event } from "../link/index.js";
 import { alreadyAuth } from "../../js/utils.js";
+import langData from "../../js/lagages.js";
 
 export class LoginPage extends HTMLElement
 {
@@ -18,18 +19,18 @@ export class LoginPage extends HTMLElement
         const content = template.content.cloneNode(true);
         this.appendChild(content);
         updateLanguageContent();
-
+        
         this.loginForm = this.querySelector('.login-box');
         this.errorMessage = this.querySelector('#errorMessage');
         this.intraButton = this.querySelector('.intra-login');
-
+        
         // Add event listeners
         this.loginForm.addEventListener('submit', this.handleSubmit);
         this.intraButton.addEventListener('click', this.handleFTLogin);
-
+        
         // Handle callback if redirected back with tokens
         this.handleOAuthCallback();
-
+        
         document.querySelector('.click_eye').addEventListener('click', () => {
             const passwordInput = document.getElementById('password');
             if (passwordInput.type == 'password') {
@@ -40,6 +41,8 @@ export class LoginPage extends HTMLElement
                 document.querySelector('.eye').src = "./images/closed_eye.png";
             }
         });
+
+
     }
 
     disconnectedCallback() {
@@ -73,8 +76,9 @@ export class LoginPage extends HTMLElement
             history.pushState({url}, null, url);
             document.dispatchEvent(event);
         } catch (error) {
-            this.errorMessage.textContent = error.message;
+            const currLang = localStorage.getItem('lang') || 'en';
             this.errorMessage.style.display = 'block';
+            this.errorMessage.textContent = langData[currLang]?.login_error || error.message;
         }
     }
 
@@ -99,8 +103,9 @@ export class LoginPage extends HTMLElement
             }
         } catch (error) {
             // Show the error message
-            this.errorMessage.textContent = error.message;
+            const currLang = localStorage.getItem('lang') || 'en';
             this.errorMessage.style.display = 'block';
+            this.errorMessage.textContent = langData[currLang]?.login_error || error.message;
         }
     }
 
@@ -132,8 +137,9 @@ export class LoginPage extends HTMLElement
                     throw new Error(data.error || 'Failed to authenticate with 42.');
                 }
             } catch (error) {
-                this.errorMessage.textContent = error.message;
+                const currLang = localStorage.getItem('lang') || 'en';
                 this.errorMessage.style.display = 'block';
+                this.errorMessage.textContent = langData[currLang]?.login_error || error.message;
             }
         }
     }
