@@ -144,8 +144,8 @@
                             </div>
                         </div>
                         <div class="actions">
-                            <button class="meg" onclick="window.location.href='/setting'"><span  data-i18n="settings"></span></button>
-                            <button class="play" onclick="window.location.href='/game'"><span  data-i18n="playNow"></span></button>
+                            <button class="meg" onclick="go_to_page('/setting')"><span  data-i18n="settings"></span></button>
+                            <button class="play" onclick="go_to_page('/game')"><span  data-i18n="playNow"></span></button>
                         </div>
                     </div>
                     <div class="header-left-side">
@@ -854,5 +854,10 @@
 <script src="./js/erorrpage.js" type="module"></script>
 <script src="./js/bootstrap.bundle.min.js"></script>
 <script src="./js/lagages.js" type="module" defer></script>
+<!-- <script src="./js/utils.js" type="module" defer></script> -->
+<script type="module">
+    import { go_to_page } from './js/utils.js';
+    window.go_to_page = go_to_page;
+</script>
 
 </html>

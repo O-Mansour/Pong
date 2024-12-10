@@ -170,7 +170,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    translate: 628% -33%;
+    translate: 522% -38%;
     /* background-color: green; */
     background-color: #37C25E;
     border-radius: 50%;
@@ -442,13 +442,14 @@
 }
 
 .leader_1 .active {
-    display: var(--active);
+    /* display: block; */
     position: absolute;
     top: 0;
     left: 0;
     translate: -30% -30%;
     /* background-color: green; */
-    background-color: #37C25E;
+    /* background-color: #37C25E; */
+    background-color: var(--color);
     border-radius: 50%;
     width: 15px;
     height: 15px;

@@ -72,8 +72,6 @@ export class Profile extends HTMLElement {
       if (data.rank == null){
         rankElement.style.fontSize = "18px";
         rankElement.textContent = "Not ranked yet";
-
-        const currLang = localStorage.getItem('lang') || 'en';
         rankElement.setAttribute('data-i18n', 'notRankedYet');
       }
       else
@@ -120,11 +118,11 @@ export class Profile extends HTMLElement {
 
                 <div class="status_img">
                   <img src="http://localhost:8000${friend.profileimg}" class="img_leader1">
-                  <span class="active" style="--active: block"/>
+                   <span class="active" style="--color: ${friend.is_online ? '#37C25E' : '#941b1b'}"/>
                 </div>
                 <span class="leader-name_1">${friend.firstname} ${friend.lastname}</span>
                 <div class="leader-username_1">@${friend.username}</div>
-                <button class="message-btn_1" data-i18n="changefriend">Challenge</button>`;
+                <button class="message-btn_1" data-i18n="changefriend" onclick='go_to_page("/game")'>Challenge</button>`;
 
         friendsList.appendChild(friendDiv);
         updateLanguageContent();
@@ -158,7 +156,7 @@ export class Profile extends HTMLElement {
                   <span class="opp_user">${match.opponent_profile.username}</span>
                   <div>
                       <img src="${match.won ? './images/accueil(1).png' : './images/Close.png'}" class="img_valide">
-                      <span class="opp_win" data-i18n="${match.won ? 'win_2' : 'loss_1'}">${match.won ? 'Win' : 'Loss'}</span>
+                      <span class="opp_win" data-i18n="${match.won ? 'win_2' : 'loss_1'}"></span>
                   </div>
                   <span class="date">${match.date_played}</span>`;
 
@@ -169,6 +167,7 @@ export class Profile extends HTMLElement {
         barDiv.innerHTML = `<div class="bar3" style="width: 100%;"></div>`;
 
         historyList.appendChild(barDiv);
+        updateLanguageContent();
       });
     } catch (error) {
       console.error('Error fetching match history:', error);

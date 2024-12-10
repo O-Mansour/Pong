@@ -3,6 +3,12 @@ from django.conf import settings
 from .validators import validate_size
 
 class Profile(models.Model):
+	LANGUAGE_CHOICES = (
+		('en', 'English'),
+		('fr', 'French'),
+		('es', 'Spanish')
+	)
+
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	profileimg = models.ImageField(upload_to='profile_images/',
 								default='default_pfp.jpg',
@@ -16,6 +22,7 @@ class Profile(models.Model):
 	tour_played = models.PositiveIntegerField(default=0)
 	tour_won = models.PositiveIntegerField(default=0)
 	ft_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
+	language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default='en')
 
 	def __str__(self):
 		return f"{self.user.username}'s Profile"

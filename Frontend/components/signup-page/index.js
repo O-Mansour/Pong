@@ -1,6 +1,7 @@
 import updateLanguageContent from "../../js/lagages.js";
 import { event } from "../link/index.js";
 import { alreadyAuth } from "../../js/utils.js";
+import { set_online } from "../../js/utils.js";
 
 export class LoginSignup extends HTMLElement {
 
@@ -142,9 +143,10 @@ export class LoginSignup extends HTMLElement {
                 alert("No valid response");
                 return ;
             }
-            alert("All is good");
             localStorage.setItem('access_token', data.access);
             localStorage.setItem('refresh_token', data.refresh);
+
+            set_online();
             const url = '/home';
             history.pushState({url}, null, url);
             document.dispatchEvent(event);

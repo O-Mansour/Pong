@@ -1,6 +1,8 @@
 import updateLanguageContent from "../../js/lagages.js";
 import { event } from "../link/index.js";
 import {requireAuth} from "../../js/utils.js";
+import {go_to_page} from "../../js/utils.js";
+import {set_offline} from "../../js/utils.js";
 
 export class Setting extends  HTMLElement
 {
@@ -19,17 +21,7 @@ export class Setting extends  HTMLElement
         updateLanguageContent();
 
         this.querySelector('.logee').addEventListener('click', logout);
-
-        document.getElementById("ch")?.addEventListener("change", (event) => {
-    
-            const selectedLang = event.target.value;
-        
-            localStorage.setItem('lang', selectedLang);
-            // endpont lagage backend
-            //post request to set langauge in user profile 
-        
-            updateLanguageContent();
-        });
+        document.getElementById("ch")?.addEventListener("change", setLanguage);
     }
     async fetchsettingsData() {
         try {
@@ -39,8 +31,6 @@ export class Setting extends  HTMLElement
                 }
             });
             const data = await response.json(); 
-
-            // localStorage.setItem('lang', user lang );
 
             const imgElement= document.querySelector('.img_change');
             const Elementfirstname =document.querySelector('#firstNameInput');
@@ -197,10 +187,39 @@ function logout() {
         },
         body: JSON.stringify({ refresh_token })
     }).finally(() => {
+        set_offline();
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        window.location.href = '/';
+        go_to_page('/');
     });
+}
+
+async function setLanguage(event)
+{
+    try {
+        const selectedLang = event.target.value;
+        localStorage.setItem('lang', selectedLang);
+
+        const response = await fetch('http://localhost:8000/api/profiles/me/', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${localStorage.getItem('access_token')}`
+            },
+            body: JSON.stringify({
+                language: selectedLang
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to change language');
+        }
+
+        updateLanguageContent();
+    } catch (error) {
+        console.error('Error changing language:', error);
+    }
 }
 
 customElements.define("setting-page",Setting);

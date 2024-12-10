@@ -1,6 +1,7 @@
 import updateLanguageContent from "../../js/lagages.js";
 import { event } from "../link/index.js";
 import { alreadyAuth } from "../../js/utils.js";
+import { set_online } from "../../js/utils.js";
 import langData from "../../js/lagages.js";
 
 export class LoginPage extends HTMLElement
@@ -75,6 +76,7 @@ export class LoginPage extends HTMLElement
             const url = '/home';
             history.pushState({url}, null, url);
             document.dispatchEvent(event);
+            set_online();
         } catch (error) {
             const currLang = localStorage.getItem('lang') || 'en';
             this.errorMessage.style.display = 'block';
@@ -130,6 +132,7 @@ export class LoginPage extends HTMLElement
                     localStorage.setItem('access_token', data.access_token);
                     localStorage.setItem('refresh_token', data.refresh_token);
 
+                    set_online();
                     const url = '/home';
                     history.pushState({url}, null, url);
                     document.dispatchEvent(event);

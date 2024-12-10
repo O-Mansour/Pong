@@ -10,7 +10,6 @@ class ProfileSerializer(serializers.ModelSerializer):
 	firstname = serializers.CharField(source='user.first_name', required=False)
 	lastname = serializers.CharField(source='user.last_name', required=False)
 	email = serializers.EmailField(source='user.email', required=False)
-	# password = serializers.CharField(source='user.password', write_only=True, required=False)
 	date_joined = serializers.DateTimeField(source='user.date_joined', format="%Y-%m-%d", read_only=True)
 	current_friends = serializers.SerializerMethodField()
 
@@ -18,7 +17,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 		model = Profile
 		fields = ['id', 'user_id', 'username', 'firstname', 'lastname', 'email',
 				 'date_joined', 'profileimg', 'wins', 'losses', 'is_online', 'level',
-				 'xps', 'rank', 'tour_played', 'tour_won', 'current_friends']
+				 'xps', 'rank', 'tour_played', 'tour_won', 'current_friends', 'language']
 	
 	def get_current_friends(self, obj):
 		current_friends = Friendship.objects.filter(

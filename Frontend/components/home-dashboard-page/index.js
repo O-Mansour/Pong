@@ -99,9 +99,6 @@ export class HomeDashboard extends  HTMLElement
           if (data.rank == null){
             Element_yourrank.style.fontSize = "18px";
             Element_yourrank.textContent = "Not ranked yet";
-
-            // Get the current language from localStorage or default to English
-            // const currLang = localStorage.getItem('lang') || 'en';
             Element_yourrank.setAttribute('data-i18n', 'notRankedYet');
           }
           else
@@ -166,7 +163,6 @@ export class HomeDashboard extends  HTMLElement
                 'Authorization': `JWT ${localStorage.getItem('access_token')}`
               }
             });
-            acceptButton.textContent = "Accepted";
             acceptButton.disabled = true;
             rejectButton.disabled = true;
           } catch(err) {
@@ -181,7 +177,6 @@ export class HomeDashboard extends  HTMLElement
                 'Authorization': `JWT ${localStorage.getItem('access_token')}`
               }
             });
-            rejectButton.textContent = "Rejected";
             acceptButton.disabled = true;
             rejectButton.disabled = true;
           }catch(err) {
@@ -261,13 +256,14 @@ export class HomeDashboard extends  HTMLElement
           profileBtn.classList.add('message-btn');
           profileBtn.setAttribute('data-i18n-button', 'myProfile'); 
           profileBtn.textContent = langData[currLang]?.myProfile || 'My Profile';
-          profileBtn.setAttribute('onclick', 'window.location.href="/user"');
+          profileBtn.setAttribute('onclick', 'go_to_page("/user")');
           leaderDiv.appendChild(profileBtn);
         } else if (friendsIds.includes(leader.user_id)) {
           const playBtn = document.createElement('button');
           playBtn.classList.add('message-btn');
           playBtn.setAttribute('data-i18n-button', 'challenge'); 
           playBtn.textContent = langData[currLang]?.challenge || 'Challenge';
+          playBtn.setAttribute('onclick', 'go_to_page("/game")');
           leaderDiv.appendChild(playBtn);
         } else if (sentIds.includes(leader.user_id)) {
           const sentBtn = document.createElement('button');

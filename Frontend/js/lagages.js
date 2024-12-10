@@ -252,12 +252,26 @@ const  langData = ({
 //If the key is "welcomeMessage" and langData[currLang]?.["welcomeMessage"] is undefined, 
 //the displayed text will be "welcomeMessage".
 
-
-function updateLanguageContent() {
-        console.log("hi1");
-      
-        const currLang = localStorage.getItem('lang') || 'en';
-      
+async function updateLanguageContent() {
+        let currLang = localStorage.getItem('lang') || 'en';
+        if (!localStorage.getItem('lang') && localStorage.getItem('access_token'))
+        {
+            try {
+                const response = await fetch('http://localhost:8000/api/profiles/me/', {
+                  headers: {
+                    'Authorization': `JWT ${localStorage.getItem('access_token')}`
+                  }
+                });
+                
+                if (!response.ok)
+                    console.error(`Failed to fetch profile: ${response.status}`);
+                const data = await response.json();
+                currLang = data.language;
+                localStorage.setItem('lang', currLang);
+            } catch (error) {
+                console.error("Error fetching language :", error);
+            }
+        }
       
         const elements = document.querySelectorAll("[data-i18n]");
         elements.forEach((el) => {
@@ -273,22 +287,13 @@ function updateLanguageContent() {
           if (key)
                  input.placeholder = langData[currLang]?.[key] || key;
         });
-      
-        // Update dynamically added buttons
+
         const buttons = document.querySelectorAll("[data-i18n-button]");
         buttons.forEach((btn) => {
           const key = btn.getAttribute("data-i18n-button");
           if (key)
-                 btn.textContent = langData[currLang]?.[key] || key;
+                btn.textContent = langData[currLang]?.[key] || key;
         });
-
-        // 'data-win-loss' attribute
-        // const winLossElements = document.querySelectorAll("[data-win-loss]");
-        // winLossElements.forEach((el) => {
-        // const key = el.getAttribute("data-win-loss");
-        // if (key) 
-        //     el.textContent = langData[currLang]?.[key] || key;
-        // });
        
         console.log("Language content updated!");
       }

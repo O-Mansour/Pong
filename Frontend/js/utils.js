@@ -33,3 +33,53 @@ export function alreadyAuth() {
         document.dispatchEvent(event);
     }
 }
+
+export async function set_online() {
+    try {
+        const response = await fetch('http://localhost:8000/api/profiles/me/', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${localStorage.getItem('access_token')}`
+            },
+            body: JSON.stringify({
+                is_online: true
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to change online status');
+        }
+    } catch (error) {
+        console.error('Error changing online status:', error);
+    }
+}
+
+export async function set_offline() {
+    try {
+        const response = await fetch('http://localhost:8000/api/profiles/me/', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${localStorage.getItem('access_token')}`
+            },
+            body: JSON.stringify({
+                is_online: false
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to change online status');
+        }
+    } catch (error) {
+        console.error('Error changing online status:', error);
+    }
+}
+
+export function go_to_page(url) {
+    const go_event = new Event("mylink");
+    history.pushState({url}, null, url);
+    document.dispatchEvent(go_event);
+}
