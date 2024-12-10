@@ -254,7 +254,7 @@ const  langData = ({
 
 async function updateLanguageContent() {
         let currLang = localStorage.getItem('lang') || 'en';
-        if (!localStorage.getItem('lang') && localStorage.getItem('access_token'))
+        if (localStorage.getItem('access_token'))
         {
             try {
                 const response = await fetch('http://localhost:8000/api/profiles/me/', {

@@ -74,7 +74,7 @@ input[type="email"] {
 
 
 input[type="password"],
-.pass_eyy .o .ope1 .ope2 {
+.pass_eyy .o  {
 
     position: relative;
     width: 80%;
@@ -87,6 +87,41 @@ input[type="password"],
     color: white;
     left: 5%;
 }
+
+
+input[type="password"],
+.pass_eyy1 .ope1 {
+
+    position: relative;
+    width: 80%;
+    height: 5px;
+    padding: 14px 16px 14px 16px;
+    margin: 10px 0px 10px 0px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(234, 228, 228, 0.1);
+    color: white;
+    left: 5%;
+}
+
+
+input[type="password"],
+.pass_eyy2 .ope2 {
+
+    position: relative;
+    width: 80%;
+    height: 5px;
+    padding: 14px 16px 14px 16px;
+    margin: 10px 0px 10px 0px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(234, 228, 228, 0.1);
+    color: white;
+    left: 5%;
+}
+
+
+
 
 .pass_eyy
 .click_eye
@@ -318,7 +353,6 @@ button {
     
 }
 
-
 .login-box .log .l2,
 .signup-box .log .l2,
 .forgotpassword-box .log .l2 {
@@ -328,7 +362,6 @@ button {
     /* font-size: 0.21.1rem; */
     font-size: 0.85rem;
     color: #fff;
-
 }
 
 .check_ {
@@ -386,7 +419,6 @@ button {
 } */
 
 .intra-login svg {
-
     vertical-align: middle;
 }
 

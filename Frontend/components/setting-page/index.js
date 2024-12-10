@@ -198,8 +198,6 @@ async function setLanguage(event)
 {
     try {
         const selectedLang = event.target.value;
-        localStorage.setItem('lang', selectedLang);
-
         const response = await fetch('http://localhost:8000/api/profiles/me/', {
             method: 'PUT',
             headers: {
@@ -215,7 +213,7 @@ async function setLanguage(event)
             const errorData = await response.json();
             throw new Error(errorData.message || 'Failed to change language');
         }
-
+        localStorage.setItem('lang', selectedLang);
         updateLanguageContent();
     } catch (error) {
         console.error('Error changing language:', error);
