@@ -1,18 +1,13 @@
 import updateLanguageContent from "../../js/lagages.js";
 import { event } from "../link/index.js";
-import {requireAuth} from "../../js/utils.js";
-import {go_to_page} from "../../js/utils.js";
-import {set_offline} from "../../js/utils.js";
+import { alertMessage, requireAuth, go_to_page, set_offline } from "../../js/utils.js";
 
-export class Setting extends  HTMLElement
-{
-    constructor()
-    {
+export class Setting extends HTMLElement {
+    constructor() {
         super();
     }
 
-    connectedCallback()
-    {
+    connectedCallback() {
         requireAuth();
         const template = document.getElementById("setting");
         const content = template.content.cloneNode(true);
@@ -27,24 +22,23 @@ export class Setting extends  HTMLElement
         try {
             const response = await fetch('http://localhost:8000/api/profiles/me/', {
                 headers: {
-                  'Authorization': `JWT ${localStorage.getItem('access_token')}`
+                    'Authorization': `JWT ${localStorage.getItem('access_token')}`
                 }
             });
-            const data = await response.json(); 
+            const data = await response.json();
 
-            const imgElement= document.querySelector('.img_change');
-            const Elementfirstname =document.querySelector('#firstNameInput');
-            const Elementlastname= document.querySelector('#lastNameInput');
+            const imgElement = document.querySelector('.img_change');
+            const Elementfirstname = document.querySelector('#firstNameInput');
+            const Elementlastname = document.querySelector('#lastNameInput');
             const Elementusername = document.querySelector('#usernameInput');
             const Elementemail = document.querySelector('#emailInput');
 
-            if(imgElement && Elementfirstname && Elementlastname && Elementusername && Elementemail)
-            {
+            if (imgElement && Elementfirstname && Elementlastname && Elementusername && Elementemail) {
                 imgElement.src = `http://localhost:8000${data.profileimg}`;
-                Elementfirstname.value= data.firstname;
-                Elementlastname.value= data.lastname;
-                Elementusername.value= data.username;
-                Elementemail.value= data.email;
+                Elementfirstname.value = data.firstname;
+                Elementlastname.value = data.lastname;
+                Elementusername.value = data.username;
+                Elementemail.value = data.email;
             }
 
             // const logoutButton = document.querySelector(".logee");
@@ -55,39 +49,50 @@ export class Setting extends  HTMLElement
             // });
 
             const updateButton = document.querySelector('.update-btn');
-            
+
             updateButton.addEventListener('click', async (event) => {
-            event.preventDefault(); 
-
-            try {
-                const response = await fetch('http://localhost:8000/api/profiles/me/', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `JWT ${localStorage.getItem('access_token')}`
-                    },
-                    body: JSON.stringify({
-                        firstname: Elementfirstname.value,
-                        lastname: Elementlastname.value,
-                        username: Elementusername.value,
-                        email: Elementemail.value
-                    })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to update user information');
-                }
-                const result = await response.json();
-                console.log('User information updated successfully:', result);
-            } catch (error) {
-                console.error('Error updating user information:', error);
-            }
-        });
-
-        const changePasswordButton = document.querySelector('.btn_ch');
-        changePasswordButton.addEventListener('click', async (event) => {
                 event.preventDefault();
+
+                try {
+
+                    if (!Elementfirstname.value ||
+                        !Elementlastname.value ||
+                        !Elementusername.value ||
+                        !Elementemail.value) {
+                            throw new Error('Failed to update user information, empty field.');
+                    }
+
+                    const response = await fetch('http://localhost:8000/api/profiles/me/', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `JWT ${localStorage.getItem('access_token')}`
+                        },
+                        body: JSON.stringify({
+                            firstname: Elementfirstname.value,
+                            lastname: Elementlastname.value,
+                            username: Elementusername.value,
+                            email: Elementemail.value
+                        })
+                    });
+                    // console.log('response status', response.status);
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Failed to update user information');
+                    }
+                    const result = await response.json();
+                    alertMessage('User information updated successfully.',"alert-success");
+                } catch (error) {
+                    // console.log('Error updating user information:', error);
+                    alertMessage(error.message);
+                }
+
+            });
+
+            const changePasswordButton = document.querySelector('.btn_ch');
+            changePasswordButton.addEventListener('click', async (event) => {
+                event.preventDefault();
+
                 const oldPassword = document.querySelector('input[placeholder="Old Password"]');
                 const newPassword = document.querySelector('input[placeholder="New Password"]');
 
@@ -111,14 +116,16 @@ export class Setting extends  HTMLElement
                         const errorData = await response.json();
                         throw new Error(errorData.message || 'Failed to change password');
                     }
-                    alert('Password changed successfully');
-
+                    const result = await response.json();
+                    // alert('Password changed successfully');
+                    alertMessage('Password changed successfully.',"alert-success");
                     // Clear the input fields
                     oldPassword.value = '';
                     newPassword.value = '';
                 } catch (error) {
-                    console.error('Error changing password:', error);
-                    alert(error);
+                    // console.log('Error changing password:', error);
+                   // alert(error);  hana fin khas nbdl message iban luser ==>  Old password is incorrect
+                   alertMessage(error.message);
                 }
             });
 
@@ -134,19 +141,22 @@ export class Setting extends  HTMLElement
                 // Check if a file is selected
                 const file = event.target.files[0];
                 if (!file) {
-                    alert('No file selected!');
+                    // alert('No file selected!');
+                    alertMessage('No file selected!',"alert-danger");
                     return;
+
                 }
 
                 if (file.type !== 'image/jpeg') {
-                    alert('Only JPG files are supported.');
+                    // alert('Only JPG files are supported.');
+                    alertMessage('Only JPG files are supported.',"alert-danger");
                     return;
                 }
 
                 // Prepare the picture data
                 const picData = new FormData();
                 picData.append('profileimg', file);
-            
+
                 try {
                     const response = await fetch('http://localhost:8000/api/profiles/me/', {
                         method: 'PUT',
@@ -155,30 +165,32 @@ export class Setting extends  HTMLElement
                         },
                         body: picData
                     });
-            
+
                     if (!response.ok) {
                         const errorData = await response.json();
                         // Extract profileimg error message if available
                         const profileImgError = errorData.profileimg ? errorData.profileimg.join(', ') : 'Unknown error';
-                        alert('Failed to update profile picture: ' + profileImgError);
+                        // alert('Failed to update profile picture: ' + profileImgError);
+                        alertMessage('Failed to update profile picture: ', + profileImgError);
                         throw new Error(profileImgError);
                     }
-            
                     const result = await response.json();
                     pictureElement.src = `http://localhost:8000${result.profileimg}`;
                 } catch (error) {
-                    console.error('Error updating profile picture:', error);
+                    // console.log('Error updating profile picture:', error);
+                    alertMessage(error.message);
                 }
             });
         } catch (error) {
-        console.error('Error fetching settings:', error); 
+            // console.log('Error fetching settings:', error);
+            alertMessage(error.message);
         }
     }
 }
 
 function logout() {
     const refresh_token = localStorage.getItem('refresh_token');
-    
+
     // Call backend to blacklist token
     fetch('http://localhost:8000/auth/logout/', {
         method: 'POST',
@@ -194,8 +206,7 @@ function logout() {
     });
 }
 
-async function setLanguage(event)
-{
+async function setLanguage(event) {
     try {
         const selectedLang = event.target.value;
         const response = await fetch('http://localhost:8000/api/profiles/me/', {
@@ -216,8 +227,9 @@ async function setLanguage(event)
         localStorage.setItem('lang', selectedLang);
         updateLanguageContent();
     } catch (error) {
-        console.error('Error changing language:', error);
+        // console.log('Error changing language:', error);
+        alertMessage(error.message);
     }
 }
 
-customElements.define("setting-page",Setting);
+customElements.define("setting-page", Setting);

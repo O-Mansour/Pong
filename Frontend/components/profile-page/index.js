@@ -1,5 +1,5 @@
 import updateLanguageContent from "../../js/lagages.js";
-import {requireAuth} from "../../js/utils.js";
+import {alertMessage, requireAuth} from "../../js/utils.js";
 
 export class Profile extends HTMLElement {
   constructor() {
@@ -49,20 +49,20 @@ export class Profile extends HTMLElement {
           tour_wonElement && matches_played && matches_won && friendsElement &&
           xpElement && imgElement && onlineElement) 
         {
-        usernameElement.textContent = data.username;
-        fullnameElement.textContent = `${data.firstname} ${data.lastname}`;
+            usernameElement.textContent = data.username;
+            fullnameElement.textContent = `${data.firstname} ${data.lastname}`;
 
-        joinedElement.textContent = " " + data.date_joined;
+            joinedElement.textContent = " " + data.date_joined;
 
-        tour_playedElement.textContent = data.tour_played;
-        tour_wonElement.textContent = data.tour_won;
-        friendsElement.textContent = data.current_friends;
+            tour_playedElement.textContent = data.tour_played;
+            tour_wonElement.textContent = data.tour_won;
+            friendsElement.textContent = data.current_friends;
 
-        matches_played.textContent = data.wins + data.losses;
-        matches_won.textContent = data.wins;
+            matches_played.textContent = data.wins + data.losses;
+            matches_won.textContent = data.wins;
 
-        xpElement.textContent = data.xps;
-        levelElement.textContent = data.level;
+            xpElement.textContent = data.xps;
+            levelElement.textContent = data.level;
 
         imgElement.src = `http://localhost:8000${data.profileimg}`;
         if (data.is_online == false)
@@ -96,7 +96,9 @@ export class Profile extends HTMLElement {
 
       updateLanguageContent();
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      // console.log('Error fetching profile:', error);
+      alertMessage(error.message);
+
     }
   }
 
@@ -107,6 +109,7 @@ export class Profile extends HTMLElement {
             'Authorization': `JWT ${localStorage.getItem('access_token')}`
         }
       });
+
       const friendsData = await response.json();
       const friendsList = document.querySelector('.Friend_list');
 
@@ -128,7 +131,8 @@ export class Profile extends HTMLElement {
         updateLanguageContent();
       });
     } catch (error) {
-      console.error('Error fetching friend list:', error);
+      // console.log('Error fetching friend list:', error);
+      alertMessage(error.message);
     }
   }
 
@@ -170,7 +174,8 @@ export class Profile extends HTMLElement {
         updateLanguageContent();
       });
     } catch (error) {
-      console.error('Error fetching match history:', error);
+      // console.log('Error fetching match history:', error);
+      alertMessage(error.message);
     }
   }
 }
