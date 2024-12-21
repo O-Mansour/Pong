@@ -6,7 +6,7 @@ export class Gameves extends  HTMLElement
     }
 
      // when the component is attached to the dom 
-
+     
     connectedCallback()
     {
         const template = document.getElementById("page-gamevers");

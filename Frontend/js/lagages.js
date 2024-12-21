@@ -53,7 +53,6 @@ const  langData = ({
                 singleGame: "1 VS 1 Game",
                 tournament: "Tournament",
                 playTournament: "Play a tournament",
-
                 myProfile: "My Profile",
                 challenge: "Challenge",
                 pending: "Pending...",
@@ -139,7 +138,6 @@ const  langData = ({
                 singleGame: "1 contre 1",
                 tournament: "Tournoi",
                 playTournament: "Jouer un tournoi",
-
                 myProfile: "Mon Profil",
                 challenge: "Défi",
                 pending: "En attente",
@@ -148,7 +146,6 @@ const  langData = ({
                 notRankedYet: "Pas encore classé",
                 changefriend: "Défi",
                 friendsTitle:"Veut être votre amie",
-
                 password_login:"Mot de passe",
                 password_signup: "Mot de passe",
                 login_link: "Se connecter",
@@ -262,14 +259,16 @@ async function updateLanguageContent() {
                     'Authorization': `JWT ${localStorage.getItem('access_token')}`
                   }
                 });
-                
                 if (!response.ok)
-                    console.error(`Failed to fetch profile: ${response.status}`);
+                // console.log(`Failed to fetch profile: ${response.status}`);
+                  alertMessage('Failed to fetch profile.',"alert-danger");
+               
                 const data = await response.json();
                 currLang = data.language;
                 localStorage.setItem('lang', currLang);
             } catch (error) {
-                console.error("Error fetching language :", error);
+                // console.log("Error fetching language :", error);
+                alertMessage(error.message);
             }
         }
       
@@ -294,8 +293,7 @@ async function updateLanguageContent() {
           if (key)
                 btn.textContent = langData[currLang]?.[key] || key;
         });
-       
-        console.log("Language content updated!");
+        // console.log("Language content updated!");
       }
       
 export default updateLanguageContent;

@@ -1,6 +1,6 @@
 import updateLanguageContent from "../../js/lagages.js";
 import langData from "../../js/lagages.js";
-import {requireAuth} from "../../js/utils.js";
+import {requireAuth,alertMessage} from "../../js/utils.js";
 
 export class HomeDashboard extends  HTMLElement
 {
@@ -32,19 +32,16 @@ export class HomeDashboard extends  HTMLElement
       const data = await response.json();
 
       const fullnameElement = document.getElementById('fetched_fullname');
-
       const xpElement = document.getElementById('fetched_xp');
       const levelElement = document.getElementById('fetched_level');
       const imgElement = document.querySelector('.prof');
-
       const matches_played = document.getElementById('fetched_matches_played');
       const matches_won = document.getElementById('fetched_matches_won');
+      const Element_totalgame = document.getElementById("fetched_total_game");
+      const Element_gametoday =document.getElementById("fetched_game_tody");
+      const Element_playin_now = document.getElementById("fetched_playin_now");
+      const Element_yourrank = document.getElementById("fetched_yourrank");
 
-     const Element_totalgame = document.getElementById("fetched_total_game");
-     const Element_gametoday =document.getElementById("fetched_game_tody");
-     const Element_playin_now = document.getElementById("fetched_playin_now");
-
-     const Element_yourrank = document.getElementById("fetched_yourrank");
 
       if (fullnameElement && xpElement &&  levelElement && matches_played && matches_won && Element_totalgame
         && Element_gametoday && Element_playin_now && Element_yourrank)
@@ -97,16 +94,17 @@ export class HomeDashboard extends  HTMLElement
 
           // Update your rank
           if (data.rank == null){
-            Element_yourrank.style.fontSize = "18px";
-            Element_yourrank.textContent = "Not ranked yet";
-            Element_yourrank.setAttribute('data-i18n', 'notRankedYet');
+              Element_yourrank.style.fontSize = "18px";
+              Element_yourrank.textContent = "Not ranked yet";
+              Element_yourrank.setAttribute('data-i18n', 'notRankedYet');
           }
           else
             Element_yourrank.textContent = '#' + data.rank;
-          updateLanguageContent();
+            updateLanguageContent();
       }
     } catch (error) {
-      console.error('Error fetching dashboard :', error);
+      // console.log('Error fetching dashboard :', error);
+        alertMessage('Error fetching dashboard :',error.message);
     }
   }
 
@@ -166,7 +164,8 @@ export class HomeDashboard extends  HTMLElement
             acceptButton.disabled = true;
             rejectButton.disabled = true;
           } catch(err) {
-              console.log("failed to accept", err.message);
+              // console.log("failed to accept", err.message);
+              alertMessage(err.message);
           }
         });
 
@@ -180,21 +179,25 @@ export class HomeDashboard extends  HTMLElement
             acceptButton.disabled = true;
             rejectButton.disabled = true;
           }catch(err) {
-            console.log("failed to reject", err.message);
+            // console.log("failed to reject", err.message);
+            alertMessage("failed to reject",err.message);
+
           }
         });
 
         updateLanguageContent();
       });
     } catch (error) {
-      console.error('Error fetching dashboard:', error);
+      // console.log('Error fetching dashboard:', error);
+
+      alertMessage("Error fetching dashboard:",err.message);
+
     }
   }
 
 
   async fetchTotalPlayers() {
     try {
-    
       const response = await fetch('http://localhost:8000/api/profiles/me/', {
         headers: {
           'Authorization': `JWT ${localStorage.getItem('access_token')}`
@@ -303,10 +306,14 @@ export class HomeDashboard extends  HTMLElement
                 addFriendBtn.setAttribute('data-i18n-button', 'pending');
                 addFriendBtn.textContent = langData[currLang]?.pending || 'Pending..';
               } else {
-                  alert('Failed to send friend request.');
+                  // alert('Failed to send friend request.');
+                  alertMessage('Failed to send friend request.',"alert-danger");
                 }
               } catch (error) {
-                console.error('Error adding friend:', error);
+
+                // console.log('Error adding friend:', error);
+                alertMessage("'Error adding friend:",error.message);
+
               }
             });
           }
@@ -315,10 +322,10 @@ export class HomeDashboard extends  HTMLElement
           updateLanguageContent();
       });
     } catch (error) {
-      console.error('Error fetching dashboard:', error);
+      // console.log('Error fetching dashboard:', error);
+      alertMessage('Error fetching dashboard:',"alert-danger");
     }
   }
-  
 }
 
 customElements.define("home-dashboard-page", HomeDashboard);

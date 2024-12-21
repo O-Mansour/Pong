@@ -2,7 +2,7 @@ import updateLanguageContent from "../../js/lagages.js";
 import { event } from "../link/index.js";
 import { alreadyAuth } from "../../js/utils.js";
 import { set_online } from "../../js/utils.js";
-
+import { alertMessage} from "../../js/utils.js";
 export class LoginSignup extends HTMLElement {
 
     constructor() 
@@ -20,8 +20,7 @@ export class LoginSignup extends HTMLElement {
         updateLanguageContent();
 
         this.querySelector('.signup-box').addEventListener('submit', this.handleSignup);
-
-
+        
         const clickEye1 = this.querySelector('.click_eye1');
         const clickEye2 = this.querySelector('.click_eye2');
 
@@ -38,7 +37,9 @@ export class LoginSignup extends HTMLElement {
                 }
             });
         } else {
-            console.error('.click_eye1 button not found in LoginSignup component');
+
+            // console.log('.click_eye1 button not found in LoginSignup component');
+            alertMessage('.click_eye1 button not found in LoginSignup component',"alert-danger");
         }
 
         if (clickEye2) {
@@ -54,10 +55,10 @@ export class LoginSignup extends HTMLElement {
                 }
             });
         } else {
-            console.error('.click_eye2 button not found in LoginSignup component');
+            // console.log('.click_eye2 button not found in LoginSignup component');
+            alertMessage('.click_eye2 button not found in LoginSignup component',"alert-danger");
         }
     
-
 
         // document.querySelectorAll('.click_eye')[0].addEventListener('click', () => {
         //     const passwordInput = document.getElementById('password');
@@ -121,7 +122,8 @@ export class LoginSignup extends HTMLElement {
         const confirmPassword = this.querySelector('#confirm_password').value;
 
         if (password !== confirmPassword) {
-            alert('Passwords do not match!');
+            // alert('Passwords do not match!');
+            alertMessage('Passwords do not match!',"alert-danger");
             return;
         }
 
@@ -140,7 +142,8 @@ export class LoginSignup extends HTMLElement {
             });
             const data = await response.json();
             if (!response.ok) {
-                alert("No valid response");
+                // alert("No valid response");
+                alertMessage('No valid response',"alert-danger");
                 return ;
             }
             localStorage.setItem('access_token', data.access);
@@ -151,8 +154,9 @@ export class LoginSignup extends HTMLElement {
             history.pushState({url}, null, url);
             document.dispatchEvent(event);
         } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again later.');
+            console.log('Error:', error);
+            // alert('An error occurred. Please try again later.');
+            alertMessage('An error occurred. Please try again later',"alert-danger");
         }
     }
 }

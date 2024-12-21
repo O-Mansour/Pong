@@ -121,8 +121,6 @@ input[type="password"],
 }
 
 
-
-
 .pass_eyy
 .click_eye
 {
@@ -259,35 +257,6 @@ input[type="email"]
     width: 100%;
 }
 
-/* .pass_eyy1 .click_eye1 .eye1 {
-    position: absolute;
-    top: 190%;
-    /* transform: translate(-60%); */
-    /* transform: translate(-162%, -695%);
-    font-size: 20px; */
-/* } 
-
-.pass_eyy1
-.click_eye1
-.eye1 {
-
-    position: absolute;
-    top: 190%;
- transform: translate(-60%); 
-     transform: translate(-50%, -651%);
-    font-size: 20px;
-}
-
-.pass_eyy2
-.click_eye2
-.eye2 {
-    position: absolute;
-    top: 336%;
-    transform: translate(-50%);
-     transform: translate(-50%, -1327%);
-    font-size: 20px; 
- }
-*/
 
 ::placeholder {
 
