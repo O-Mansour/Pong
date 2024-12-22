@@ -103,8 +103,7 @@ export class HomeDashboard extends  HTMLElement
             updateLanguageContent();
       }
     } catch (error) {
-      // console.log('Error fetching dashboard :', error);
-        alertMessage('Error fetching dashboard :',error.message);
+        alertMessage('Error fetching data : ' + error.message);
     }
   }
 
@@ -164,8 +163,7 @@ export class HomeDashboard extends  HTMLElement
             acceptButton.disabled = true;
             rejectButton.disabled = true;
           } catch(err) {
-              // console.log("failed to accept", err.message);
-              alertMessage(err.message);
+              alertMessage("Failed to accept" + err.message);
           }
         });
 
@@ -179,19 +177,14 @@ export class HomeDashboard extends  HTMLElement
             acceptButton.disabled = true;
             rejectButton.disabled = true;
           }catch(err) {
-            // console.log("failed to reject", err.message);
-            alertMessage("failed to reject",err.message);
-
+            alertMessage("failed to reject" + err.message);
           }
         });
 
         updateLanguageContent();
       });
     } catch (error) {
-      // console.log('Error fetching dashboard:', error);
-
-      alertMessage("Error fetching dashboard:",err.message);
-
+      alertMessage("Error fetching data : " + err.message);
     }
   }
 
@@ -306,24 +299,18 @@ export class HomeDashboard extends  HTMLElement
                 addFriendBtn.setAttribute('data-i18n-button', 'pending');
                 addFriendBtn.textContent = langData[currLang]?.pending || 'Pending..';
               } else {
-                  // alert('Failed to send friend request.');
-                  alertMessage('Failed to send friend request.',"alert-danger");
+                  alertMessage('Failed to send friend request');
                 }
               } catch (error) {
-
-                // console.log('Error adding friend:', error);
-                alertMessage("'Error adding friend:",error.message);
-
+                alertMessage("Error adding friend : " + error.message);
               }
             });
           }
           leaderboard.appendChild(leaderDiv);
-          // Ensure language is updated for dynamically added buttons
           updateLanguageContent();
       });
     } catch (error) {
-      // console.log('Error fetching dashboard:', error);
-      alertMessage('Error fetching dashboard:',"alert-danger");
+      alertMessage('Error fetching data : ' + error.message);
     }
   }
 }

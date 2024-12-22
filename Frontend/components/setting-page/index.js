@@ -1,5 +1,4 @@
 import updateLanguageContent from "../../js/lagages.js";
-import { event } from "../link/index.js";
 import { alertMessage, requireAuth, go_to_page, set_offline } from "../../js/utils.js";
 
 export class Setting extends HTMLElement {
@@ -41,13 +40,6 @@ export class Setting extends HTMLElement {
                 Elementemail.value = data.email;
             }
 
-            // const logoutButton = document.querySelector(".logee");
-            // logoutButton.addEventListener("click", () => {
-            //     const url = '/';
-            //     history.pushState({url}, null, url);  //history.pushState to change the browser’s URL without reloading the page
-            //     document.dispatchEvent(event);
-            // });
-
             const updateButton = document.querySelector('.update-btn');
 
             updateButton.addEventListener('click', async (event) => {
@@ -80,10 +72,8 @@ export class Setting extends HTMLElement {
                         const errorData = await response.json();
                         throw new Error(errorData.message || 'Failed to update user information');
                     }
-                    const result = await response.json();
                     alertMessage('User information updated successfully.',"alert-success");
                 } catch (error) {
-                    // console.log('Error updating user information:', error);
                     alertMessage(error.message);
                 }
 
@@ -116,15 +106,11 @@ export class Setting extends HTMLElement {
                         const errorData = await response.json();
                         throw new Error(errorData.message || 'Failed to change password');
                     }
-                    const result = await response.json();
-                    // alert('Password changed successfully');
-                    alertMessage('Password changed successfully.',"alert-success");
+                    alertMessage('Password changed successfully.', "alert-success");
                     // Clear the input fields
                     oldPassword.value = '';
                     newPassword.value = '';
                 } catch (error) {
-                    // console.log('Error changing password:', error);
-                   // alert(error);  hana fin khas nbdl message iban luser ==>  Old password is incorrect
                    alertMessage(error.message);
                 }
             });
@@ -141,18 +127,13 @@ export class Setting extends HTMLElement {
                 // Check if a file is selected
                 const file = event.target.files[0];
                 if (!file) {
-                    // alert('No file selected!');
-                    alertMessage('No file selected!',"alert-danger");
+                    alertMessage('No file selected!');
                     return;
-
                 }
-
                 if (file.type !== 'image/jpeg') {
-                    // alert('Only JPG files are supported.');
-                    alertMessage('Only JPG files are supported.',"alert-danger");
+                    alertMessage('Only JPG files are supported.');
                     return;
                 }
-
                 // Prepare the picture data
                 const picData = new FormData();
                 picData.append('profileimg', file);
@@ -170,20 +151,16 @@ export class Setting extends HTMLElement {
                         const errorData = await response.json();
                         // Extract profileimg error message if available
                         const profileImgError = errorData.profileimg ? errorData.profileimg.join(', ') : 'Unknown error';
-                        // alert('Failed to update profile picture: ' + profileImgError);
-                        alertMessage('Failed to update profile picture: ', + profileImgError);
-                        throw new Error(profileImgError);
+                        throw new Error('Failed to update profile picture' + profileImgError);
                     }
                     const result = await response.json();
                     pictureElement.src = `http://localhost:8000${result.profileimg}`;
                 } catch (error) {
-                    // console.log('Error updating profile picture:', error);
                     alertMessage(error.message);
                 }
             });
         } catch (error) {
-            // console.log('Error fetching settings:', error);
-            alertMessage(error.message);
+            alertMessage('Error fetching settings data : ' + error.message);
         }
     }
 }
@@ -227,8 +204,7 @@ async function setLanguage(event) {
         localStorage.setItem('lang', selectedLang);
         updateLanguageContent();
     } catch (error) {
-        // console.log('Error changing language:', error);
-        alertMessage(error.message);
+        alertMessage('Error changing language : ' + error.message);
     }
 }
 

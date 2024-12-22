@@ -36,10 +36,6 @@ export class LoginSignup extends HTMLElement {
                     eyeIcon.src = "./images/closed_eye.png";
                 }
             });
-        } else {
-
-            // console.log('.click_eye1 button not found in LoginSignup component');
-            alertMessage('.click_eye1 button not found in LoginSignup component',"alert-danger");
         }
 
         if (clickEye2) {
@@ -54,61 +50,9 @@ export class LoginSignup extends HTMLElement {
                     eyeIcon.src = "./images/closed_eye.png";
                 }
             });
-        } else {
-            // console.log('.click_eye2 button not found in LoginSignup component');
-            alertMessage('.click_eye2 button not found in LoginSignup component',"alert-danger");
         }
-    
-
-        // document.querySelectorAll('.click_eye')[0].addEventListener('click', () => {
-        //     const passwordInput = document.getElementById('password');
-        //     if (passwordInput.type == 'password') {
-        //         passwordInput.type = 'text';
-        //         document.querySelector('.eye1').src = "./images/open_eye.png";
-        //     } else {
-        //         passwordInput.type = 'password';
-        //         document.querySelector('.eye1').src = "./images/closed_eye.png";
-        //     }
-        // });
-
-        // document.querySelectorAll('.click_eye')[1].addEventListener('click', () => {
-        //     const passwordInput = document.getElementById('confirm_password');
-        //     if (passwordInput.type == 'password') {
-        //         passwordInput.type = 'text';
-        //         document.querySelector('.eye2').src = "./images/open_eye.png";
-        //     } else {
-        //         passwordInput.type = 'password';
-        //         document.querySelector('.eye2').src = "./images/closed_eye.png";
-        //     }
-        // });
-
-
-        // document.querySelector('.click_eye1')[0].addEventListener('click', () => {
-        //     const passwordInput = document.getElementById('password');
-        //     if (passwordInput.type == 'password') {
-        //         passwordInput.type = 'text';
-        //         document.querySelector('.eye1').src = "./images/open_eye.png";
-        //     } else {
-        //         passwordInput.type = 'password';
-        //         document.querySelector('.eye1').src = "./images/closed_eye.png";
-        //     }
-        // });
-
-
-        // document.querySelector('.click_eye2')[1].addEventListener('click', () => {
-        //     const passwordInput = document.getElementById('password');
-        //     if (passwordInput.type == 'password') {
-        //         passwordInput.type = 'text';
-        //         document.querySelector('.eye2').src = "./images/open_eye.png";
-        //     } else {
-        //         passwordInput.type = 'password';
-        //         document.querySelector('.eye2').src = "./images/closed_eye.png";
-        //     }
-        // });
-
     }
 
-    // Cleans up the submit event listener to prevent memory leaks
     disconnectedCallback() {
         this.querySelector('.signup-box').removeEventListener('submit', this.handleSignup);
     }
@@ -122,13 +66,11 @@ export class LoginSignup extends HTMLElement {
         const confirmPassword = this.querySelector('#confirm_password').value;
 
         if (password !== confirmPassword) {
-            // alert('Passwords do not match!');
-            alertMessage('Passwords do not match!',"alert-danger");
+            alertMessage('Passwords do not match!');
             return;
         }
 
         try {
-            // Send data to the backend
             const response = await fetch('http://localhost:8000/auth/register/', {
                 method: 'POST',
                 headers: {
@@ -142,8 +84,7 @@ export class LoginSignup extends HTMLElement {
             });
             const data = await response.json();
             if (!response.ok) {
-                // alert("No valid response");
-                alertMessage('No valid response',"alert-danger");
+                alertMessage(data.error || "An error occurred. Try again");
                 return ;
             }
             localStorage.setItem('access_token', data.access);
@@ -154,9 +95,7 @@ export class LoginSignup extends HTMLElement {
             history.pushState({url}, null, url);
             document.dispatchEvent(event);
         } catch (error) {
-            console.log('Error:', error);
-            // alert('An error occurred. Please try again later.');
-            alertMessage('An error occurred. Please try again later',"alert-danger");
+            alertMessage('An error occurred. Try again');
         }
     }
 }

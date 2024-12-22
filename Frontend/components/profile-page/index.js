@@ -96,8 +96,7 @@ export class Profile extends HTMLElement {
 
       updateLanguageContent();
     } catch (error) {
-      // console.log('Error fetching profile:', error);
-      alertMessage(error.message);
+      alertMessage('Error fetching profile data : ' + error.message);
 
     }
   }
@@ -131,8 +130,7 @@ export class Profile extends HTMLElement {
         updateLanguageContent();
       });
     } catch (error) {
-      // console.log('Error fetching friend list:', error);
-      alertMessage(error.message);
+      alertMessage('Error fetching friend list : ' + error.message);
     }
   }
 
@@ -174,8 +172,7 @@ export class Profile extends HTMLElement {
         updateLanguageContent();
       });
     } catch (error) {
-      // console.log('Error fetching match history:', error);
-      alertMessage(error.message);
+      alertMessage('Error fetching match history : ' + error.message);
     }
   }
 }

@@ -179,6 +179,11 @@ class MatchViewSet(ModelViewSet):
 
 class RegistrationView(APIView):
 	def post(self, request):
+		# Check if the username already exists
+		if User.objects.filter(username=request.data['username']).exists():
+			return Response(
+				{"error": "Username already exists"}, status=status.HTTP_400_BAD_REQUEST
+				)
 		serializer = UserSerializer(data=request.data)
 		if serializer.is_valid():
 			user = serializer.save()
@@ -186,8 +191,8 @@ class RegistrationView(APIView):
 			return Response({
 				'refresh': str(refresh),
 				'access': str(refresh.access_token),
-			})
-		return Response(serializer.errors, status=400)
+			}, status=status.HTTP_201_CREATED)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(APIView):
 	def post(self, request):
