@@ -17,6 +17,8 @@ from django.conf import settings
 import requests
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError as ValidationErrorException
 
 from django.http import JsonResponse
 
@@ -44,6 +46,12 @@ class ProfileViewSet(ModelViewSet):
 	
 	@action(detail=False, methods=['POST'])
 	def change_password(self, request):
+		try:
+			validate_password(request.data['new_password'])
+		except ValidationErrorException:
+			return Response(
+				{"message": "New password is not valid"}, status=status.HTTP_400_BAD_REQUEST)
+
 		serializer = PasswordSerializer(
 			data=request.data, 
 			context={'request': request}
@@ -75,7 +83,7 @@ class FriendshipViewSet(ModelViewSet):
 		
 		# Prevent self-friendship
 		if receiver == self.request.user:
-			raise ValidationError("You cannot send a friendship request to yourself.")
+			raise ValidationError({"message": "You cannot send a friendship request to yourself"})
 
 		# Check for existing non-accepted friendship requests
 		existing_friendship = Friendship.objects.filter(
@@ -89,7 +97,7 @@ class FriendshipViewSet(ModelViewSet):
 				# Allow new request if all previous were rejected
 				serializer.save(sender=self.request.user)
 			else:
-				raise ValidationError("Friendship request already exists.")
+				raise ValidationError({"message": "Friendship request already exists"})
 		else:
 			# No existing requests, create new
 			serializer.save(sender=self.request.user)
@@ -173,17 +181,24 @@ class MatchViewSet(ModelViewSet):
 		opponent = serializer.validated_data['opponent']
 		
 		if opponent == self.request.user.profile:
-			raise ValidationError("You cannot play a match with yourself.")
+			raise ValidationError({"message": "You cannot play a match with yourself"})
 
 		serializer.save(player=self.request.user.profile)
 
 class RegistrationView(APIView):
 	def post(self, request):
-		# Check if the username already exists
+		# Check if the username and email already in use
 		if User.objects.filter(username=request.data['username']).exists():
 			return Response(
-				{"error": "Username already exists"}, status=status.HTTP_400_BAD_REQUEST
-				)
+				{"message": "The username is already taken"}, status=status.HTTP_400_BAD_REQUEST)
+		if User.objects.filter(email=request.data['email']).exists():
+			return Response(
+				{"message": "The email is already in use"}, status=status.HTTP_400_BAD_REQUEST)
+		try:
+			validate_password(request.data['password'])
+		except ValidationErrorException:
+			return Response(
+				{"message": "The password is not valid"}, status=status.HTTP_400_BAD_REQUEST)
 		serializer = UserSerializer(data=request.data)
 		if serializer.is_valid():
 			user = serializer.save()

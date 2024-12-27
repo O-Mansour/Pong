@@ -3,6 +3,7 @@ from rest_framework import serializers
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 
 class ProfileSerializer(serializers.ModelSerializer):
 	user_id = serializers.IntegerField(required=False, read_only=True)
@@ -29,6 +30,13 @@ class ProfileSerializer(serializers.ModelSerializer):
 	def update(self, instance, validated_data):
 		# Extract user data
 		user_data = validated_data.pop('user', {})
+
+		if self.instance:
+			current_user = self.instance.user
+			if Profile.objects.exclude(user=current_user).filter(user__username=user_data['username']).exists():
+				raise serializers.ValidationError({"message": "The username is already taken"})
+			if Profile.objects.exclude(user=current_user).filter(user__email=user_data['email']).exists():
+				raise serializers.ValidationError({"message": "The email is already in use"})
 		
 		# Update user fields
 		if user_data:
@@ -44,7 +52,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 			if 'email' in user_data:
 				user.email = user_data['email']
 			
-			# Handle password separately (with proper hashing)
+			# Handle password with proper hashing
 			if 'password' in user_data:
 				user.set_password(user_data['password'])
 			
@@ -57,23 +65,20 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 		return instance
 
-	def validate_email(self, value):
-		"""
-		Validate email uniqueness using Profile
-		"""
-		user = self.instance.user if self.instance else None
-		if Profile.objects.exclude(user=user if user else None).filter(user__email=value).exists():
-			raise serializers.ValidationError("This email is already in use.")
-		return value
+	# def validate_email(self, value):
+	# 	if self.instance:
+	# 		current_user = self.instance.user
+	# 		if Profile.objects.exclude(user=current_user).filter(user__email=value).exists():
+	# 			raise serializers.ValidationError({"message": "The email is already in use"})
+	# 	return value
 
-	def validate_username(self, value):
-		"""
-		Validate username uniqueness using Profile
-		"""
-		user = self.instance.user if self.instance else None
-		if Profile.objects.exclude(user=user if user else None).filter(user__username=value).exists():
-			raise serializers.ValidationError("This username is already taken.")
-		return value
+
+	# def validate_username(self, value):
+	# 	if self.instance:
+	# 		current_user = self.instance.user
+	# 		if Profile.objects.exclude(user=current_user).filter(user__username=value).exists():
+	# 			raise serializers.ValidationError({"message": "The username is already taken"})
+	# 	return value
 
 class ProfileSimpleSerializer(serializers.ModelSerializer):
 	username = serializers.CharField(source='user.username', read_only=True)
@@ -137,20 +142,31 @@ class UserSerializer(serializers.ModelSerializer):
 		)
 		return user
 
+	# I may not need it here (added in the view)
+	# def validate_password(self, value):
+	# 	try:
+	# 		validate_password(value)
+	# 	except ValidationError:
+	# 		raise serializers.ValidationError({"message": "The password is not valid"})
+	# 	return value
+
 class PasswordSerializer(serializers.Serializer):
-	old_password = serializers.CharField(write_only=True, required=True)
+	old_password = serializers.CharField(write_only=True, required=False, allow_blank=True)
 	new_password = serializers.CharField(write_only=True, required=True)
 
-	def validate_new_password(self, value):
-		# Use Django's built-in password validation
-		validate_password(value)
-		return value
+	# def validate_new_password(self, value):
+	# 	try:
+	# 		validate_password(value)
+	# 	except ValidationError:
+	# 		raise serializers.ValidationError({"message": "New password is not valid"})
+	# 	return value
 
 	def validate(self, data):
 		# Check if old password is correct
 		user = self.context['request'].user
-		if not user.check_password(data.get('old_password')):
-			raise serializers.ValidationError({"message": "Old password is incorrect"})
+		if user.has_usable_password():
+			if not user.check_password(data.get('old_password')):
+				raise serializers.ValidationError({"message": "Old password is incorrect"})
 		return data
 
 	def save(self, **kwargs):

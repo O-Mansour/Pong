@@ -47,10 +47,10 @@ export class Setting extends HTMLElement {
 
                 try {
 
-                    if (!Elementfirstname.value ||
-                        !Elementlastname.value ||
-                        !Elementusername.value ||
-                        !Elementemail.value) {
+                    if (!Elementfirstname.value.trim() ||
+                        !Elementlastname.value.trim() ||
+                        !Elementusername.value.trim() ||
+                        !Elementemail.value.trim()) {
                             throw new Error('Failed to update user information, empty field.');
                     }
 
@@ -61,10 +61,10 @@ export class Setting extends HTMLElement {
                             'Authorization': `JWT ${localStorage.getItem('access_token')}`
                         },
                         body: JSON.stringify({
-                            firstname: Elementfirstname.value,
-                            lastname: Elementlastname.value,
-                            username: Elementusername.value,
-                            email: Elementemail.value
+                            firstname: Elementfirstname.value.trim(),
+                            lastname: Elementlastname.value.trim(),
+                            username: Elementusername.value.trim(),
+                            email: Elementemail.value.trim()
                         })
                     });
                     // console.log('response status', response.status);
@@ -86,8 +86,11 @@ export class Setting extends HTMLElement {
                 const oldPassword = document.querySelector('input[placeholder="Old Password"]');
                 const newPassword = document.querySelector('input[placeholder="New Password"]');
 
-                if (!oldPassword || !newPassword.value)
+                if (!newPassword.value.trim())
+                {
+                    alertMessage('New password field cannot be blank.');
                     return;
+                }
 
                 try {
                     const response = await fetch('http://localhost:8000/api/profiles/change_password/', {

@@ -56,7 +56,7 @@ export class HomeDashboard extends  HTMLElement
                 progressPercentage = (data.xps / maxXp) * 100;
             document.querySelector('.ft_progress').style = `--xp:${progressPercentage}%`;
 
-          imgElement.src = `http://localhost:8000/${data.profileimg}`;
+          imgElement.src = `http://localhost:8000${data.profileimg}`;
 
 
           matches_played.textContent = data.wins + data.losses;

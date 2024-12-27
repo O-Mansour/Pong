@@ -1,0 +1,21 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="game.css" />
+    <title>Pong</title>
+  </head>
+  <body>
+    <div id="score-container">
+      <div id="player1-score">Player 1: <span id="scoreLeft">0</span></div>
+      <div id="player2-score">Player 2: <span id="scoreRight">0</span></div>
+    </div>
+    <div id="connection-status">Connecting...</div>
+    <div id="player-side"></div>
+    <!-- <div id="tournament-stage">Tournament Stage: Not Started</div> -->
+    <div id="tournament-status">Waiting for players...</div>
+    <script src="game.js" type="module"></script>
+  </body>
+</html>

@@ -17,6 +17,7 @@ from datetime import timedelta
 STATIC_URL = '/static/'
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -27,8 +28,9 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'core',
-    # 'oauth2_42',
-    'corsheaders'
+    'corsheaders',
+    'channels',
+    'pong_app'
 ]
 
 MIDDLEWARE = [
@@ -45,6 +47,14 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000"
 ]
+
+ASGI_APPLICATION = 'pong.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 TEMPLATES = [
     {

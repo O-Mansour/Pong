@@ -1,4 +1,4 @@
-const rout = ['', '/', '/home', '/user', '/settings', '/404', '/forgetpassword', '/sign-up' ,'/game','/twoplyer','/tournament']
+const rout = ['', '/', '/home', '/user', '/settings', '/404', '/forgetpassword', '/sign-up' ,'/game' ,'/tournament']
 
 const routes = new Map([
 
@@ -13,6 +13,10 @@ const routes = new Map([
     ["/sign-up",{
         Title: "signup",
         Element: "signup-page"
+    }],
+    ["/game",{
+        Title: "Game",
+        Element: "game-page"
     }],
     ["/home",{
         Title: "Home",
@@ -30,11 +34,11 @@ const routes = new Map([
         Title: "setting",
         Element: "setting-page"
     }],
-    ["/game", {
+    ["/select", {
         Title: "game",
         Element: "ponggame-game"
     }],
-    ["/twoplyer", {
+    ["/1vs1-local", {
         Title: "game",
         Element: "vers1-game"
     }],

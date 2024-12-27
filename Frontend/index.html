@@ -9,15 +9,20 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
     <!-- <script src="./js/bootstrap.bundle.min.js"></script> -->
-   
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/"
+          }
+        }
+      </script>
 </head>
 
 <body>
 
     <main>
     </main>
-    
-    <div id="alert" class="alertMessage"></div>
 
     <template id="login-page">
             <div class="ft_container_0">
@@ -124,7 +129,7 @@
                     <ul>
                         <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
                         <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
-                        <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                        <li><my-link href="/select"><img src="./images/Stadium.png" alt="Games"></my-link></li>
                         <!-- <li><my-link href=""><img src="./images/Chat.png" alt="msg"></my-link></li> -->
                         <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
                     </ul>
@@ -374,7 +379,7 @@
                     <ul>
                         <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
                         <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
-                        <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                        <li><my-link href="/select"><img src="./images/Stadium.png" alt="Games"></my-link></li>
                         <!-- <li><my-link href="#"><img src="./images/Chat.png" alt="msg"></my-link></li> -->
                         <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
                     </ul>
@@ -494,7 +499,7 @@
                 <ul>
                     <li><my-link title="home_page" href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
                     <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
-                    <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                    <li><my-link href="/select"><img src="./images/Stadium.png" alt="Games"></my-link></li>
                     <!-- <li><my-link href="#"><img src="./images/Chat.png" alt="msg"></my-link></li> -->
                     <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
                 </ul>
@@ -751,7 +756,7 @@
                     <ul>
                         <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
                         <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
-                        <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                        <li><my-link href="/select"><img src="./images/Stadium.png" alt="Games"></my-link></li>
                         <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
                     </ul>
                 </nav>
@@ -764,7 +769,14 @@
                         <div class="sig_game">
                             <h1 class="clc_game"><span data-i18n="classicGame"></span></h1>
                             <h2 class="single_game"> <span  data-i18n="singleGame"></span></h2>
-                           <ul><li> <my-link href="/twoplyer"><img src="./images/versus.png" alt="" class="vss_1"></my-link></li></ul>
+                           <ul><li>
+                            
+                            <my-link onclick="go_to_page('/game?mode=1vs1-local')"><img src="./images/versus.png" class="vss_1"></my-link>
+                        
+
+                            
+                        
+                        </li></ul>
                            
                         </div>
                     </div>
@@ -772,7 +784,7 @@
                       <div class="to_4">
                         <h1 class="tous_4"> <span data-i18n="tournament"></span></h1>
                         <h2 class="tous_plys"><span data-i18n="playTournament"></span></h2>
-                        <ul> <li><my-link href="/tournament"><img src="./images/poker.png" alt="" class="vss_4"></my-link></li> </ul>
+                        <ul> <li><my-link onclick="go_to_page('/game?mode=tournament')"><img src="./images/poker.png" alt="" class="vss_4"></my-link></li> </ul>
                       </div>
                     </div>
                 </div>
@@ -798,7 +810,7 @@
                      <ul>
                          <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
                          <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
-                         <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                         <li><my-link href="/select"><img src="./images/Stadium.png" alt="Games"></my-link></li>
                          <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
                      </ul>
                  </nav>
@@ -825,7 +837,7 @@
                      <ul>
                          <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
                          <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
-                         <li><my-link href="/game"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                         <li><my-link href="/select"><img src="./images/Stadium.png" alt="Games"></my-link></li>
                          <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
                      </ul>
                  </nav>
@@ -842,6 +854,7 @@
 
 
 <script src="./components/login-page/index.js" type="module"></script>
+<script src="./components/game/index.js" type="module"></script>
 <script src="./components/signup-page/index.js" type="module"></script>
 <script src="./components/forget-password-page/index.js" type="module"></script>
 <script src="./components/home-dashboard-page/index.js" type="module"></script>

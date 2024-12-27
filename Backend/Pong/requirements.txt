@@ -8,3 +8,5 @@ django-filter
 djangorestframework-simplejwt
 gunicorn
 django-cors-headers
+daphne
+channels
