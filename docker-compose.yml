@@ -26,16 +26,6 @@ services:
       - database
     env_file: .env
 
-  game:
-    image: game
-    container_name: 1vs1-local
-    build:
-      context: ./Game
-    ports:
-      - "8080:80"
-    networks:
-      - pong-network
-  
   database:
     image: postgres:13
     ports:
