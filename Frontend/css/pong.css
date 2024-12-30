@@ -17,12 +17,12 @@
     gap: 1rem;
 } */
 
-body_game { 
+/* body_game { 
     margin: 0; 
     overflow: hidden; 
     background-color: #000;
     font-family: Arial, sans-serif;
-}
+} */
 #score-container {
     position: absolute;
     top: 10px;
@@ -63,7 +63,7 @@ body_game {
     font-family: Arial, sans-serif;
     margin: 0;
   } */
-/*   
+
 .card {
 display: flex;
 align-items: center;
@@ -98,4 +98,4 @@ font-size: 24px;
 font-weight: bold;
 color: #ff4d4d;
 text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-} */
+}

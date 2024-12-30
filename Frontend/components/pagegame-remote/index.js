@@ -1,7 +1,7 @@
 import updateLanguageContent from "../../js/lagages.js";
 import {requireAuth} from "../../js/utils.js";
 
-export class Gamermote extends  HTMLElement
+export class Gameremote extends  HTMLElement
 {
     constructor()
     {
@@ -13,11 +13,11 @@ export class Gamermote extends  HTMLElement
     connectedCallback()
     {
         requireAuth();
-        const template = document.getElementById("page-game");
+        const template = document.getElementById("page-remote");
         const content = template.content.cloneNode(true);
         this.appendChild(content);
         updateLanguageContent();
     }
 }
 
-customElements.define("ponggame-game", Gamermote);
+customElements.define("pagegame-remote", Gameremote);

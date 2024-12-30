@@ -42,6 +42,14 @@ const routes = new Map([
         Title: "game",
         Element: "vers1-game"
     }],
+    ["/local", {
+        Title: "game",
+        Element: "localgame-game"
+    }],
+    ["/remote", {
+        Title: "game",
+        Element: "pagegame-remote"
+    }],
     ["/tournament", {
         Title: "game",
         Element: "vers4-game"

@@ -18,10 +18,10 @@ class PlayerSide(Enum):
     RIGHT = 'right'
 
 class GameConfig:
-    FPS = 60
+    FPS = 120
     FRAME_TIME = 1 / FPS
-    BALL_SPEED = 0.3
-    PADDLE_SPEED = 0.15
+    BALL_SPEED = 0.35
+    PADDLE_SPEED = 0.1
     PADDLE_BOUND = 2.4
     BALL_BOUND_Z = 2.9
     PADDLE_HITBOX_HEIGHT = 1.2

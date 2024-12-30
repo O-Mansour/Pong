@@ -49,7 +49,6 @@ export class WebSocketManager {
         switch(data.type) {
             case 'players_ready':
                 this.handlePlayersReady(data, connectionStatus, playerSideElement, sideAssigned);
-                console.log(data);
                 break;
             
             case 'game_state':
@@ -123,7 +122,7 @@ export class WebSocketManager {
             '1vs1-local': '1vs1-local/',
             'tournament': 'tournament/'
         };
-        return baseUrl + (modes[gameMode] || modes.tournament) ;
+        return baseUrl + (modes[gameMode] || '1vs1-local/') ;
     }
 
     sendPaddleMove(side, direction) {

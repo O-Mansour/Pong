@@ -84,7 +84,7 @@ export class LoginSignup extends HTMLElement {
             });
             const data = await response.json();
             if (!response.ok) {
-                alertMessage(data.message || "An error occurred. Try again");
+                alertMessage(data.error || "An error occurred. Try again");
                 return ;
             }
             localStorage.setItem('access_token', data.access);

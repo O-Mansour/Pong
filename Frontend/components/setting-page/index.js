@@ -16,7 +16,9 @@ export class Setting extends HTMLElement {
 
         this.querySelector('.logee').addEventListener('click', logout);
         document.getElementById("ch")?.addEventListener("change", setLanguage);
+    
     }
+    
     async fetchsettingsData() {
         try {
             const response = await fetch('http://localhost:8000/api/profiles/me/', {
@@ -47,10 +49,10 @@ export class Setting extends HTMLElement {
 
                 try {
 
-                    if (!Elementfirstname.value.trim() ||
-                        !Elementlastname.value.trim() ||
-                        !Elementusername.value.trim() ||
-                        !Elementemail.value.trim()) {
+                    if (!Elementfirstname.value ||
+                        !Elementlastname.value ||
+                        !Elementusername.value ||
+                        !Elementemail.value) {
                             throw new Error('Failed to update user information, empty field.');
                     }
 
@@ -61,10 +63,10 @@ export class Setting extends HTMLElement {
                             'Authorization': `JWT ${localStorage.getItem('access_token')}`
                         },
                         body: JSON.stringify({
-                            firstname: Elementfirstname.value.trim(),
-                            lastname: Elementlastname.value.trim(),
-                            username: Elementusername.value.trim(),
-                            email: Elementemail.value.trim()
+                            firstname: Elementfirstname.value,
+                            lastname: Elementlastname.value,
+                            username: Elementusername.value,
+                            email: Elementemail.value
                         })
                     });
                     // console.log('response status', response.status);
@@ -86,11 +88,8 @@ export class Setting extends HTMLElement {
                 const oldPassword = document.querySelector('input[placeholder="Old Password"]');
                 const newPassword = document.querySelector('input[placeholder="New Password"]');
 
-                if (!newPassword.value.trim())
-                {
-                    alertMessage('New password field cannot be blank.');
+                if (!oldPassword || !newPassword.value)
                     return;
-                }
 
                 try {
                     const response = await fetch('http://localhost:8000/api/profiles/change_password/', {

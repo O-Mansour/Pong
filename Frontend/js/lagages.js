@@ -50,7 +50,7 @@ const  langData = ({
                 "login-link": "Login",
                 modeSelection: "Mode selection game",
                 classicGame: "Classic Game",
-                singleGame: "1 VS 1 Game",
+                singleGame: "1 Versus 1",
                 tournament: "Tournament",
                 playTournament: "Play a tournament",
                 myProfile: "My Profile",
@@ -135,7 +135,7 @@ const  langData = ({
                 signup_link: "Inscrivez-vous",
                 modeSelection: "Sélection du mode de jeu",
                 classicGame: "Jeu classique",
-                singleGame: "1 contre 1",
+                singleGame: "1 Contre 1",
                 tournament: "Tournoi",
                 playTournament: "Jouer un tournoi",
                 myProfile: "Mon Profil",
@@ -210,7 +210,7 @@ const  langData = ({
                 "signup-button": "Registrarse",
                 modeSelection: "Selección de modo de juego",
                 classicGame: "Juego clásico",
-                singleGame: "1 contra 1",
+                singleGame: "1 Contra 1",
                 tournament: "Torneo",
                 playTournament: "Jugar un torneo",
                 myProfile: "Mi Perfil",
@@ -297,3 +297,4 @@ async function updateLanguageContent() {
       }
       
 export default updateLanguageContent;
+
