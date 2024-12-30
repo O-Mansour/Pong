@@ -120,10 +120,12 @@ REST_FRAMEWORK = {
     ),
 }
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=10),
-    'AUTH_HEADER_TYPES': ('JWT',),
-}
+# SIMPLE_JWT = {
+#     'ACCESS_TOKEN_LIFETIME': timedelta(days=10),
+#     'AUTH_HEADER_TYPES': ('JWT',),
+# }
+
+
 
 # Paths and directories
 BASE_DIR = Path(__file__).resolve().parent.parent.parent

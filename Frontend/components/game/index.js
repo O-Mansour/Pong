@@ -2,6 +2,7 @@ import { Initializer } from './initializer.js';
 import { GameObjects } from './objects.js';
 import { WebSocketManager } from './socketManager.js';
 import { InputHandler } from './handler.js';
+import {requireAuth} from "../../js/utils.js";
 
 export class Game extends HTMLElement
 {
@@ -12,15 +13,27 @@ export class Game extends HTMLElement
 
     connectedCallback()
     {
+        requireAuth();
         const container = document.createElement('div');
-        container.innerHTML = `<div id="score-container">
-        <div id="player1-score">Player 1: <span id="scoreLeft">0</span></div>
-        <div id="player2-score">Player 2: <span id="scoreRight">0</span></div>
-        </div>
-        <div id="connection-status">Connecting...</div>
-        <div id="player-side"></div>
-        <!-- <div id="tournament-stage">Tournament Stage: Not Started</div> -->`.trim();
-    ``
+
+        container.setAttribute("id", "body_game");
+        container.innerHTML = `
+            <div id="score-container">
+                <div class="card">
+                    <div class="pp pp-left">
+                        <img src="/images/profile.jpg" alt="Player 1">
+                        <p>Player 1</p>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="pp pp-right">
+                        <img src="/images/profile.jpg" alt="Player 2">
+                        <p>Player 2</p>
+                    </div>
+                </div>
+            </div>
+            <div id="connection-status">Connecting...</div>
+            <div id="player-side">Player 1's Side</div>
+        `.trim();
     this.appendChild(container);
             // const parent = this;
             class PongGame {
@@ -75,10 +88,10 @@ export class Game extends HTMLElement
                         this.rightPaddle.position.z = Math.max(-2.4, Math.min(2.4, gameState.paddles.right.position));
                     }
             
-                    if (gameState.scores) {
-                        document.getElementById('scoreLeft').textContent = gameState.scores.left;
-                        document.getElementById('scoreRight').textContent = gameState.scores.right;
-                    }
+                    // if (gameState.scores) {
+                    //     document.getElementById('scoreLeft').textContent = gameState.scores.left;
+                    //     document.getElementById('scoreRight').textContent = gameState.scores.right;
+                    // }
                 }
             
                 animate() {

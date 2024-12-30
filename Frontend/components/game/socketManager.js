@@ -22,11 +22,18 @@ export class WebSocketManager {
         this.socket.onmessage = (event) => this.handleMessage(event, connectionStatus, playerSideElement, sideAssigned);
     }
 
-    handleOpen(connectionStatus) {
+    async handleOpen(connectionStatus) {
         if (connectionStatus) {
             connectionStatus.textContent = 'Connected';
             connectionStatus.style.color = 'green';
         }
+        const response = await fetch('http://localhost:8000/api/profiles/me/', {
+            headers: {
+              'Authorization': `JWT ${localStorage.getItem('access_token')}`
+            }
+          });
+        const data = await response.json();
+        this.socket.send(JSON.stringify({ type: 'user', user_data: data}));
     }
 
     handleClose(connectionStatus) {
@@ -42,6 +49,7 @@ export class WebSocketManager {
         switch(data.type) {
             case 'players_ready':
                 this.handlePlayersReady(data, connectionStatus, playerSideElement, sideAssigned);
+                console.log(data);
                 break;
             
             case 'game_state':
@@ -66,10 +74,16 @@ export class WebSocketManager {
         if (playerSideElement && data.player_side) {
             playerSideElement.textContent = `You are on the ${data.player_side} side`;
         }
+        const player1 = document.querySelector('.pp-left');
+        const player2 = document.querySelector('.pp-right');
 
         // Adjust camera based on game mode and player side
         if (this.gameMode === '1vs1-local') {
             // For local mode, always set camera to center
+            // player1.textContent = data.username1;
+            // player1.style.color = 'blue';
+            // player2.textContent = data.username2;
+            // player2.style.color = 'green';
             this.game.camera.position.set(0, 6, 6);
         } else if (data.player_side === "left") {
             this.game.camera.position.set(-6, 6, 0);
@@ -77,9 +91,11 @@ export class WebSocketManager {
 
         if (this.playerSide === 'player1') {
             this.playerSide === 'left'
+            player1.textContent = data.username;
             this.game.camera.position.set(-6, 6, 0);
         } else if (this.playerSide === 'player2') {
             this.playerSide === 'right'
+            player2.textContent = data.username;
             this.game.camera.position.set(6, 6, 0);
         }
 
@@ -107,7 +123,7 @@ export class WebSocketManager {
             '1vs1-local': '1vs1-local/',
             'tournament': 'tournament/'
         };
-        return baseUrl + (modes[gameMode] || modes.tournament);
+        return baseUrl + (modes[gameMode] || modes.tournament) ;
     }
 
     sendPaddleMove(side, direction) {
@@ -119,6 +135,7 @@ export class WebSocketManager {
             }));
         }
     }
+
 
     sendStartGame() {
         if (this.socket?.readyState === WebSocket.OPEN) {

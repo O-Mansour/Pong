@@ -17,7 +17,7 @@
     gap: 1rem;
 } */
 
-body { 
+body_game { 
     margin: 0; 
     overflow: hidden; 
     background-color: #000;
@@ -53,3 +53,49 @@ body {
     color: rgb(255, 0, 0);
     font-size: 24px;
 }
+
+/* #body_game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1e1e2e;
+    font-family: Arial, sans-serif;
+    margin: 0;
+  } */
+/*   
+.card {
+display: flex;
+align-items: center;
+background: linear-gradient(145deg, #2e2e3e, #1c1c2a);
+border-radius: 20px;
+padding: 20px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.pp {
+text-align: center;
+margin: 0 20px;
+}
+
+.pp img {
+width: 100px;
+height: 100px;
+border-radius: 50%;
+border: 3px solid #fff;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pp p {
+margin-top: 10px;
+color: #fff;
+font-size: 16px;
+font-weight: bold;
+}
+
+.vs {
+font-size: 24px;
+font-weight: bold;
+color: #ff4d4d;
+text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+} */

@@ -3,7 +3,6 @@ import os
 
 DEBUG = True
 
-SECRET_KEY = 'django-insecure-0kuvujmviyb^l0n$b_n=o)syf3*n5ul1#7&#b1jqs5i4nwc1s+'
 
 DATABASES = {
     'default': {
@@ -19,3 +18,17 @@ DATABASES = {
 ALLOWED_HOSTS = [
     'localhost',
     ]
+
+SECRET_KEY = 'django-insecure-0kuvujmviyb^l0n$b_n=o)syf3*n5ul1#7&#b1jqs5i4nwc1s+'
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("JWT",),
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+}
