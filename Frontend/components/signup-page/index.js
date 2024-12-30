@@ -60,11 +60,17 @@ export class LoginSignup extends HTMLElement {
     async handleSignup(e) {
         e.preventDefault();
 
-        const username = this.querySelector('#username').value;
-        const email = this.querySelector('#email').value;
+        const username = this.querySelector('#username').value.trim();
+        const email = this.querySelector('#email').value.trim();
         const password = this.querySelector('#password').value;
         const confirmPassword = this.querySelector('#confirm_password').value;
 
+        if (!username || !email || !password || !confirmPassword)
+        {
+            alertMessage('All required fields must be filled out!');
+            return;
+        }
+        
         if (password !== confirmPassword) {
             alertMessage('Passwords do not match!');
             return;

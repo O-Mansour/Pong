@@ -65,7 +65,9 @@ const  langData = ({
                 onlineNow: "Online Now",
                 friendsTitle: "Wants to be your friend",
                 login_link: "Login",
-                login_error: "Invalid credentials"
+                login_error: "Invalid credentials",
+                settings: "Settings",
+                playNow: "Play Now"
         },
         fr: {
                 selectLanguage: "Choisissez une langue",

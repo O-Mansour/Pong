@@ -33,9 +33,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 		if self.instance:
 			current_user = self.instance.user
-			if Profile.objects.exclude(user=current_user).filter(user__username=user_data['username']).exists():
+
+			# Check username and email uniqueness
+			username = user_data.get('username')
+			email = user_data.get('email')
+
+			if username and Profile.objects.exclude(user=current_user).filter(user__username=username).exists():
 				raise serializers.ValidationError({"message": "The username is already taken"})
-			if Profile.objects.exclude(user=current_user).filter(user__email=user_data['email']).exists():
+
+			if email and Profile.objects.exclude(user=current_user).filter(user__email=email).exists():
 				raise serializers.ValidationError({"message": "The email is already in use"})
 		
 		# Update user fields
