@@ -1,4 +1,4 @@
-const rout = ['', '/', '/home', '/user', '/settings', '/404', '/forgetpassword', '/sign-up' ,'/game' ,'/tournament']
+const rout = ['', '/', '/home', '/user', '/settings', '/404', '/forgetpassword', '/sign-up' ,'/game', 'congrats' ,'/tournament']
 
 const routes = new Map([
 
@@ -49,6 +49,10 @@ const routes = new Map([
     ["/remote", {
         Title: "game",
         Element: "pagegame-remote"
+    }],
+    ["/congrats", {
+        Title: "congrats",
+        Element: "pagegame-winner"
     }],
     ["/tournament", {
         Title: "game",

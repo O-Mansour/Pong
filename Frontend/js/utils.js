@@ -84,6 +84,20 @@ export function go_to_page(url) {
     document.dispatchEvent(go_event);
 }
 
+// export function go_to_select(url) {
+//     const go_event = new Event("mylink");
+//     history.pushState({ url }, null, url);
+//     document.dispatchEvent(go_event);
+//     // const gameContainer = document.getElementById('body_game');
+//     // if (gameContainer) {
+//     //     gameContainer.style.display = 'none';
+//     // }
+//     const canvas = document.querySelector('canvas[data-engine="three.js r171"]');
+//     if (canvas) {
+//         canvas.style.display = 'none'; // Hide the canvas element
+//     }
+// }
+
 // classname: An optional parameter specifying the CSS class for the alert type (e.g., alert-danger, alert-success).
 //div.role = "alert"; =>setattrbuit
 export function alertMessage(message, classname = "alert-danger") {

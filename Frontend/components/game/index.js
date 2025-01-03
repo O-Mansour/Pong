@@ -34,12 +34,13 @@ export class Game extends HTMLElement
             <div id="connection-status">Connecting...</div>
             <div id="player-side">Player 1's Side</div>
         `.trim();
-    this.appendChild(container);
-            // const parent = this;
+        this.appendChild(container);
             class PongGame {
                 constructor() {
+                    
                     // Initialize core Three.js components
-                    this.renderer = Initializer.initRenderer(document.body);
+                    const body = document.getElementById("body_game");
+                    this.renderer = Initializer.initRenderer(body);
                     this.scene = Initializer.initScene();
                     this.camera = Initializer.initCamera();
                     this.directionalLight = Initializer.initLighting(this.scene);

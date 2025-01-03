@@ -1,3 +1,6 @@
+import { go_to_page } from "../../js/utils.js";
+
+
 export class WebSocketManager {
     constructor(game) {
         this.game = game;
@@ -7,7 +10,8 @@ export class WebSocketManager {
     }
 
     connect() {
-        const wsUrl = this.getWebSocketUrl(this.gameMode);
+        const token = localStorage.getItem('access_token');
+        const wsUrl = this.getWebSocketUrl(this.gameMode) + `?token=${encodeURIComponent(token)}`;
         this.socket = new WebSocket(wsUrl);
         this.setupEventHandlers();
     }
@@ -27,13 +31,13 @@ export class WebSocketManager {
             connectionStatus.textContent = 'Connected';
             connectionStatus.style.color = 'green';
         }
-        const response = await fetch('http://localhost:8000/api/profiles/me/', {
-            headers: {
-              'Authorization': `JWT ${localStorage.getItem('access_token')}`
-            }
-          });
-        const data = await response.json();
-        this.socket.send(JSON.stringify({ type: 'user', user_data: data}));
+        // const response = await fetch('http://localhost:8000/api/profiles/me/', {
+        //     headers: {
+        //       'Authorization': `JWT ${localStorage.getItem('access_token')}`
+        //     }
+        //   });
+        // const data = await response.json();
+        // this.socket.send(JSON.stringify({ type: 'user', user_data: data}));
     }
 
     handleClose(connectionStatus) {
@@ -50,15 +54,23 @@ export class WebSocketManager {
             case 'players_ready':
                 this.handlePlayersReady(data, connectionStatus, playerSideElement, sideAssigned);
                 break;
-            
             case 'game_state':
                 this.handleGameState(data);
                 break;
-
+            case 'already':
+                alert("already in a room")
+                this.socket?.close()
+                go_to_page("/select");
+                break;
+            case 'match_finished':
+                //route to winner page
+                alert("match is finished")
+                this.socket?.close()
+                go_to_page("/select")
+                break;
             case 'tournament_update':
                 this.handleTournamentUpdate(data);
                 break;
-            
             case 'error':
                 console.error(data.message);
                 break;

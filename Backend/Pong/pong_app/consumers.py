@@ -1,6 +1,7 @@
 import json
 import time
 import math
+import jwt
 import random
 import asyncio
 import uuid
@@ -32,6 +33,8 @@ class GameConfig:
         PlayerSide.RIGHT: 4.9
     }
 
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
 class PongGameLocalConsumer(AsyncWebsocketConsumer):
     game_rooms = {}
 
@@ -196,13 +199,18 @@ class PongGameLocalConsumer(AsyncWebsocketConsumer):
             (side == PlayerSide.RIGHT.value and ball['position'][0] > 5):
                 scores[PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value] += 1
                 
-                if scores[PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value] >= 5:
+                if scores[PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value] >= 2:
                     # showi lwinner hna
+                    asyncio.create_task(self.match_finished())
                     self._stop_ball(game_state)
                     break;
                 
                 self._reset_ball(game_state)
-
+    async def match_finished(self):
+        await self.send(text_data=json.dumps({
+            'type': 'match_finished',
+            'message': 'Game Over'
+        }))
     def _check_paddle_collision(self, ball: Dict, paddle_x: float, paddle: Dict) -> bool:
         if (paddle_x > 0 and ball['position'][0] >= paddle_x - GameConfig.BALL_RADIUS) or \
         (paddle_x < 0 and ball['position'][0] <= paddle_x + GameConfig.BALL_RADIUS):
@@ -239,32 +247,128 @@ class PongGameLocalConsumer(AsyncWebsocketConsumer):
 
 
 
+from django.conf import settings
+
 class PongGameRemoteConsumer(AsyncWebsocketConsumer):
     game_rooms: Dict[str, Dict] = {}
 
     async def connect(self):
-        await self.accept()
-
+        query_string = self.scope['query_string'].decode('utf-8')
+        query_params = parse_qs(query_string)
+        token = query_params.get('token', [None])[0]
+        
+        if not token:
+            await self.close(code=403)
+            return
+        
         try:
-            room = await self.find_or_create_game_room()
+            decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+            self.user_id = decoded_token.get('user_id')
+            if not self.user_id:
+                await self.close(code=403)
+                return
+            
+            self.user = await self.get_user(self.user_id)
+            if not self.user:
+                await self.close(code=403)
+                return
 
+            await self.accept()
+            
+            if self.user_id in self.game_rooms:
+                await self.send(text_data=json.dumps({
+                    'type': 'already',
+                    'message': 'You are already in a game!'
+                }))
+                await self.close(code=403)
+                return
+
+            room = await self.find_or_create_game_room()
             await self.channel_layer.group_add(room['room_group_name'], self.channel_name)
 
             self.room_name = room['room_name']
             self.room_group_name = room['room_group_name']
             self.player_side = self._assign_player_side(room)
+            
             if not room['game_state']:
                 room['game_state'] = self._create_initial_game_state()
             if 'player_info' not in room:
                 room['player_info'] = {}
+                
+            room['player_info'][self.player_side] = {
+                'username': self.user.username,
+                'channel_name': self.channel_name
+            }
+            self.game_rooms[self.user_id] = self.room_name
+            
             await self._notify_players_ready(room)
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'send_game_message',
+                    'message': {
+                        'type': 'player_info',
+                        'player_info': room['player_info']
+                    }
+                }
+            )
+            
+        except (jwt.ExpiredSignatureError, jwt.DecodeError):
+            await self.close(code=403)
+            return
 
+    async def disconnect(self, close_code):
+        if not hasattr(self, 'room_name'):
+            return
+
+        room = self.game_rooms.get(self.room_name)
+        if not room:
+            return
+
+        if self.player_side in room['players']:
+            del room['players'][self.player_side]
+        
+        if 'player_info' in room and self.player_side in room['player_info']:
+            player_info = room['player_info'][self.player_side]
+            if self.user_id in self.game_rooms:
+                del self.game_rooms[self.user_id]
+            del room['player_info'][self.player_side]
+
+        if not room['players']:
+            if self.room_name in self.game_rooms:
+                del self.game_rooms[self.room_name]
+
+        await self.channel_layer.group_discard(
+            self.room_group_name, 
+            self.channel_name
+        )
+
+
+    async def receive(self, text_data):
+        try:
+            data = json.loads(text_data)
+            room = self.game_rooms.get(self.room_name)
+            if not room:
+                return
+                
+            if data['type'] == 'paddle_move':
+                await self._handle_paddle_move(data, room)
+            elif data['type'] == 'start_game':
+                await self._handle_start_game(room)
         except Exception as e:
             await self.send(text_data=json.dumps({
                 'type': 'error',
-                'message': f'Connection error: {str(e)}'
+                'message': f'Unexpected error: {str(e)}'
             }))
-            await self.close()
+
+
+    async def get_user(self, user_id):
+        from django.contrib.auth import get_user_model
+        try:
+            return await database_sync_to_async(get_user_model().objects.select_related('profile').get)(id=user_id)
+        except get_user_model().DoesNotExist:
+            return None
+
 
     def _assign_player_side(self, room: Dict) -> str:
         if not room['players'].get(PlayerSide.LEFT.value):
@@ -311,69 +415,6 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
             0,  # no move in y-axes
             direction * GameConfig.BALL_SPEED * math.sin(angle),
         ]
-
-    async def disconnect(self, close_code):
-        if not hasattr(self, 'room_name'):
-            return
-
-        room = self.game_rooms.get(self.room_name)
-        if not room:
-            return
-
-        # Remove the player from the room
-        if self.player_side in room['players']:
-            del room['players'][self.player_side]
-        if 'player_info' in room and self.player_side in room['player_info']:
-            del room['player_info'][self.player_side]
-        
-        # Remove the room if no players left
-        if not room['players']:
-            del self.game_rooms[self.room_name]
-        
-        # Leave the group
-        await self.channel_layer.group_discard(
-            self.room_group_name, 
-            self.channel_name
-        )
-
-    async def receive(self, text_data):
-        try:
-            data = json.loads(text_data)
-            room = self.game_rooms.get(self.room_name)
-
-            if not room:
-                return
-            # if data['type'] == 'user':
-            #     print(data['user_data']['username'], file=sys.stderr) // here is the data that I need to keep
-            if data['type'] == 'user':
-                # Store the username in the room's player_info
-                # print(data, file=sys.stderr)
-                if 'user_data' in data and 'username' in data['user_data']:
-                    room['player_info'][self.player_side] = {
-                        'username': data['user_data']['username'],
-                        # 'wins' : data['user_data']['wins'],
-                        'channel_name': self.channel_name
-                    }
-                    # Notify all players about the new player
-                    await self.channel_layer.group_send(
-                        self.room_group_name,
-                        {
-                            'type': 'send_game_message',
-                            'message': {
-                                'type': 'player_info',
-                                'player_info': room['player_info']
-                            }
-                        }
-                    )
-            if data['type'] == 'paddle_move':
-                await self._handle_paddle_move(data, room)
-            elif data['type'] == 'start_game':
-                await self._handle_start_game(room)
-        except Exception as e:
-            await self.send(text_data=json.dumps({
-                'type': 'error',
-                'message': f'Unexpected error: {str(e)}'
-            }))
 
     async def _handle_paddle_move(self, data: Dict, room: Dict):
         # Validate player side
@@ -458,62 +499,91 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
             next_z = -GameConfig.BALL_BOUND_Z + (-next_z - GameConfig.BALL_BOUND_Z)
             ball['velocity'][2] *= -1
         return next_z
-
     def _check_paddle_and_goal_collisions(self, game_state: Dict):
         ball = game_state['ball']
         paddles = game_state['paddles']
         scores = game_state['scores']
-
+        room = self.game_rooms.get(self.room_name)
+        
         for side in [PlayerSide.LEFT.value, PlayerSide.RIGHT.value]:
             paddle_x = GameConfig.PADDLE_X_POSITIONS[PlayerSide(side)]
             
             if self._check_paddle_collision(ball, paddle_x, paddles[side]):
                 continue
             
-            # Check for goals
             if (side == PlayerSide.LEFT.value and ball['position'][0] < -5) or \
-               (side == PlayerSide.RIGHT.value and ball['position'][0] > 5):
-                scores[PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value] += 1
+            (side == PlayerSide.RIGHT.value and ball['position'][0] > 5):
+                scoring_side = PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value
+                scores[scoring_side] += 1
                 
-                # Check if a player has reached 5 points (winning condition)
-                if scores[PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value] >= 2:
-                    winning_side = PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value
-                    loser_side = PlayerSide.RIGHT.value if winning_side == PlayerSide.LEFT.value else PlayerSide.LEFT.value
-                    # Get winner's username
-                    room = self.game_rooms.get(self.room_name)
-                    winner_username = room['player_info'].get(winning_side).get('username')
-                    loser_username = room['player_info'].get(loser_side).get('username')
-                    # room['player_info']['wins'] = room['player_info'].get('wins', 0) + 1
-                    Thread(target=self.store_in_database, args=(winner_username,loser_username)).start()
+                if scores[scoring_side] >= 2:
+                    winning_side = scoring_side
+                    losing_side = PlayerSide.RIGHT.value if winning_side == PlayerSide.LEFT.value else PlayerSide.LEFT.value
+
+                    if 'player_info' in room:
+                        winner_info = room['player_info'].get(winning_side)
+                        loser_info = room['player_info'].get(losing_side)
+                        
+                        if winner_info and loser_info:
+                            winner_username = winner_info['username']
+                            loser_username = loser_info['username']
+                            Thread(target=self._update_player_stats, args=(winner_username, True)).start()
+                            Thread(target=self._update_player_stats, args=(loser_username, False)).start()
                     self._stop_ball(game_state)
-                    self.close()
-                    
+                    game_state['playing'] = False
+                    asyncio.create_task(self.match_finished())
                 else:
                     self._reset_ball(game_state)
+    async def match_finished(self):
+        if hasattr(self, 'room_group_name'):
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'send_game_message',
+                    'message': {
+                        'type': 'match_finished',
+                        'message': 'Game Over'
+                    },
+                },
+            )
 
-    def store_in_database(self, winner_username, loser_username):
+
+    def _update_player_stats(self, username: str, is_winner: bool):
         try:
             from django.db import connection
-            connection.close()  # Ensure we get a fresh connection
-            winner_profile = Profile.objects.get(user__username=winner_username)
-            winner_profile.wins = winner_profile.wins + 1
-            if (winner_profile.xps < 80):
-                winner_profile.xps = winner_profile.xps + 20
+            from django.contrib.auth import get_user_model
+            from django.db.models import Q
+
+            connection.close()
+
+            User = get_user_model()
+            user = User.objects.get(username=username)
+            profile = user.profile
+            
+            if is_winner:
+                profile.wins += 1
+                if profile.xps < 80:
+                    profile.xps += 20
+                else:
+                    profile.level += 1
+                    profile.xps = 80 - profile.xps
+                    
+                # Update rank
+                profiles_with_better_level = Profile.objects.filter(
+                    Q(level__gt=profile.level) |
+                    Q(level=profile.level, xps__gt=profile.xps)
+                ).count()
+                
+                profile.rank = profiles_with_better_level + 1
             else:
-                winner_profile.level = winner_profile.level + 1
-                winner_profile.xps = 80 - winner_profile.xps
-            profiles_with_better_level = Profile.objects.filter(level__gt=winner_profile.level).count() + \
-                Profile.objects.filter(level=winner_profile.level, xps__gt=winner_profile.xps).count()
-            winner_profile.rank = profiles_with_better_level + 1
-            print(f"profile xps is {winner_profile.xps} and level is {winner_profile.level} and rank is {winner_profile.rank}", file=sys.stderr)
-            winner_profile.save()
-            loser_profile = Profile.objects.get(user__username=loser_username)
-            loser_profile.losses = loser_profile.losses + 1
-            loser_profile.save()
-            print(f"Updated wins for {winner_username} to {winner_profile.wins}", file=sys.stderr)
-            print(f"Updated losses for {loser_username} to {loser_profile.losses}", file=sys.stderr)
+                profile.losses += 1
+
+            profile.save()
+            print(f"Updated stats for {username}: Wins={profile.wins}, Level={profile.level}", file=sys.stderr)
+            
         except Exception as e:
-            print(f"Error updating wins: {str(e)}", file=sys.stderr)
+            print(f"Error updating stats for {username}: {str(e)}", file=sys.stderr)
+            
     def _check_paddle_collision(self, ball: Dict, paddle_x: float, paddle: Dict) -> bool:
         """Check and handle paddle collision."""
         if (paddle_x > 0 and ball['position'][0] >= paddle_x - GameConfig.BALL_RADIUS) or \
