@@ -294,9 +294,6 @@
     justify-content: center;
     height: 100%;
     display: flex;
-    /* align-items: center; */
-    /* justify-content: space-around; */
-    /* justify-content: space-between; */
     padding: 40px;
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
@@ -305,9 +302,8 @@
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
 }
 
-/* 
-.round-con {
 
+.round-con {
     width: 100%;
     max-width: 1134px;
     height: 75%;
@@ -323,7 +319,7 @@
     top: 50%;
     left: 50%;
     translate: -50% -50%;
-} */
+}
 
 .round {
     display: flex;
