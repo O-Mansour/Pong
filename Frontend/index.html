@@ -849,6 +849,48 @@
      </div>
  </template>
 
+ <template id="page-winner">
+    <!-- <canvas id="game-canva"></canvas> -->
+    <div class="ft_container">
+         <div class="header">
+             <div class="ft-box">
+                 <img src="./images/logo.png" class="logo">
+             </div>
+         </div>
+         <div class="content">
+
+             <aside class="sidebar">
+                 <nav class="menu">
+                     <ul>
+                         <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
+                         <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
+                         <li><my-link href="/select"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                         <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
+                     </ul>
+                 </nav>
+             </aside>
+
+            <main class="content1">
+                    <div class="ca1">
+                        <div class="player-con">
+                            <div class="player1">
+                                <p class="us1">username 1</p>
+                                <img src="./images/game.png" class="imgplyer1">
+                            </div>
+                                
+                        </div>
+                        <button class="cancel1" onclick="go_to_page('/select')">Go back!</button>
+                    </div>
+
+                    <!-- <div class="btn-container"> -->
+                        <!-- <button class="accept1">Accept</button> -->
+                        <!-- <button class="cancel1">Cancel</button> -->
+                    <!-- </div> -->
+
+             </main>
+         </div>
+     </div>
+ </template>
 
 <template id="page-gamelocal">
     <!-- <canvas id="game-canva"></canvas> -->
@@ -977,6 +1019,7 @@
 <script src="./components/error-page/index.js" type="module"></script>
 <script src="./components/localgame-game/index.js" type="module"></script>
 <script src="./components/pagegame-remote/index.js" type="module"></script>
+<script src="./components/winner-page/index.js" type="module"></script>
 <script src="./js/Router.js" type="module"></script>
 <script src="./components/link/index.js" type="module"></script>
 <script src="./components/ponggame-game/index.js" type="module"></script>

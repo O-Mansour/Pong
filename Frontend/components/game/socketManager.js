@@ -64,9 +64,9 @@ export class WebSocketManager {
                 break;
             case 'match_finished':
                 //route to winner page
-                alert("match is finished")
+                // alert("match is finished")
                 this.socket?.close()
-                go_to_page("/select")
+                go_to_page("/congrats")
                 break;
             case 'tournament_update':
                 this.handleTournamentUpdate(data);

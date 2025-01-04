@@ -259,7 +259,7 @@ export class HomeDashboard extends  HTMLElement
           playBtn.classList.add('message-btn');
           playBtn.setAttribute('data-i18n-button', 'challenge'); 
           playBtn.textContent = langData[currLang]?.challenge || 'Challenge';
-          playBtn.setAttribute('onclick', 'go_to_page("/game")');
+          playBtn.setAttribute('onclick', 'go_to_page("/select")');
           leaderDiv.appendChild(playBtn);
         } else if (sentIds.includes(leader.user_id)) {
           const sentBtn = document.createElement('button');

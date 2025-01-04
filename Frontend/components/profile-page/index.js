@@ -124,7 +124,7 @@ export class Profile extends HTMLElement {
                 </div>
                 <span class="leader-name_1">${friend.firstname} ${friend.lastname}</span>
                 <div class="leader-username_1">@${friend.username}</div>
-                <button class="message-btn_1" data-i18n="changefriend" onclick='go_to_page("/game")'>Challenge</button>`;
+                <button class="message-btn_1" data-i18n="changefriend" onclick='go_to_page("/select")'>Challenge</button>`;
 
         friendsList.appendChild(friendDiv);
         updateLanguageContent();
