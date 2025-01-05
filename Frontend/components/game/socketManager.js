@@ -1,4 +1,4 @@
-import { go_to_page } from "../../js/utils.js";
+import { go_to_page, alertMessage } from "../../js/utils.js";
 
 
 export class WebSocketManager {
@@ -58,15 +58,22 @@ export class WebSocketManager {
                 this.handleGameState(data);
                 break;
             case 'already':
-                alert("already in a room")
+                // alert("already in a room")
+                go_to_page("/goback");
                 this.socket?.close()
-                go_to_page("/select");
                 break;
             case 'match_finished':
                 //route to winner page
                 // alert("match is finished")
                 this.socket?.close()
                 go_to_page("/congrats")
+                break;
+            case 'match_canceled':
+                //route to winner page
+                // alert("match is finished")
+                alertMessage("Match is canceled")
+                this.socket?.close()
+                go_to_page("/select")
                 break;
             case 'tournament_update':
                 this.handleTournamentUpdate(data);

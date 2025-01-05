@@ -6,6 +6,7 @@ import random
 import asyncio
 import uuid
 from core.models import Profile
+from core.models import Match
 from enum import Enum, auto
 from typing import Dict, List, Optional
 from channels.generic.websocket import AsyncWebsocketConsumer
@@ -13,6 +14,8 @@ from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
 import sys
 from threading import Thread
+from datetime import datetime
+from django.utils import timezone
 
 class PlayerSide(Enum):
     LEFT = 'left'
@@ -248,6 +251,7 @@ class PongGameLocalConsumer(AsyncWebsocketConsumer):
 
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 class PongGameRemoteConsumer(AsyncWebsocketConsumer):
     game_rooms: Dict[str, Dict] = {}
@@ -274,7 +278,6 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                 return
 
             await self.accept()
-            
             if self.user_id in self.game_rooms:
                 await self.send(text_data=json.dumps({
                     'type': 'already',
@@ -282,6 +285,7 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                 }))
                 await self.close(code=403)
                 return
+            
 
             room = await self.find_or_create_game_room()
             await self.channel_layer.group_add(room['room_group_name'], self.channel_name)
@@ -351,6 +355,8 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
             if not room:
                 return
                 
+            if data['type'] == 'go_back':
+                await self.match_canceled()
             if data['type'] == 'paddle_move':
                 await self._handle_paddle_move(data, room)
             elif data['type'] == 'start_game':
@@ -361,6 +367,18 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                 'message': f'Unexpected error: {str(e)}'
             }))
 
+    async def match_canceled(self):
+        if hasattr(self, 'room_group_name'):
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'send_game_message',
+                    'message': {
+                        'type': 'match_canceled',
+                        'message': 'Game Over'
+                    },
+                },
+            )
 
     async def get_user(self, user_id):
         from django.contrib.auth import get_user_model
@@ -523,12 +541,13 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                     if 'player_info' in room:
                         winner_info = room['player_info'].get(winning_side)
                         loser_info = room['player_info'].get(losing_side)
-                        
+
                         if winner_info and loser_info:
                             winner_username = winner_info['username']
                             loser_username = loser_info['username']
-                            Thread(target=self._update_player_stats, args=(winner_username, True)).start()
-                            Thread(target=self._update_player_stats, args=(loser_username, False)).start()
+                            print(f"winner is {winner_username} and loser is {loser_username}", file=sys.stderr)
+                            Thread(target=self._update_player_stats, args=(winner_username, loser_username, True)).start()
+                            Thread(target=self._update_player_stats, args=(winner_username,loser_username, False)).start()
                     self._stop_ball(game_state)
                     game_state['playing'] = False
                     asyncio.create_task(self.match_finished())
@@ -548,41 +567,51 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
             )
 
 
-    def _update_player_stats(self, username: str, is_winner: bool):
-        try:
+    def _update_player_stats(self, winner_username: str, loser_username: str, is_winner: bool):
             from django.db import connection
             from django.contrib.auth import get_user_model
             from django.db.models import Q
+            
 
             connection.close()
 
             User = get_user_model()
-            user = User.objects.get(username=username)
-            profile = user.profile
-            
-            if is_winner:
-                profile.wins += 1
-                if profile.xps < 80:
-                    profile.xps += 20
-                else:
-                    profile.level += 1
-                    profile.xps = 80 - profile.xps
-                    
-                # Update rank
-                profiles_with_better_level = Profile.objects.filter(
-                    Q(level__gt=profile.level) |
-                    Q(level=profile.level, xps__gt=profile.xps)
-                ).count()
-                
-                profile.rank = profiles_with_better_level + 1
-            else:
-                profile.losses += 1
+            winner = User.objects.get(username=winner_username)
+            loser = User.objects.get(username=loser_username)
 
-            profile.save()
-            print(f"Updated stats for {username}: Wins={profile.wins}, Level={profile.level}", file=sys.stderr)
+            if is_winner:
+                winner.profile.wins += 1
+                if winner.profile.xps < 80:
+                    winner.profile.xps += 20
+                else:
+                    winner.profile.level += 1
+                    winner.profile.xps = 80 - winner.profile.xps
+
+                profiles_with_better_level = Profile.objects.filter(
+                    Q(level__gt=winner.profile.level) |
+                    Q(level=winner.profile.level, xps__gt=winner.profile.xps)
+                ).count()
+                winner.profile.rank = profiles_with_better_level + 1
+                Match.objects.create(
+                    player=winner.profile,
+                    opponent=loser.profile,
+                    won=True,
+                    date_played=timezone.now()
+                )
+                print(f"the winner is {winner}: Wins={winner.profile.wins}, Level={winner.profile.level}", file=sys.stderr)
+                winner.profile.save()
+                
+            else:
+                loser.profile.losses += 1
+                Match.objects.create(
+                    player=loser.profile,
+                    opponent=winner.profile,
+                    won=False,
+                    date_played=timezone.now()
+                )
+                print(f"the loser is {loser}: Wins={loser.profile.wins}, Level={loser.profile.level}", file=sys.stderr)
+                loser.profile.save()
             
-        except Exception as e:
-            print(f"Error updating stats for {username}: {str(e)}", file=sys.stderr)
             
     def _check_paddle_collision(self, ball: Dict, paddle_x: float, paddle: Dict) -> bool:
         """Check and handle paddle collision."""
