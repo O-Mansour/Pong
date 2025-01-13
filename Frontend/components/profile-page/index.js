@@ -26,7 +26,7 @@ export class Profile extends HTMLElement {
         }
       });
       const data = await response.json();
-      console.log("Profile data received:", data);
+      // console.log("Profile data received:", data);
       const usernameElement = document.getElementById('fetched_username');
       const fullnameElement = document.getElementById('fetched_fullname');
       const joinedElement = document.getElementById('fetched_joined');
@@ -147,7 +147,7 @@ export class Profile extends HTMLElement {
 
       const historyList = document.querySelector('.list_hostory');
 
-      console.log("History data received:", historyData);
+      // console.log("History data received:", historyData);
       historyData.forEach(match => {
         const matchDiv = document.createElement('div');
         matchDiv.classList.add('history_1');

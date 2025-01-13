@@ -16,6 +16,19 @@ export class WebSocketManager {
         this.setupEventHandlers();
     }
 
+    sendTournamentNicknames(nicknames) {
+        if (this.socket?.readyState === WebSocket.OPEN) {
+            this.socket.send(JSON.stringify({
+                type: 'setup_tournament_nicknames',
+                nicknames: {
+                    player1: nicknames.player1,
+                    player2: nicknames.player2,
+                    player3: nicknames.player3,
+                    player4: nicknames.player4
+                }
+            }));
+        }
+    }
     setupEventHandlers() {
         const connectionStatus = document.getElementById('connection-status');
         const playerSideElement = document.getElementById('player-side');
@@ -31,13 +44,10 @@ export class WebSocketManager {
             connectionStatus.textContent = 'Connected';
             connectionStatus.style.color = 'green';
         }
-        // const response = await fetch('http://localhost:8000/api/profiles/me/', {
-        //     headers: {
-        //       'Authorization': `JWT ${localStorage.getItem('access_token')}`
-        //     }
-        //   });
-        // const data = await response.json();
-        // this.socket.send(JSON.stringify({ type: 'user', user_data: data}));
+         const storedNicknames = JSON.parse(localStorage.getItem('tournamentPlayers'));
+         if (storedNicknames) {
+             this.sendTournamentNicknames(storedNicknames);
+         }
     }
 
     handleClose(connectionStatus) {
@@ -52,31 +62,37 @@ export class WebSocketManager {
         
         switch(data.type) {
             case 'players_ready':
+                console.log('Tournament players ready:', data);
+                this.currentRoomId = data.room_id; // Store the room_id
                 this.handlePlayersReady(data, connectionStatus, playerSideElement, sideAssigned);
                 break;
             case 'game_state':
-                this.handleGameState(data);
+                if (data.room_id === this.currentRoomId) {
+                    this.handleGameState(data);
+                }
                 break;
+            
             case 'already':
                 // alert("already in a room")
                 go_to_page("/goback");
                 this.socket?.close()
                 break;
             case 'match_finished':
-                //route to winner page
-                // alert("match is finished")
-                this.socket?.close()
-                go_to_page("/congrats")
-                break;
+                if (this.gameMode === "tournament")
+                    this.handleMatchFinished(data);
+                // else if (this.gameMode === "1vs1-remote")
+                //     alertMessage(`Match Winner: ${data.winner}!`);
+                //     this.socket?.close();
+                //     go_to_page("/select")
             case 'match_canceled':
+                console.log("here")
                 //route to winner page
                 // alert("match is finished")
+                if (this.gameMode === "tournament")
+                    break;
                 alertMessage("Match is canceled")
                 this.socket?.close()
                 go_to_page("/select")
-                break;
-            case 'tournament_update':
-                this.handleTournamentUpdate(data);
                 break;
             case 'error':
                 console.error(data.message);
@@ -84,24 +100,53 @@ export class WebSocketManager {
         }
     }
 
+    
+
+    handleMatchFinished(data) {
+        const state = data.tournament_status.state;
+        console.log(state);
+        if (state === 'completed') {
+            localStorage.setItem('finalwinner', JSON.stringify(data.winner));
+            localStorage.setItem('finalwinnerscore', JSON.stringify(data.winnerscore));
+            localStorage.setItem('finalloserscore', JSON.stringify(data.loserscore));
+            alertMessage(`Tournament Winner: ${data.winner}! 🏆`);
+            this.socket?.close();
+            go_to_page("/tournamentwinner");
+        } else{
+            alertMessage(`Match Winner: ${data.winner}! Next match starting soon...`);
+            if (state === "semifinals_2")
+                localStorage.setItem('playersemione', JSON.stringify(data.winner));
+                localStorage.setItem('winner1score', JSON.stringify(data.winnerscore));
+                localStorage.setItem('loser1score', JSON.stringify(data.loserscore));
+            if (state === "finals")
+                localStorage.setItem('playersemitwo', JSON.stringify(data.winner));
+                localStorage.setItem('winner2score', JSON.stringify(data.winnerscore));
+                localStorage.setItem('loser2score', JSON.stringify(data.loserscore));
+            this.socket?.close();
+            go_to_page("/game?mode=tournament")
+        }
+    }
+
+
     handlePlayersReady(data, connectionStatus, playerSideElement) {
         // Store the assigned player side
         this.playerSide = data.player_side;
         
         // Update UI to show which side the player is on
         if (playerSideElement && data.player_side) {
-            playerSideElement.textContent = `You are on the ${data.player_side} side`;
+            if (data.player_side === "left")
+                playerSideElement.textContent = `You are on the ${data.player_side} side, you can play with WS or AD`;
+            else
+                playerSideElement.textContent = `You are on the ${data.player_side} side, you can play with the arrows`;
+            
         }
         const player1 = document.querySelector('.pp-left');
         const player2 = document.querySelector('.pp-right');
 
         // Adjust camera based on game mode and player side
-        if (this.gameMode === '1vs1-local') {
+        if (this.gameMode === '1vs1-local' || this.gameMode === 'tournament') {
             // For local mode, always set camera to center
             // player1.textContent = data.username1;
-            // player1.style.color = 'blue';
-            // player2.textContent = data.username2;
-            // player2.style.color = 'green';
             this.game.camera.position.set(0, 6, 6);
         } else if (data.player_side === "left") {
             this.game.camera.position.set(-6, 6, 0);
@@ -130,9 +175,6 @@ export class WebSocketManager {
         }
     }
 
-    handleTournamentUpdate(data) {
-        // Add any tournament-specific UI updates here
-    }
 
     getWebSocketUrl(gameMode) {
         const baseUrl = 'ws://127.0.0.1:8000/ws/pong/';
@@ -151,13 +193,6 @@ export class WebSocketManager {
                 player: side,
                 direction: direction > 0 ? 'down' : 'up',
             }));
-        }
-    }
-
-
-    sendStartGame() {
-        if (this.socket?.readyState === WebSocket.OPEN) {
-            this.socket.send(JSON.stringify({ type: 'start_game' }));
         }
     }
 }

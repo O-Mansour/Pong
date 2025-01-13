@@ -1,4 +1,4 @@
-const rout = ['', '/', '/home', '/user', '/settings', '/404', '/forgetpassword', '/sign-up' ,'/game', '/congrats', '/goback' ,'/tournament']
+const rout = ['', '/', '/home', '/user', '/settings', '/404', '/forgetpassword', '/sign-up' ,'/game', '/congrats', '/goback' ,'/tournament', 'tournamentwinner']
 
 const routes = new Map([
 
@@ -62,6 +62,10 @@ const routes = new Map([
         Title: "game",
         Element: "vers4-game"
     }],
+    ["/tournamentwinner", {
+        Title: "game",
+        Element: "vers4-game-winner"
+    }],
     ["/404",{
         Title: "not found",
         Element: "error-page"
@@ -95,7 +99,7 @@ const Router = {
         let route = window.location.pathname;
        
         // Handles navigation to different routes and page content loading
-        console.log(`Going to ${route}`, route.length); //next step well we need to call router go  so he can to the route
+        // console.log(`Going to ${route}`, route.length); //next step well we need to call router go  so he can to the route
          
         const cache = document.querySelector("main");
         if (routes.get(route)) // Checks if the current path matches a defined route in the routes map

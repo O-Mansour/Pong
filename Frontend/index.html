@@ -984,63 +984,143 @@
 
             <main class="content1">
                 <div class="round-con">
-                    <div class="round">
-                        <div class="muth_4">
-                            <div class="match1">
-                                <div class="player">
-                                  <img src="./images/plyer.png" class="plyer_tour">
-                                  <input type="text" class="us1 player-input player1" placeholder="Player 1" required>
-                                  <span class="score">2</span>
+                    <form>
+                        <div class="round">
+                            <div class="muth_4">
+                                <div class="match1">
+                                    <div class="player">
+                                    <img src="./images/plyer.png" class="plyer_tour">
+                                    <input type="text" class="us1 player-input" id="tournamentplayer1" placeholder="Player 1" required>
+                                    <!-- <span class="score">2</span> -->
+                                    </div>
+                                    <div class="player">
+                                    <img src="./images/plyer.png"  class="plyer_tour">
+                                    <input type="text" class="us1 player-input" id="tournamentplayer2" placeholder="Player 2" required>
+                                    <!-- <span class="score"> 1</span> -->
+                                    </div>
                                 </div>
-                                <div class="player">
-                                  <img src="./images/plyer.png"  class="plyer_tour">
-                                  <input type="text" class="us1 player-input player2" placeholder="Player 2" required>
-                                  <span class="score"> 1</span>
+                                <div class="match2">
+                                    <div class="player">
+                                    <img src="./images/plyer.png"  class="plyer_tour">
+                                    <input type="text" class="us1 player-input" id="tournamentplayer3" placeholder="Player 3" required>
+                                    <!-- <span class="score"> 1</span> -->
+                                    </div>
+                                    <div class="player">
+                                    <img src="./images/plyer.png"  class="plyer_tour">
+                                    <input type="text" class="us1 player-input" id="tournamentplayer4" placeholder="Player 4" required>
+                                    <!-- <span class="score"> 2</span> -->
+                                    </div>
                                 </div>
                             </div>
-                            <div class="match2">
-                                <div class="player">
-                                  <img src="./images/plyer.png"  class="plyer_tour">
-                                  <input type="text" class="us1 player-input player3" placeholder="Player 3" required>
-                                  <span class="score"> 1</span>
-                                </div>
-                                <div class="player">
-                                  <img src="./images/plyer.png"  class="plyer_tour">
-                                  <input type="text" class="us1 player-input player4" placeholder="Player 4" required>
-                                  <span class="score"> 2</span>
-                                </div>
-                            </div>
-                        </div>
 
-                        <img src="./images/trophy (20).png" class="Champion">
-                        
-                        <div class="match3">
-                            <div class="player">
-                                <img src="./images/plyer.png"  class="plyer_tour">
-                                <span class="us1"></span>
-                                <span class="score"> 3</span>
+                            <img src="./images/trophy (20).png" class="Champion">
+                            
+                            <div class="match3">
+                                <div class="player">
+                                    <img src="./images/plyer.png"  class="plyer_tour" id="tournamentplayersemi1">
+                                    <span class="us1"></span>
+                                    <!-- <span class="score"> 3</span> -->
+                                </div>
+                                <div class="player">
+                                    <img src="./images/plyer.png" class="plyer_tour" id="tournamentplayersemi2">
+                                    <span class="us1"></span>
+                                    <!-- <span class="score"> 2 </span> -->
+                                </div>
                             </div>
-                            <div class="player">
-                                <img src="./images/plyer.png" class="plyer_tour">
-                                <span class="us1"></span>
-                                <span class="score"> 2 </span>
+                            
+                            <div class="win_up">
+                                <div class="winner">
+                                    <img src="./images/star (10).png"  class="star">
+                                    <img src="./images/plyer.png"  class="plyer_tour1">
+                                    <span class="us2"></span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="win_up">
-                            <div class="winner">
-                                <img src="./images/star (10).png"  class="star">
-                                <img src="./images/plyer.png"  class="plyer_tour1">
-                                <span class="us2"></span>
-                            </div>
-                        </div>
-                        <button id="submit-players" class="submit-button">Start Tournament</button>
+                            <button type="submit" id="submit-players" class="submit-button">Start</button>
+                        </form>
                     </div>
                 </div>
             </main>
          </div>
      </div>
     </template>
+    <template id="page-tournamentwinner">
+        <div class="ft_container">
+             <div class="header">
+                 <div class="ft-box">
+                     <img src="./images/logo.png" class="logo">
+                 </div>
+             </div>
+             <div class="content">
+                 <aside class="sidebar">
+                     <nav class="menu">
+                         <ul>
+                             <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
+                             <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
+                             <li><my-link href="/select"><img src="./images/Stadium.png" alt="Games"></my-link></li>
+                             <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
+                         </ul>
+                     </nav>
+                 </aside>
+    
+                <main class="content1">
+                    <div class="round-con">
+                        <div class="round">
+                            <div class="muth_4">
+                                <div class="match1">
+                                    <div class="player">
+                                      <img src="./images/plyer.png" class="plyer_tour">
+                                      <span type="text" class="us1 player-input player1" id="tournamentplayer1res" placeholder="Player 1" required></span>
+                                      <span class="score" id="tournamentplayer1score">0</span>
+                                    </div>
+                                    <div class="player">
+                                      <img src="./images/plyer.png"  class="plyer_tour">
+                                      <span type="text" class="us1 player-input player2" id="tournamentplayer2res" placeholder="Player 2" required></span>
+                                      <span class="score" id="tournamentplayer2score">0</span>
+                                    </div>
+                                </div>
+                                <div class="match2">
+                                    <div class="player">
+                                      <img src="./images/plyer.png"  class="plyer_tour">
+                                      <span type="text" class="us1 player-input player3" id="tournamentplayer3res" placeholder="Player 3" required></span>
+                                      <span class="score" id="tournamentplayer3score">0</span>
+                                    </div>
+                                    <div class="player">
+                                      <img src="./images/plyer.png"  class="plyer_tour">
+                                      <span type="text" class="us1 player-input player4" id="tournamentplayer4res" placeholder="Player 4" required></span>
+                                      <span class="score" id="tournamentplayer4score">0</span>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <img src="./images/trophy (20).png" class="Champion">
+                            
+                            <div class="match3">
+                                <div class="player">
+                                    <img src="./images/plyer.png"  class="plyer_tour">
+                                    <span class="us1" id="playersemione"></span>
+                                    <span class="score" id="playersemionescore"> 0</span>
+                                </div>
+                                <div class="player">
+                                    <img src="./images/plyer.png" class="plyer_tour">
+                                    <span class="us1" id="playersemitwo"></span>
+                                    <span class="score" id="playersemitwoscore"> 0 </span>
+                                </div>
+                            </div>
+                            
+                            <div class="win_up">
+                                <div class="winner">
+                                    <img src="./images/star (10).png"  class="star">
+                                    <img src="./images/plyer.png"  class="plyer_tour1">
+                                    <span class="us2" id="finalwinner"></span>
+                                </div>
+                            </div>
+                            <!-- <button id="submit-players" class="submit-button">Start Tournament</button> -->
+                        </div>
+                    </div>
+                </main>
+             </div>
+         </div>
+        </template>
 </body>
 
 
@@ -1061,6 +1141,7 @@
 <script src="./components/ponggame-game/index.js" type="module"></script>
 <script src="./components/vers1-game/index.js" type="module"></script>
 <script src="./components/vers4-game/index.js" type="module"></script>
+<script src="./components/tournamentwinner/index.js" type="module"></script>
 <script src="./js/erorrpage.js" type="module"></script>
 <script src="./js/bootstrap.bundle.min.js"></script>
 <script src="./js/lagages.js" type="module" defer></script>
