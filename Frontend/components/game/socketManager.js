@@ -7,6 +7,8 @@ export class WebSocketManager {
         this.gameMode = window.location.search.slice(6);
         this.socket = null;
         this.playerSide = null;
+        this.scoreLeft = document.querySelector('#playerleftscore');
+        this.scoreRight = document.querySelector('#playerrightscore');
     }
 
     connect() {
@@ -32,11 +34,10 @@ export class WebSocketManager {
     setupEventHandlers() {
         const connectionStatus = document.getElementById('connection-status');
         const playerSideElement = document.getElementById('player-side');
-        let sideAssigned = false;
 
         this.socket.onopen = () => this.handleOpen(connectionStatus);
         this.socket.onclose = () => this.handleClose(connectionStatus);
-        this.socket.onmessage = (event) => this.handleMessage(event, connectionStatus, playerSideElement, sideAssigned);
+        this.socket.onmessage = (event) => this.handleMessage(event, connectionStatus, playerSideElement);
     }
 
     async handleOpen(connectionStatus) {
@@ -57,39 +58,54 @@ export class WebSocketManager {
         }
     }
 
-    handleMessage(event, connectionStatus, playerSideElement, sideAssigned) {
+    handleMessage(event, connectionStatus, playerSideElement) {
         const data = JSON.parse(event.data);
         
         switch(data.type) {
             case 'players_ready':
-                console.log('Tournament players ready:', data);
+                console.log('players ready:', data);
                 this.currentRoomId = data.room_id; // Store the room_id
-                this.handlePlayersReady(data, connectionStatus, playerSideElement, sideAssigned);
+                this.handlePlayersReady(data, connectionStatus, playerSideElement);
                 break;
             case 'game_state':
                 if (data.room_id === this.currentRoomId) {
                     this.handleGameState(data);
                 }
                 break;
-            
+            case 'score_update':
+                console.log(data)
+            // if (data.room_id === this.currentRoomId) {
+                this.handleScoreUpdate(data.scores);
+            // }
+            break;
             case 'already':
                 // alert("already in a room")
-                go_to_page("/goback");
+                go_to_page("/already");
                 this.socket?.close()
                 break;
             case 'match_finished':
                 if (this.gameMode === "tournament")
                     this.handleMatchFinished(data);
+                if (this.gameMode === "1vs1-local" || this.gameMode === "1vs1-remote"){
+                    // alertMessage(`Match Winner: ${data.winner}!`);
+                    this.socket?.close();
+                    go_to_page("/congrats")
+                }
+                if (this.gameMode === "1vs1-remote"){
+                    // alertMessage(`Match Winner: ${data.winner}!`);
+                    localStorage.setItem('remotewinner', JSON.stringify(data.winner));
+                    this.socket?.close();
+                    go_to_page("/congrats")
+                }
                 // else if (this.gameMode === "1vs1-remote")
-                //     alertMessage(`Match Winner: ${data.winner}!`);
                 //     this.socket?.close();
                 //     go_to_page("/select")
+                break
             case 'match_canceled':
-                console.log("here")
+                // console.log("here")
+                    // break;
                 //route to winner page
                 // alert("match is finished")
-                if (this.gameMode === "tournament")
-                    break;
                 alertMessage("Match is canceled")
                 this.socket?.close()
                 go_to_page("/select")
@@ -100,7 +116,24 @@ export class WebSocketManager {
         }
     }
 
-    
+    handleScoreUpdate(scores) {
+        // Update score display elements if they exist
+        if (this.scoreLeft) {
+            this.scoreLeft.textContent = scores.left;
+        }
+        if (this.scoreRight) {
+            this.scoreRight.textContent = scores.right;
+        }
+        localStorage.setItem('gameScores', JSON.stringify({
+            leftScore: scores.left,
+            rightScore: scores.right
+        }));
+        // Optionally play a sound effect when score changes
+        // this.playScoreSound();
+
+        // // You could also add visual effects here
+        // this.showScoreAnimation();
+    }
 
     handleMatchFinished(data) {
         const state = data.tournament_status.state;
@@ -128,45 +161,35 @@ export class WebSocketManager {
     }
 
 
-    handlePlayersReady(data, connectionStatus, playerSideElement) {
-        // Store the assigned player side
-        this.playerSide = data.player_side;
-        
-        // Update UI to show which side the player is on
-        if (playerSideElement && data.player_side) {
-            if (data.player_side === "left")
-                playerSideElement.textContent = `You are on the ${data.player_side} side, you can play with WS or AD`;
-            else
-                playerSideElement.textContent = `You are on the ${data.player_side} side, you can play with the arrows`;
-            
+    handlePlayersReady(data, connectionStatus) {
+        if (!this.playerSide) {
+            this.playerSide = data.player_side;
         }
-        const player1 = document.querySelector('.pp-left');
-        const player2 = document.querySelector('.pp-right');
-
-        // Adjust camera based on game mode and player side
+        if (connectionStatus) {
+            if (data.players_count === 1) {
+                connectionStatus.textContent = '⏳ Waiting for opponent...';
+                connectionStatus.style.color = 'orange';
+            } else if (data.players_count === 2) {
+                connectionStatus.textContent = '🎮 Both players ready!';
+                connectionStatus.style.color = 'green';
+            }
+        }
+        const playerSideElement = document.getElementById('player-side');
+        if (playerSideElement) {
+            const side = this.playerSide 
+            if (side === 'left')
+                playerSideElement.textContent = `You are playing on the ${side} side Use W/S or A/D Keys`;
+            if (side === 'right')
+                playerSideElement.textContent = `You are playing on the ${side} side Use Arrow Keys`;
+        }
         if (this.gameMode === '1vs1-local' || this.gameMode === 'tournament') {
-            // For local mode, always set camera to center
-            // player1.textContent = data.username1;
             this.game.camera.position.set(0, 6, 6);
         } else if (data.player_side === "left") {
             this.game.camera.position.set(-6, 6, 0);
         }
-
-        if (this.playerSide === 'player1') {
-            this.playerSide === 'left'
-            player1.textContent = data.username;
-            this.game.camera.position.set(-6, 6, 0);
-        } else if (this.playerSide === 'player2') {
-            this.playerSide === 'right'
-            player2.textContent = data.username;
-            this.game.camera.position.set(6, 6, 0);
-        }
-
-        // Additional UI updates for number of players
-        if (connectionStatus && data.players_count === 2) {
-            connectionStatus.textContent = 'Ready to Play';
-            connectionStatus.style.color = 'green';
-        }
+        localStorage.setItem('Players', JSON.stringify({
+            players: data.players,
+        }));
     }
 
     handleGameState(data) {

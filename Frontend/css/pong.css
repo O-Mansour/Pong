@@ -1,48 +1,77 @@
-/* body {
-    margin: 0;
-}
 
-.score {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    font-size: 25px;
+.scor {
+
+    /* position: absolute; /
+    / top: 153px; /
+    / left: 50%; /
+    / transform: translateX(-50%); */
+
+    color:white;
+   
     font-weight: bold;
+
+    font-family: "Roboto", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    text-shadow: 1px 1px 0 #3992A5, -1px -1px 0 #3992A5, 1px -1px 0 #3992A5, -1px 1px 0 #3992A5;
+    -webkit-text-stroke: 0px #3992A5;
+    text-align: center;
+
 }
 
 .player {
     display: flex;
     gap: 1rem;
-} */
+}
 
-/* body_game { 
+#body_game { 
     margin: 0; 
     overflow: hidden; 
     background-color: #000;
     font-family: Arial, sans-serif;
-} */
+}
+
 #score-container {
     position: absolute;
     top: 10px;
+    /* left: 10px; */
     width: 100%;
     display: flex;
-    justify-content: space-between;
+
+    justify-content:space-between;
     color: white;
     font-size: 24px;
-    padding: 20 -20px;
+    /* padding: 20 -20px; */
+
 }
+
 #connection-status {
     position: absolute;
     bottom: 10px;
     width: 100%;
-    /* left: 10px; */
+     /* left: 10px;  */
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "Roboto", sans-serif;
     color: white;
 }
+
+/* #player-side {
+    position: absolute;
+    top: 10px;
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 0, 0);
+    font-size: 24px;
+} */
+
+
 #player-side {
     position: absolute;
     top: 10px;
@@ -52,6 +81,15 @@
     justify-content: center;
     color: rgb(255, 0, 0);
     font-size: 24px;
+    width: 300px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border-radius: 6px 6px 6px 6px;
+    font-weight: bold;
+    font-family: "Roboto", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 /* #body_game {
@@ -62,40 +100,82 @@
     background-color: #1e1e2e;
     font-family: Arial, sans-serif;
     margin: 0;
-  } */
+  }  */
 
-.card {
-display: flex;
-align-items: center;
-background: linear-gradient(145deg, #2e2e3e, #1c1c2a);
-border-radius: 20px;
-padding: 20px;
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  .card1{
+    margin-left: 2%;
+    width: 8%;
+    height: 166px;
+    display: flex;
+    align-items: center;
+     /*     
+    background: linear-gradient(145deg, #2e2e3e, #1c1c2a);  */
+    border-radius: 20px;
+    /* padding: 20px; 
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);  */
+
+    backdrop-filter: blur(10px);
+    background: rgba(109, 96, 96, 0.1);
+    border-radius: 6px 6px 6px 6px;
+    /* border-radius: 20px 20px 20px 20px; */
+    box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
+    background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
+
+}
+
+
+.card2
+{
+    margin-right: 2%;
+    width: 8%;
+    height: 166px;
+    display: flex;
+    align-items: center;
+    /*
+    background: linear-gradient(145deg, #2e2e3e, #1c1c2a); */
+    border-radius: 20px;
+    /*padding: 20px;*/
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
+
+    backdrop-filter: blur(10px);
+    background: rgba(109, 96, 96, 0.1);
+    /* border-radius: 20px 20px 20px 20px; */
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
+    background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
+
 }
 
 .pp {
-text-align: center;
-margin: 0 20px;
+    
+    margin-left: 23%;
+    /* justify-content: center; */
+    display: flex;
+
+    flex-direction: column;
+    /*justify-content: center; */
+    align-items: center;
+    /*text-align: center;*/
+    /* margin: 13px 20px; */
 }
 
 .pp img {
-width: 100px;
-height: 100px;
+width: 70px;
+height: 70px;
 border-radius: 50%;
 border: 3px solid #fff;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .pp p {
-margin-top: 10px;
-color: #fff;
-font-size: 16px;
-font-weight: bold;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 10px;
+    color: #fff;
+    font-weight: bold;
 }
 
-.vs {
-font-size: 24px;
-font-weight: bold;
-color: #ff4d4d;
-text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
+
+

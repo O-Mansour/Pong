@@ -202,15 +202,28 @@ class PongGameLocalConsumer(AsyncWebsocketConsumer):
             # Check for goals
             if (side == PlayerSide.LEFT.value and ball['position'][0] < -5) or \
             (side == PlayerSide.RIGHT.value and ball['position'][0] > 5):
-                scores[PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value] += 1
+                scoring_side = PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value
+                scores[scoring_side] += 1
                 
-                if scores[PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value] >= 2:
-                    # showi lwinner hna
+                # Send score update message
+                asyncio.create_task(self._send_score_update(scores))
+                
+                if scores[scoring_side] >= 2:
                     asyncio.create_task(self.match_finished())
                     self._stop_ball(game_state)
-                    break;
+                    break
                 
                 self._reset_ball(game_state)
+
+    async def _send_score_update(self, scores: Dict):
+        await self.send(text_data=json.dumps({
+            'type': 'score_update',
+            'scores': {
+                'left': scores[PlayerSide.LEFT.value],
+                'right': scores[PlayerSide.RIGHT.value]
+            },
+            'room_id': self.room_id
+        }))
     async def match_finished(self):
         await self.send(text_data=json.dumps({
             'type': 'match_finished',
@@ -411,6 +424,12 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
         }
 
     async def _notify_players_ready(self, room: Dict):
+        # Get player info for both sides if available
+        players_info = {}
+        if 'player_info' in room:
+            for side, info in room['player_info'].items():
+                players_info[side] = info['username']
+        
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -418,7 +437,10 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                 'message': {
                     'type': 'players_ready',
                     'players_count': len(room['players']),
-                    'player_side': self.player_side
+                    'player_side': self.player_side,
+                    'player_username': self.user.username,
+                    'players': players_info,
+                    'waiting': len(room['players']) == 1
                 }
             }
         )
@@ -515,6 +537,21 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
             next_z = -GameConfig.BALL_BOUND_Z + (-next_z - GameConfig.BALL_BOUND_Z)
             ball['velocity'][2] *= -1
         return next_z
+    async def _send_score_update(self, scores: Dict):
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'send_game_message',
+                'message': {
+                    'type': 'score_update',
+                    'scores': {
+                        'left': scores[PlayerSide.LEFT.value],
+                        'right': scores[PlayerSide.RIGHT.value]
+                    }
+                }
+            }
+        )
+
     def _check_paddle_and_goal_collisions(self, game_state: Dict):
         ball = game_state['ball']
         paddles = game_state['paddles']
@@ -532,7 +569,11 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                 scoring_side = PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value
                 scores[scoring_side] += 1
                 
+                # Create and run the score update task
+                asyncio.create_task(self._send_score_update(scores))
+                
                 if scores[scoring_side] >= 2:
+                    # Rest of the winning logic remains the same
                     winning_side = scoring_side
                     losing_side = PlayerSide.RIGHT.value if winning_side == PlayerSide.LEFT.value else PlayerSide.LEFT.value
 
@@ -543,9 +584,9 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                         if winner_info and loser_info:
                             winner_username = winner_info['username']
                             loser_username = loser_info['username']
-                            print(f"winner is {winner_username} and loser is {loser_username}", file=sys.stderr)
                             Thread(target=self._update_player_stats, args=(winner_username, loser_username, True)).start()
-                            Thread(target=self._update_player_stats, args=(winner_username,loser_username, False)).start()
+                            Thread(target=self._update_player_stats, args=(winner_username, loser_username, False)).start()
+                    
                     self._stop_ball(game_state)
                     game_state['playing'] = False
                     asyncio.create_task(self.match_finished(winner_info['username']))

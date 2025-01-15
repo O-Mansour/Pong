@@ -19,17 +19,22 @@ export class Game extends HTMLElement
         container.setAttribute("id", "body_game");
         container.innerHTML = `
             <div id="score-container">
-                <div class="card">
-                    <div class="pp pp-left">
-                        <img src="/images/profile.jpg" alt="Player 1">
-                        <p>Player 1</p>
+        
+                    <div class="card1">
+                        <div class="pp pp-left">
+                            <img src="/images/profile.jpg" alt="Player 1">
+                            <p id="playerleftname">Player 1</p>
+                            <span id="playerleftscore" class="scor">0</span>
+                        </div>
                     </div>
-                    <div class="vs">VS</div>
-                    <div class="pp pp-right">
-                        <img src="/images/profile.jpg" alt="Player 2">
-                        <p>Player 2</p>
+
+                    <div class="card2">
+                        <div class="pp pp-right">
+                            <img src="/images/profile.jpg" alt="Player 2">
+                            <p id="playerrightname">Player 2</p>
+                            <span id="playerrightscore" class="scor">0</span>
+                        </div>
                     </div>
-                </div>
             </div>
             <div id="connection-status">Connecting...</div>
             <div id="player-side">Player 1's Side</div>
