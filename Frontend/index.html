@@ -877,33 +877,34 @@
                     <div class="ca1">
                         <div class="player-con1">
                             <div class="player1">
-                                <span  class="wonn1">You Won</span>
+                                <span  class="wonn1" id="player1text">You Won</span>
                                 <img src="./images/game.png" class="imgply1">
-                                <p class="us1">Plyer 1</p>
+                                <p class="us1" id="rightplayername">Player 1</p>
                             </div>
                           
                             <div class="scor_win_lost">
-                                <span class="win1">5</span>
+                                <span class="win1" id="winnerscore">0</span>
                                 <img src="./images/versus.png" class="imgplyer_2">
-                                <span class="Loss1">2</span> 
+                                <span class="Loss1" id="loserscore">0</span> 
                             </div>  
                             <div class="player1">
-                                <span class="Lost1">You Lost</span>
+                                <span class="Lost1" id="player2text">You Lost</span>
                                 <img src="./images/game.png" class="imgply2">
-                                <p class="us1">Plyer 2</p>
+                                <p class="us1" id="leftplayername">Player 2</p>
                             </div>   
                         </div>
                         <!-- <button class="cancel1" onclick="go_to_page('/select')">Go back!</button> -->
                     </div>
 
                     <div class="btn-container"> 
-                        <button class="Rematch">Rematch</button> 
-                        <button class="back_h">Back to Home</button>
+                        <button class="Rematch" onclick="go_to_page('/select')">Rematch</button> 
+                        <button class="back_h" onclick="go_to_page('/home')">Back to Home</button>
                     </div>
              </main>
          </div>
      </div>
  </template>
+
 
  <template id="goback">
     <!-- <canvas id="game-canva"></canvas> -->

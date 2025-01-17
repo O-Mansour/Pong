@@ -189,7 +189,9 @@ export class WebSocketManager {
             // Update left player if exists
             if (data.players.left) {
                 this.playerLeftName.textContent = data.players.left;
-                this.playerLeftImage.src = '/home/ahamou/test/Backend/Pong/media/profile_images/ahamou_profile.jpg';
+                // this.playerLeftImage.src = 'http://localhost:8000/media/profile_images/alagmiri.jpeg';
+                this.playerLeftImage.src = `http://localhost:8000/media/profile_images/${data.players.left}_profile.jpg`;
+
                 // this.playerLeftImage.onerror = () => {
                 //     console.error('Failed to load left player image');
                 //     this.playerLeftImage.src = '/home/ahamou/test/Backend/Pong/media/profile_images/ahamou_profile.jpg'; // Fallback image
@@ -199,7 +201,8 @@ export class WebSocketManager {
             // Update right player if exists
             if (data.players.right) {
                 this.playerRightName.textContent = data.players.right;
-                this.playerRightImage.src = '/Backend/Pong/media/default_pfp.jpg';
+                // this.playerRightImage.src = 'http://localhost:8000/media/profile_images/alagmiri.jpeg';
+                this.playerRightImage.src = `http://localhost:8000/media/profile_images/${data.players.right}_profile.jpg`;
                 
             }
         }
