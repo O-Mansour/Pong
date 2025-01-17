@@ -1,20 +1,31 @@
 import { go_to_page, alertMessage } from "../../js/utils.js";
 
-
 export class WebSocketManager {
     constructor(game) {
         this.game = game;
         this.gameMode = window.location.search.slice(6);
+        const validModes = ['1vs1-remote', '1vs1-local', 'tournament'];
+        if (!validModes.includes(this.gameMode)) {
+            go_to_page("/error");
+            return;
+        }
         this.socket = null;
         this.playerSide = null;
         this.scoreLeft = document.querySelector('#playerleftscore');
         this.scoreRight = document.querySelector('#playerrightscore');
+        this.playerLeftImage = document.querySelector('#playerleftimage');
+        this.playerLeftName = document.querySelector('#playerleftname');
+        this.playerRightImage = document.querySelector('#playerrightimage');
+        this.playerRightName = document.querySelector('#playerrightname');
     }
 
     connect() {
         const token = localStorage.getItem('access_token');
         const wsUrl = this.getWebSocketUrl(this.gameMode) + `?token=${encodeURIComponent(token)}`;
         this.socket = new WebSocket(wsUrl);
+        // this.socket.onerror = () => {
+        //     go_to_page("/error");
+        // };
         this.setupEventHandlers();
     }
 
@@ -77,7 +88,7 @@ export class WebSocketManager {
             // if (data.room_id === this.currentRoomId) {
                 this.handleScoreUpdate(data.scores);
             // }
-            break;
+                break;
             case 'already':
                 // alert("already in a room")
                 go_to_page("/already");
@@ -174,6 +185,25 @@ export class WebSocketManager {
                 connectionStatus.style.color = 'green';
             }
         }
+        if (data.players) {
+            // Update left player if exists
+            if (data.players.left) {
+                this.playerLeftName.textContent = data.players.left;
+                this.playerLeftImage.src = '/home/ahamou/test/Backend/Pong/media/profile_images/ahamou_profile.jpg';
+                // this.playerLeftImage.onerror = () => {
+                //     console.error('Failed to load left player image');
+                //     this.playerLeftImage.src = '/home/ahamou/test/Backend/Pong/media/profile_images/ahamou_profile.jpg'; // Fallback image
+                // };
+            }
+            
+            // Update right player if exists
+            if (data.players.right) {
+                this.playerRightName.textContent = data.players.right;
+                this.playerRightImage.src = '/Backend/Pong/media/default_pfp.jpg';
+                
+            }
+        }
+
         const playerSideElement = document.getElementById('player-side');
         if (playerSideElement) {
             const side = this.playerSide 
@@ -192,6 +222,7 @@ export class WebSocketManager {
         }));
     }
 
+
     handleGameState(data) {
         if (this.game && data.game_state) {
             this.game.updateGameStates(data.game_state);
@@ -206,7 +237,7 @@ export class WebSocketManager {
             '1vs1-local': '1vs1-local/',
             'tournament': 'tournament/'
         };
-        return baseUrl + (modes[gameMode] || '1vs1-local/') ;
+        return baseUrl + modes[gameMode] ;
     }
 
     sendPaddleMove(side, direction) {
