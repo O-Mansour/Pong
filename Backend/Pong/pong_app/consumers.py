@@ -799,9 +799,34 @@ class TournamentManager:
 class PongGameTournamentConsumer(AsyncWebsocketConsumer):
     game_rooms = {}
     tournament_manager = TournamentManager()
-
+    active_tournaments = {}  # Track tournaments by token
+        
     async def connect(self):
         await self.accept()
+        
+        query_string = self.scope.get('query_string', b'').decode()
+        params = parse_qs(query_string)
+        self.token = params.get('token', [None])[0]
+
+        if self.token not in self.active_tournaments:
+            self.active_tournaments[self.token] = {
+                'tournament': TournamentManager(),
+                'creator_token': self.token
+            }
+
+        tournament_info = self.active_tournaments[self.token]
+        self.tournament_manager = tournament_info['tournament']
+
+        # Initialize tournament if not started and this is the creator
+        if (self.tournament_manager.state == TournamentState.NOT_STARTED and 
+            self.token == tournament_info['creator_token']):
+            self.tournament_manager.initialize_tournament()
+
+        # Get current match players
+        current_players = self.tournament_manager.get_current_match_players()
+        if not current_players:
+            await self.close()
+            return
         
         # Initialize tournament if not started
         if self.tournament_manager.state == TournamentState.NOT_STARTED:
@@ -829,7 +854,24 @@ class PongGameTournamentConsumer(AsyncWebsocketConsumer):
                 'room_id': self.room_id,
                 'tournament_status': self.tournament_manager.get_tournament_status()
             }))
+
+    async def receive(self, text_data):
+        try:
+            data = json.loads(text_data)
             
+            # Only accept nickname setup from tournament creator
+            if (data['type'] == 'setup_tournament_nicknames' and 
+                self.token == self.active_tournaments[self.token]['creator_token']):
+                self.tournament_manager.set_player_nicknames(data['nicknames'])
+            elif data['type'] == 'paddle_move':
+                await self._handle_paddle_move(data)
+            elif data['type'] == 'start_game':
+                await self._handle_start_game()
+        except Exception as e:
+            await self.send(text_data=json.dumps({
+                'type': 'error',
+                'message': f'Unexpected error: {str(e)}'
+            }))    
     def _assign_tournament_player_side(self, current_players: List[str]) -> Optional[str]:
         # Assign left side to first player, right side to second player
         if not self.game_rooms[self.room_id]['players'].get(PlayerSide.LEFT.value):
@@ -910,21 +952,6 @@ class PongGameTournamentConsumer(AsyncWebsocketConsumer):
             game_state = self.game_rooms[self.room_id]['game_state']
             game_state['playing'] = False
             del self.game_rooms[self.room_id]
-    async def receive(self, text_data):
-        try:
-            data = json.loads(text_data)
-            
-            if data['type'] == 'setup_tournament_nicknames':
-                self.tournament_manager.set_player_nicknames(data['nicknames'])
-            elif data['type'] == 'paddle_move':
-                await self._handle_paddle_move(data)
-            elif data['type'] == 'start_game':
-                await self._handle_start_game()
-        except Exception as e:
-            await self.send(text_data=json.dumps({
-                'type': 'error',
-                'message': f'Unexpected error: {str(e)}'
-            }))
     async def send_nicknames(self, event):
         await self.send(text_data=json.dumps({
             'type': 'nicknames_update',

@@ -22,7 +22,7 @@ export class Game extends HTMLElement
         
                     <div class="card1">
                         <div class="pp pp-left">
-                            <img src="/images/profile.jpg" alt="Player 1">
+                            <img id="playerleftimage" src="/images/profile.jpg" alt="P1">
                             <p id="playerleftname">Player 1</p>
                             <span id="playerleftscore" class="scor">0</span>
                         </div>
@@ -30,7 +30,7 @@ export class Game extends HTMLElement
 
                     <div class="card2">
                         <div class="pp pp-right">
-                            <img src="/images/profile.jpg" alt="Player 2">
+                            <img id="playerrightimage" src="/images/profile.jpg" alt="P2">
                             <p id="playerrightname">Player 2</p>
                             <span id="playerrightscore" class="scor">0</span>
                         </div>
@@ -41,9 +41,7 @@ export class Game extends HTMLElement
         `.trim();
         this.appendChild(container);
             class PongGame {
-                constructor() {
-                    
-                    // Initialize core Three.js components
+                constructor() {                    
                     const body = document.getElementById("body_game");
                     this.renderer = Initializer.initRenderer(body);
                     this.scene = Initializer.initScene();
