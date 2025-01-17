@@ -928,21 +928,31 @@
             <main class="content1">
                 <h1 class="game_mode" data-i18n="alreadyplaying"></h1>
                     <div class="ca1">
-                        <div class="player-con">
+                        <div class="player-con1">
                             <div class="player1">
-                                <p class="us1">username 1</p>
-                                <img src="./images/game.png" class="imgplyer1">
+                                <span  class="wonn1">You Won</span>
+                                <img src="./images/game.png" class="imgply1">
+                                <p class="us1">Plyer 1</p>
                             </div>
-                                
+                          
+                            <div class="scor_win_lost">
+                                <span class="win1">5</span>
+                                <img src="./images/versus.png" class="imgplyer_2">
+                                <span class="Loss1">2</span> 
+                            </div>  
+                            <div class="player1">
+                                <span class="Lost1">You Lost</span>
+                                <img src="./images/game.png" class="imgply2">
+                                <p class="us1">Plyer 2</p>
+                            </div>   
                         </div>
-                        <button class="cancel1" onclick="go_to_page('/select')">Go back!</button>
+                        <!-- <button class="cancel1" onclick="go_to_page('/select')">Go back!</button> -->
                     </div>
 
-                    <!-- <div class="btn-container"> -->
-                        <!-- <button class="accept1">Accept</button> -->
-                        <!-- <button class="cancel1">Cancel</button> -->
-                    <!-- </div> -->
-
+                    <div class="btn-container"> 
+                        <button class="Rematch">Rematch</button> 
+                        <button class="back_h">Back to Home</button>
+                    </div>
              </main>
          </div>
      </div>
@@ -975,6 +985,7 @@
      </div>
  </template>
 
+ <template id="page-game4vers">
  <template id="page-game4vers">
     <div class="ft_container">
          <div class="header">
@@ -1111,9 +1122,13 @@
                                     <img src="./images/plyer.png"  class="plyer_tour">
                                     <span class="us1" id="playersemione"></span>
                                     <span class="score" id="playersemionescore"> 0</span>
+                                    <span class="us1" id="playersemione"></span>
+                                    <span class="score" id="playersemionescore"> 0</span>
                                 </div>
                                 <div class="player">
                                     <img src="./images/plyer.png" class="plyer_tour">
+                                    <span class="us1" id="playersemitwo"></span>
+                                    <span class="score" id="playersemitwoscore"> 0 </span>
                                     <span class="us1" id="playersemitwo"></span>
                                     <span class="score" id="playersemitwoscore"> 0 </span>
                                 </div>
@@ -1193,6 +1208,7 @@
 <script src="./components/ponggame-game/index.js" type="module"></script>
 <script src="./components/vers1-game/index.js" type="module"></script>
 <script src="./components/vers4-game/index.js" type="module"></script>
+<script src="./components/tournamentwinner/index.js" type="module"></script>
 <script src="./components/tournamentwinner/index.js" type="module"></script>
 <script src="./js/erorrpage.js" type="module"></script>
 <script src="./js/bootstrap.bundle.min.js"></script>

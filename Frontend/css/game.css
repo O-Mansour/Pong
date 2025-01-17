@@ -167,9 +167,7 @@
     text-shadow: 1px 1px 0 #3992A5, -1px -1px 0 #3992A5, 1px -1px 0 #3992A5, -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5;
     text-align: center;
-
 }
-
 
 .vers_1 .sig_game,
 .single_game {
@@ -220,8 +218,6 @@
     width: 22%;
 }
 
-
-
 .player-con {
 
     width: 30%;
@@ -266,10 +262,12 @@
 }
 
 .accept1 {
+
     background-color: #3992A5;
 }
 
 .cancel1 {
+
     background-color: #453827;
    
 }
@@ -511,7 +509,6 @@
 }
 
 
-
 .plyer_tour3 {
     width: 49px;
     height: 44px;
@@ -544,6 +541,7 @@
     /* width: 70%; */
     width: 95%;
     position: absolute;
+    
 }
 
 .match3::before {
@@ -792,15 +790,10 @@
 }
 
 
-.form_tour
-{
-    width: 100%;
-    height: 200%;
-}
 
 
-.submit-button
-{
-    margin-top: -75%;
-    margin-left: 21%;
-}
+
+
+
+
+
