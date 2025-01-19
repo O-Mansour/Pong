@@ -208,7 +208,7 @@ class PongGameLocalConsumer(AsyncWebsocketConsumer):
                 # Send score update message
                 asyncio.create_task(self._send_score_update(scores))
                 
-                if scores[scoring_side] >= 2:
+                if scores[scoring_side] >= 3:
                     asyncio.create_task(self.match_finished())
                     self._stop_ball(game_state)
                     break
@@ -572,7 +572,7 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                 # Create and run the score update task
                 asyncio.create_task(self._send_score_update(scores))
                 
-                if scores[scoring_side] >= 2:
+                if scores[scoring_side] >= 3:
                     # Rest of the winning logic remains the same
                     winning_side = scoring_side
                     losing_side = PlayerSide.RIGHT.value if winning_side == PlayerSide.LEFT.value else PlayerSide.LEFT.value
@@ -1065,8 +1065,9 @@ class PongGameTournamentConsumer(AsyncWebsocketConsumer):
             if (side == PlayerSide.LEFT.value and ball['position'][0] < -5) or \
             (side == PlayerSide.RIGHT.value and ball['position'][0] > 5):
                 scores[PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value] += 1
+                asyncio.create_task(self._send_score_update(scores))
                 
-                if scores[PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value] >= 2:
+                if scores[PlayerSide.RIGHT.value if side == PlayerSide.LEFT.value else PlayerSide.LEFT.value] >= 3:
                     # showi lwinner hna
                     asyncio.create_task(self.match_finished())
                     self._stop_ball(game_state)
@@ -1074,6 +1075,15 @@ class PongGameTournamentConsumer(AsyncWebsocketConsumer):
                 
                 self._reset_ball(game_state)
 
+    async def _send_score_update(self, scores: Dict):
+        await self.send(text_data=json.dumps({
+            'type': 'score_update',
+            'scores': {
+                'left': scores[PlayerSide.LEFT.value],
+                'right': scores[PlayerSide.RIGHT.value]
+            },
+            'room_id': self.room_id
+        }))
     def _check_paddle_collision(self, ball: Dict, paddle_x: float, paddle: Dict) -> bool:
         if (paddle_x > 0 and ball['position'][0] >= paddle_x - GameConfig.BALL_RADIUS) or \
         (paddle_x < 0 and ball['position'][0] <= paddle_x + GameConfig.BALL_RADIUS):

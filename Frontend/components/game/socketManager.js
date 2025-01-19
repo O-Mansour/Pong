@@ -17,6 +17,7 @@ export class WebSocketManager {
         this.playerLeftName = document.querySelector('#playerleftname');
         this.playerRightImage = document.querySelector('#playerrightimage');
         this.playerRightName = document.querySelector('#playerrightname');
+        this.tPlayers = null;
     }
 
     connect() {
@@ -76,6 +77,25 @@ export class WebSocketManager {
             case 'players_ready':
                 console.log('players ready:', data);
                 this.currentRoomId = data.room_id; // Store the room_id
+                if (this.gameMode === "tournament") {
+                    this.tPlayers = JSON.parse(localStorage.getItem('tournamentPlayers'));
+                    switch(data.tournament_status.state) {
+                        case 'semifinals_1':
+                            this.playerLeftName.textContent = this.tPlayers.player1;
+                            this.playerRightName.textContent = this.tPlayers.player2;
+                            break;
+                        case 'semifinals_2':
+                            this.playerLeftName.textContent = this.tPlayers.player3;
+                            this.playerRightName.textContent = this.tPlayers.player4;
+                            break;
+                        case 'finals':
+                            const semifinal1Winner = JSON.parse(localStorage.getItem('playersemione'));
+                            const semifinal2Winner = JSON.parse(localStorage.getItem('playersemitwo'));
+                            this.playerLeftName.textContent = semifinal1Winner;
+                            this.playerRightName.textContent = semifinal2Winner;
+                            break;
+                    }
+                }
                 this.handlePlayersReady(data, connectionStatus, playerSideElement);
                 break;
             case 'game_state':
@@ -156,18 +176,20 @@ export class WebSocketManager {
             alertMessage(`Tournament Winner: ${data.winner}! 🏆`);
             this.socket?.close();
             go_to_page("/tournamentwinner");
-        } else{
+        } else {
             alertMessage(`Match Winner: ${data.winner}! Next match starting soon...`);
-            if (state === "semifinals_2")
+            if (state === "semifinals_2") {
                 localStorage.setItem('playersemione', JSON.stringify(data.winner));
                 localStorage.setItem('winner1score', JSON.stringify(data.winnerscore));
                 localStorage.setItem('loser1score', JSON.stringify(data.loserscore));
-            if (state === "finals")
+            }
+            if (state === "finals") {
                 localStorage.setItem('playersemitwo', JSON.stringify(data.winner));
                 localStorage.setItem('winner2score', JSON.stringify(data.winnerscore));
                 localStorage.setItem('loser2score', JSON.stringify(data.loserscore));
+            }
             this.socket?.close();
-            go_to_page("/game?mode=tournament")
+            go_to_page("/game?mode=tournament");
         }
     }
 
@@ -186,24 +208,20 @@ export class WebSocketManager {
             }
         }
         if (data.players) {
-            // Update left player if exists
             if (data.players.left) {
                 this.playerLeftName.textContent = data.players.left;
-                // this.playerLeftImage.src = 'http://localhost:8000/media/profile_images/alagmiri.jpeg';
                 this.playerLeftImage.src = `http://localhost:8000/media/profile_images/${data.players.left}_profile.jpg`;
-
-                // this.playerLeftImage.onerror = () => {
-                //     console.error('Failed to load left player image');
-                //     this.playerLeftImage.src = '/home/ahamou/test/Backend/Pong/media/profile_images/ahamou_profile.jpg'; // Fallback image
-                // };
+                this.playerLeftImage.onerror = () => {
+                    this.playerLeftImage.src = `http://localhost:8000/media/default_pfp.jpg`;
+                };
             }
             
-            // Update right player if exists
             if (data.players.right) {
                 this.playerRightName.textContent = data.players.right;
-                // this.playerRightImage.src = 'http://localhost:8000/media/profile_images/alagmiri.jpeg';
                 this.playerRightImage.src = `http://localhost:8000/media/profile_images/${data.players.right}_profile.jpg`;
-                
+                this.playerRightImage.onerror = () => {
+                    this.playerRightImage.src = `http://localhost:8000/media/default_pfp.jpg`;
+                };
             }
         }
 

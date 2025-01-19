@@ -19,12 +19,12 @@ export class Gamewinner extends  HTMLElement
         updateLanguageContent();
         this.displayScores();
     }
+    
     displayScores() {
         const scores = JSON.parse(localStorage.getItem('gameScores')) || { leftScore: 0, rightScore: 0 };
         const players = JSON.parse(localStorage.getItem('Players'));
         const winner = JSON.parse(localStorage.getItem('remotewinner'));
         
-        // Assuming you have elements with these IDs in your winner template
         const righttextElement = this.querySelector('#player1text');
         const rightScoreElement = this.querySelector('#loserscore');
         const rightcolorElement = this.querySelector('.wonn1');
@@ -33,6 +33,8 @@ export class Gamewinner extends  HTMLElement
         const leftScoreElement = this.querySelector('#winnerscore');
         const leftcolorElement = this.querySelector('.Lost1');
         const leftnameElement = this.querySelector('#leftplayername');
+        const playerLeftImage = document.querySelector('#leftplayerimage');
+        const playerRightImage = document.querySelector('#rightplayerimage');
 
         if (leftScoreElement) {
             leftScoreElement.textContent = scores.leftScore;
@@ -54,9 +56,18 @@ export class Gamewinner extends  HTMLElement
             rightcolorElement.style.color="#3992A5";
         }
         if (players && players.players){
+            playerLeftImage.src = `http://localhost:8000/media/profile_images/${players.players.left}_profile.jpg`;
+            playerLeftImage.onerror = () => {
+                playerLeftImage.src = `http://localhost:8000/media/default_pfp.jpg`;
+            };
+            playerRightImage.src = `http://localhost:8000/media/profile_images/${players.players.right}_profile.jpg`;
+            playerRightImage.onerror = () => {
+                playerRightImage.src = `http://localhost:8000/media/default_pfp.jpg`;
+            };
             if (scores.rightScore > scores.leftScore && players.players.right === winner.winner){
                 rightnameElement.textContent = players.players.right;
                 leftnameElement.textContent = players.players.left;
+                console.log("hello winner is right", players.players.right)
             }
             else{
                 rightnameElement.textContent = players.players.left;
