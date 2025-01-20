@@ -753,28 +753,20 @@
     -ms-overflow-style: none;
 }
 
-.list_ho{
-
+.list_ho {
     justify-content: space-around;
     overflow: auto;
-    /* width: 100%;
-    height: 160%;
-    max-height: 300px; */
-
-    /* width: 100%;
-    height: 180%;
-    max-height: 300%; */
-
+    height: 292px;
     width: 100%;
-
-    display: flex;
+    display: flex
+;
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
     border-radius: 20px 20px 20px 20px;
     box-shadow: 0 0 1px 1px rgb(235, 239, 243, 50%);
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
     padding: 10px 0px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 .list_hostory .title_host

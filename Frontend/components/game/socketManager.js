@@ -173,11 +173,11 @@ export class WebSocketManager {
             localStorage.setItem('finalwinner', JSON.stringify(data.winner));
             localStorage.setItem('finalwinnerscore', JSON.stringify(data.winnerscore));
             localStorage.setItem('finalloserscore', JSON.stringify(data.loserscore));
-            alertMessage(`Tournament Winner: ${data.winner}! 🏆`);
+            alertMessage(`Tournament Winner: ${data.winner}! 🏆`,"alert-success");
             this.socket?.close();
             go_to_page("/tournamentwinner");
         } else {
-            alertMessage(`Match Winner: ${data.winner}! Next match starting soon...`);
+            alertMessage(`Match Winner: ${data.winner}! Next match starting soon...`,"alert-success");
             if (state === "semifinals_2") {
                 localStorage.setItem('playersemione', JSON.stringify(data.winner));
                 localStorage.setItem('winner1score', JSON.stringify(data.winnerscore));

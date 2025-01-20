@@ -27,7 +27,7 @@ class PlayerSide(Enum):
 class GameConfig:
     FPS = 120
     FRAME_TIME = 1 / FPS
-    BALL_SPEED = 0.35
+    BALL_SPEED = 0.4
     PADDLE_SPEED = 0.1
     PADDLE_BOUND = 2.4
     BALL_BOUND_Z = 2.9
@@ -340,14 +340,30 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
         if not room:
             return
 
+        # Check if both players were in the game before disconnect
+        had_both_players = len(room['players']) == 2
+
         if self.player_side in room['players']:
             del room['players'][self.player_side]
         
         if 'player_info' in room and self.player_side in room['player_info']:
-            player_info = room['player_info'][self.player_side]
             if self.user_id in self.game_rooms:
                 del self.game_rooms[self.user_id]
             del room['player_info'][self.player_side]
+
+        if had_both_players:
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'send_game_message',
+                    'message': {
+                        'type': 'match_canceled',
+                        'message': 'Opponent disconnected'
+                    }
+                }
+            )
+            if room.get('game_state', {}).get('playing', False):
+                room['game_state']['playing'] = False
 
         if not room['players']:
             if self.room_name in self.game_rooms:
@@ -357,7 +373,6 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
             self.room_group_name, 
             self.channel_name
         )
-
 
     async def receive(self, text_data):
         try:
@@ -799,7 +814,7 @@ class TournamentManager:
 class PongGameTournamentConsumer(AsyncWebsocketConsumer):
     game_rooms = {}
     tournament_manager = TournamentManager()
-    active_tournaments = {}  # Track tournaments by token
+    active_tournaments = {}
         
     async def connect(self):
         await self.accept()
