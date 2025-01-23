@@ -3,6 +3,8 @@ import { GameObjects } from './objects.js';
 import { WebSocketManager } from './socketManager.js';
 import { InputHandler } from './handler.js';
 import {requireAuth} from "../../js/utils.js";
+import * as dat from 'dat.gui';
+
 
 export class Game extends HTMLElement
 {
@@ -37,7 +39,8 @@ export class Game extends HTMLElement
                     </div>
             </div>
             <div id="connection-status">Connecting...</div>
-            <div id="player-side">Player 1's Side</div>
+            <div id="player-side"></div>
+            <div id="game-controls"></div>
         `.trim();
         this.appendChild(container);
             class PongGame {
@@ -66,8 +69,45 @@ export class Game extends HTMLElement
                     
                     this.inputHandler = new InputHandler(this);
                     this.inputHandler.setupEventListeners();
+
+                    this.setupColorControls();
                 }
             
+                setupColorControls() {
+                    this.gui = new dat.GUI({
+                        autoPlace: false,
+                        width: 200 
+                    });
+
+                    this.colorSettings = {
+                        ballColor: '#' + this.ball.material.color.getHexString(),
+                        leftPaddleColor: '#' + this.leftPaddle.material.color.getHexString(),
+                        rightPaddleColor: '#' + this.rightPaddle.material.color.getHexString()
+                    };
+
+                    // Add color controls without folders
+                    this.gui.addColor(this.colorSettings, 'ballColor')
+                        .name('Ball Color')
+                        .onChange((value) => {
+                            this.ball.material.color.set(value);
+                        });
+
+                    this.gui.addColor(this.colorSettings, 'leftPaddleColor')
+                        .name('Left Paddle')
+                        .onChange((value) => {
+                            this.leftPaddle.material.color.set(value);
+                        });
+
+                    this.gui.addColor(this.colorSettings, 'rightPaddleColor')
+                        .name('Right Paddle')
+                        .onChange((value) => {
+                            this.rightPaddle.material.color.set(value);
+                        });
+
+                    const controlsContainer = document.getElementById('game-controls');
+                    controlsContainer.appendChild(this.gui.domElement);
+                }
+
                 movePaddle(side, direction) {
                     this.webSocketManager.sendPaddleMove(side, direction);
                 }

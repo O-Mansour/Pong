@@ -226,7 +226,7 @@ export class WebSocketManager {
         }
 
         const playerSideElement = document.getElementById('player-side');
-        if (playerSideElement) {
+        if (this.gameMode === "1vs1-remote") {
             const side = this.playerSide 
             if (side === 'left')
                 playerSideElement.textContent = `You are playing on the ${side} side Use W/S or A/D Keys`;

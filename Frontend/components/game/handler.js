@@ -1,9 +1,6 @@
-import { WebSocketManager } from './socketManager.js';
-
 export class InputHandler {
     constructor(game) {
         this.game = game;
-        // this.webSocketManager = webSocketManager;
         this.keyStates = {
             'w': false, 's': false, 'd': false, 'a': false,
             'ArrowUp': false, 'ArrowDown': false, 'ArrowRight': false, 'ArrowLeft': false

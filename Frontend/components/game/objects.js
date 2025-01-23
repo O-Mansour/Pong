@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-// import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export class GameObjects {
     constructor(scene, renderer) {
@@ -7,7 +6,7 @@ export class GameObjects {
         this.renderer = renderer;
         this.textureLoader = new THREE.TextureLoader();
     }
-
+    
     createBackground() {
         const cubeTextureLoader = new THREE.CubeTextureLoader();
         cubeTextureLoader.load([
