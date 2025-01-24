@@ -17,6 +17,9 @@ export class Gamermote extends  HTMLElement
         const content = template.content.cloneNode(true);
         this.appendChild(content);
         updateLanguageContent();
+        localStorage.removeItem('gameScores');
+        localStorage.removeItem('Players');
+        localStorage.removeItem('remotewinner');
     }
 }
 

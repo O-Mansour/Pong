@@ -117,16 +117,20 @@ export class WebSocketManager {
             case 'match_finished':
                 if (this.gameMode === "tournament")
                     this.handleMatchFinished(data);
-                if (this.gameMode === "1vs1-local" || this.gameMode === "1vs1-remote"){
+                if (this.gameMode === "1vs1-local"){
                     // alertMessage(`Match Winner: ${data.winner}!`);
                     this.socket?.close();
-                    go_to_page("/congrats")
+                    setTimeout(() => {
+                        go_to_page("/congrats")
+                    }, 1500);
                 }
                 if (this.gameMode === "1vs1-remote"){
                     // alertMessage(`Match Winner: ${data.winner}!`);
                     localStorage.setItem('remotewinner', JSON.stringify(data.winner));
                     this.socket?.close();
-                    go_to_page("/congrats")
+                    setTimeout(() => {
+                        go_to_page("/congrats")
+                    }, 1500);
                 }
                 // else if (this.gameMode === "1vs1-remote")
                 //     this.socket?.close();
@@ -175,7 +179,9 @@ export class WebSocketManager {
             localStorage.setItem('finalloserscore', JSON.stringify(data.loserscore));
             alertMessage(`Tournament Winner: ${data.winner}! 🏆`,"alert-success");
             this.socket?.close();
-            go_to_page("/tournamentwinner");
+            setTimeout(() => {
+                go_to_page("/tournamentwinner");
+            }, 1500);
         } else {
             alertMessage(`Match Winner: ${data.winner}! Next match starting soon...`,"alert-success");
             if (state === "semifinals_2") {
@@ -229,9 +235,9 @@ export class WebSocketManager {
         if (this.gameMode === "1vs1-remote") {
             const side = this.playerSide 
             if (side === 'left')
-                playerSideElement.textContent = `You are playing on the ${side} side Use W/S or A/D Keys`;
+                playerSideElement.textContent = `You can play with W/S or A/D`;
             if (side === 'right')
-                playerSideElement.textContent = `You are playing on the ${side} side Use Arrow Keys`;
+                playerSideElement.textContent = `You can play with Arrow Keys`;
         }
         else
             playerSideElement.style.display = 'none';
