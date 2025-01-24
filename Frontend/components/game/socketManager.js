@@ -75,7 +75,6 @@ export class WebSocketManager {
         
         switch(data.type) {
             case 'players_ready':
-                console.log('players ready:', data);
                 this.currentRoomId = data.room_id; // Store the room_id
                 if (this.gameMode === "tournament") {
                     this.tPlayers = JSON.parse(localStorage.getItem('tournamentPlayers'));

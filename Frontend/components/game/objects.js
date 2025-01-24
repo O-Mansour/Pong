@@ -10,12 +10,12 @@ export class GameObjects {
     createBackground() {
         const cubeTextureLoader = new THREE.CubeTextureLoader();
         cubeTextureLoader.load([
-            '/src/cube_right1.png',
-            '/src/cube_left1.png',
-            '/src/cube_up1.png',
-            '/src/cube_down1.png',
-            '/src/cube_back1.png',
-            '/src/cube_front1.png'
+            '/src/cube_right.png',
+            '/src/cube_left.png',
+            '/src/cube_up.png',
+            '/src/cube_down.png',
+            '/src/cube_back.png',
+            '/src/cube_front.png'
         ], (cubeTexture) => {
             this.scene.background = cubeTexture;
             this.scene.environment = cubeTexture;
