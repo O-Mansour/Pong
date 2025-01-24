@@ -233,6 +233,8 @@ export class WebSocketManager {
             if (side === 'right')
                 playerSideElement.textContent = `You are playing on the ${side} side Use Arrow Keys`;
         }
+        else
+            playerSideElement.style.display = 'none';
         if (this.gameMode === '1vs1-local' || this.gameMode === 'tournament') {
             this.game.camera.position.set(0, 6, 6);
         } else if (data.player_side === "left") {
