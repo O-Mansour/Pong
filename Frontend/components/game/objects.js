@@ -6,7 +6,6 @@ export class GameObjects {
         this.renderer = renderer;
         this.textureLoader = new THREE.TextureLoader();
     }
-    
     createBackground() {
         const cubeTextureLoader = new THREE.CubeTextureLoader();
         cubeTextureLoader.load([
@@ -24,7 +23,6 @@ export class GameObjects {
             this.renderer.outputEncoding = THREE.sRGBEncoding;
         });
     }
-
     createPlane() {
         const planeGeometry = new THREE.PlaneGeometry(10, 6);
         const paddleTexture = this.loadTexture('/src/plane.png');
@@ -40,11 +38,9 @@ export class GameObjects {
         this.scene.add(plane);
         return plane;
     }
-
     createPaddles() {
         const paddleGeometry = new THREE.CapsuleGeometry(0.1, 1, 4, 8);
         const paddleTexture = this.loadTexture('/src/ping-pong.jpg');
-        
         const paddleMaterials = {
             left: new THREE.MeshStandardMaterial({ 
                 color: 0x00ff00, 
@@ -59,13 +55,10 @@ export class GameObjects {
                 map: paddleTexture 
             })
         };
-
         const leftPaddle = this.createPaddle(paddleGeometry, paddleMaterials.left, -4.9);
         const rightPaddle = this.createPaddle(paddleGeometry, paddleMaterials.right, 4.9);
-        
         return { leftPaddle, rightPaddle };
     }
-
     createBall() {
         const ballGeometry = new THREE.SphereGeometry(0.1);
         const ballTexture = this.loadTexture('/src/ball2.jpg');
@@ -79,7 +72,6 @@ export class GameObjects {
         this.scene.add(ball);
         return ball;
     }
-
     loadTexture(path) {
         return this.textureLoader.load(path, (texture) => {
             texture.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
@@ -87,7 +79,6 @@ export class GameObjects {
             texture.magFilter = THREE.LinearFilter;
         });
     }
-
     createPaddle(geometry, material, xPosition) {
         const paddle = new THREE.Mesh(geometry, material);
         paddle.position.set(xPosition, 0.1, 0);

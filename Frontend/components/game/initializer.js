@@ -13,22 +13,18 @@ export class Initializer {
         parent.appendChild(renderer.domElement);
         return renderer;
     }
-
     static initScene() {
         return new THREE.Scene();
     }
-
     static initCamera() {
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
         camera.position.set(6, 6, 0);
         return camera;
     }
-
     static initLighting(scene) {
         const light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(0, 10, 10);
         scene.add(light);
-
         const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
         directionalLight.position.set(0, 10, 10);
         directionalLight.castShadow = true;
@@ -37,7 +33,6 @@ export class Initializer {
         scene.add(directionalLight);
         return directionalLight;
     }
-
     static initControls(camera, renderer) {
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
