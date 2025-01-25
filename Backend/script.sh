@@ -21,8 +21,8 @@ if not User.objects.filter(username='admin').exists():
 
 mkdir -p /etc/nginx/ssl
 
-openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx_k.key \
-    -out /etc/nginx/ssl/nginx_c.crt -subj "/CN=localhost"
+# openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx_k.key \
+#     -out /etc/nginx/ssl/nginx_c.crt -subj "/CN=localhost"
 
 # Start Django development server in the background
 python manage.py runserver 0.0.0.0:8000 &
