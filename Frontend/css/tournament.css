@@ -8,7 +8,7 @@
     
 } */
 
-/* .plye_form
+.plye_form
 {
     width: 100%;
     max-width: 1134px;
@@ -20,8 +20,7 @@
     top: 50%;
     left: 50%;
     translate: -50% -50%;
-
-} */
+}
 
 .round-con_1 {
     width: 100%;
@@ -146,22 +145,6 @@
 .submit-button:hover {
     background: #34291c;
 }
-
-.plystar
-{    
-    /* margin-top: 64%;
-    margin-left: 17%; */
-
-}
-
-
-/* .form_play
-{
-  width: 155%; 
-} */
-
-
-
 
 .plyer_tour3 {
     width: 49px;

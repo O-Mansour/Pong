@@ -1,5 +1,5 @@
-import updateLanguageContent from "../../js/lagages.js";
-import {requireAuth} from "../../js/utils.js";
+import updateLanguageContent from "../../js/language.js";
+// import {requireAuth} from "../../js/utils.js";
 
 export class Gamewinner extends  HTMLElement
 {
@@ -12,7 +12,7 @@ export class Gamewinner extends  HTMLElement
 
     connectedCallback()
     {
-        requireAuth();
+        // requireAuth();
         const template = document.getElementById("page-winner");
         const content = template.content.cloneNode(true);
         this.appendChild(content);
@@ -44,25 +44,25 @@ export class Gamewinner extends  HTMLElement
             rightScoreElement.textContent = scores.rightScore;
         }
         if (scores.rightScore > scores.leftScore){
-            lefttextElement.textContent = "You Won";
+            lefttextElement.textContent = "Winner";
             leftcolorElement.style.color="#3992A5";
-            righttextElement.textContent = "You Lost";
+            righttextElement.textContent = "Loser";
             rightcolorElement.style.color="white";
         }
         else{
-            lefttextElement.textContent = "You Lost";
+            lefttextElement.textContent = "Loser";
             leftcolorElement.style.color="white";
-            righttextElement.textContent = "You Won";
+            righttextElement.textContent = "Winner";
             rightcolorElement.style.color="#3992A5";
         }
         if (players && players.players){
-            playerLeftImage.src = `http://localhost:8000/media/profile_images/${players.players.left}_profile.jpg`;
+            playerLeftImage.src = `https://localhost:8000/media/profile_images/${players.players.left}.jpg`;
             playerLeftImage.onerror = () => {
-                playerLeftImage.src = `http://localhost:8000/media/default_pfp.jpg`;
+                playerLeftImage.src = `https://localhost:8000/media/default_pfp.jpg`;
             };
-            playerRightImage.src = `http://localhost:8000/media/profile_images/${players.players.right}_profile.jpg`;
+            playerRightImage.src = `https://localhost:8000/media/profile_images/${players.players.right}.jpg`;
             playerRightImage.onerror = () => {
-                playerRightImage.src = `http://localhost:8000/media/default_pfp.jpg`;
+                playerRightImage.src = `https://localhost:8000/media/default_pfp.jpg`;
             };
             if (scores.rightScore > scores.leftScore && players.players.right === winner.winner){
                 rightnameElement.textContent = players.players.right;

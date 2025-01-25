@@ -15,4 +15,5 @@ urlpatterns = [
 	path('auth/42login/', views.FT_LoginView.as_view()),
 	path('auth/42callback/', views.FT_CallbackView.as_view()),
 	path('auth/logout/', views.LogoutView.as_view()),
+	path('auth/refresh_token/', views.RefreshTokenView.as_view()),
 ]

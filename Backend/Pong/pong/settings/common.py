@@ -18,6 +18,8 @@ STATIC_URL = '/static/'
 
 INSTALLED_APPS = [
     'daphne',
+    'channels',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -28,15 +30,13 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'core',
-    'corsheaders',
-    'channels',
     'pong_app'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -45,7 +45,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000"
+    "https://localhost:3000"
 ]
 
 ASGI_APPLICATION = 'pong.asgi.application'
@@ -100,8 +100,7 @@ AUTH_PASSWORD_VALIDATORS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 FT_CLIENT_ID = 'u-s4t2ud-a9c4870c74d181b5f2d09157314996a195bc8f6734e9cefac685730ff61294d3'
-FT_CLIENT_SECRET = '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'
-SITE_URL = 'http://localhost:3000'
+SITE_URL = 'https://localhost:3000/'
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -114,17 +113,37 @@ LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ),
+# }
+
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'core.helpers.CookieJWTAuthentication',
+    ],
 }
+
+
+
+# CSRF Protection
+# CSRF_COOKIE_HTTPONLY = True # Not accessible via JavaScript
+# CSRF_TRUSTED_ORIGINS = ['https://localhost:3000']  # Trusted domains to send cross-site requests to back-end.
+# CSRF_COOKIE_SAMESITE = "None"
+
+# Secure Cookies
+SESSION_COOKIE_HTTPONLY = False # Protects the session cookie from XSS attacks (Not accessible via JavaScript)
+
+# CORS Settings
+CORS_ALLOW_CREDENTIALS = True # Ensures the browser includes cookies when making cross-origin requests to back-end.
 
 # SIMPLE_JWT = {
 #     'ACCESS_TOKEN_LIFETIME': timedelta(days=10),
 #     'AUTH_HEADER_TYPES': ('JWT',),
 # }
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Paths and directories

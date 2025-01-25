@@ -1,5 +1,5 @@
-import updateLanguageContent from "../../js/lagages.js";
-import { alertMessage, requireAuth, go_to_page, set_offline } from "../../js/utils.js";
+import updateLanguageContent from "../../js/language.js";
+import { alertMessage, isUserAuth, go_to_page, set_offline, getCSRFToken, fetchProtectedUrl } from "../../js/utils.js";
 
 export class Setting extends HTMLElement {
     constructor() {
@@ -7,24 +7,30 @@ export class Setting extends HTMLElement {
     }
 
     connectedCallback() {
-        requireAuth();
-        const template = document.getElementById("setting");
-        const content = template.content.cloneNode(true);
-        this.appendChild(content);
-        this.fetchsettingsData();
-        updateLanguageContent();
+        (async () => {
+            const isAuthenticated = await isUserAuth();
+            if (!isAuthenticated) {
+                go_to_page('/');
+                return;
+            }
+            const template = document.getElementById("setting");
+            const content = template.content.cloneNode(true);
+            this.appendChild(content);
+            this.fetchsettingsData();
+            updateLanguageContent();
 
-        this.querySelector('.logee')?.addEventListener('click', logout);
-        document.getElementById("ch")?.addEventListener("change", setLanguage);
-    
+            this.querySelector('.logee')?.addEventListener('click', logout);
+            document.getElementById("ch")?.addEventListener("change", setLanguage);
+        })();
     }
     
     async fetchsettingsData() {
         try {
-            const response = await fetch('http://localhost:8000/api/profiles/me/', {
-                headers: {
-                    'Authorization': `JWT ${localStorage.getItem('access_token')}`
-                }
+            const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+                method: 'GET',
+                // headers: {
+                //     'X-CSRFToken': getCSRFToken(),
+                // }
             });
             const data = await response.json();
 
@@ -35,7 +41,7 @@ export class Setting extends HTMLElement {
             const Elementemail = document.querySelector('#emailInput');
 
             if (imgElement && Elementfirstname && Elementlastname && Elementusername && Elementemail) {
-                imgElement.src = `http://localhost:8000${data.profileimg}`;
+                imgElement.src = `https://localhost:8000${data.profileimg}`;
                 Elementfirstname.value = data.firstname;
                 Elementlastname.value = data.lastname;
                 Elementusername.value = data.username;
@@ -56,11 +62,11 @@ export class Setting extends HTMLElement {
                             throw new Error('Failed to update user information, empty field.');
                     }
 
-                    const response = await fetch('http://localhost:8000/api/profiles/me/', {
+                    const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `JWT ${localStorage.getItem('access_token')}`
+                            // 'X-CSRFToken': getCSRFToken(),
                         },
                         body: JSON.stringify({
                             firstname: Elementfirstname.value.trim(),
@@ -69,7 +75,6 @@ export class Setting extends HTMLElement {
                             email: Elementemail.value.trim()
                         })
                     });
-                    // console.log('response status', response.status);
                     if (!response.ok) {
                         const errorData = await response.json();
                         throw new Error(errorData.message || 'Failed to update user information');
@@ -95,11 +100,11 @@ export class Setting extends HTMLElement {
                 }
 
                 try {
-                    const response = await fetch('http://localhost:8000/api/profiles/change_password/', {
+                    const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/change_password/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `JWT ${localStorage.getItem('access_token')}`
+                            // 'X-CSRFToken': getCSRFToken(),
                         },
                         body: JSON.stringify({
                             old_password: oldPassword.value,
@@ -144,11 +149,11 @@ export class Setting extends HTMLElement {
                 picData.append('profileimg', file);
 
                 try {
-                    const response = await fetch('http://localhost:8000/api/profiles/me/', {
+                    const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
                         method: 'PUT',
-                        headers: {
-                            'Authorization': `JWT ${localStorage.getItem('access_token')}`
-                        },
+                        // headers: {
+                        //     'X-CSRFToken': getCSRFToken(),
+                        // },
                         body: picData
                     });
 
@@ -159,7 +164,7 @@ export class Setting extends HTMLElement {
                         throw new Error('Failed to update profile picture' + profileImgError);
                     }
                     const result = await response.json();
-                    pictureElement.src = `http://localhost:8000${result.profileimg}`;
+                    pictureElement.src = `https://localhost:8000${result.profileimg}`;
                 } catch (error) {
                     alertMessage(error.message);
                 }
@@ -170,32 +175,33 @@ export class Setting extends HTMLElement {
     }
 }
 
-function logout() {
-    const refresh_token = localStorage.getItem('refresh_token');
 
-    // Call backend to blacklist token
-    fetch('http://localhost:8000/auth/logout/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ refresh_token })
-    }).finally(() => {
+async function logout() {
+    try {
         set_offline();
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
+        const response = await fetchProtectedUrl('https://localhost:8000/auth/logout/', {
+            method: 'POST',
+            // headers: {
+            //     'X-CSRFToken': getCSRFToken(),
+            // },
+        });
+        if (!response.ok) {
+            throw new Error('Failed to logout');
+        }
         go_to_page('/');
-    });
+    } catch (error) {
+        alertMessage(error.message);
+    }
 }
 
 async function setLanguage(event) {
     try {
         const selectedLang = event.target.value;
-        const response = await fetch('http://localhost:8000/api/profiles/me/', {
+        const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem('access_token')}`
+                // 'X-CSRFToken': getCSRFToken(),
             },
             body: JSON.stringify({
                 language: selectedLang

@@ -1,4 +1,4 @@
-const rout = ['', '/', '/home', '/user', '/settings', '/404', '/forgetpassword', '/sign-up' ,'/game', '/congrats' ,'/tournament','/already','/tournamentwinner']
+const rout = ['', '/', '/home', '/user', '/settings', '/404', '/sign-up' ,'/game', '/congrats' ,'/tournament','/already','/tournamentwinner']
 
 const routes = new Map([
 

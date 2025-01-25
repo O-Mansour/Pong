@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from .validators import validate_size
+from .helpers import profileimg_path
 
 class Profile(models.Model):
 	LANGUAGE_CHOICES = (
@@ -10,7 +11,7 @@ class Profile(models.Model):
 	)
 
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-	profileimg = models.ImageField(upload_to='profile_images/',
+	profileimg = models.ImageField(upload_to=profileimg_path,
 								default='default_pfp.jpg',
 								validators=[validate_size])
 	wins = models.PositiveIntegerField(default=0)

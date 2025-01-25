@@ -1,6 +1,6 @@
-import updateLanguageContent from "../../js/lagages.js";
+import updateLanguageContent from "../../js/language.js";
 import { event } from "../link/index.js";
-import { alreadyAuth } from "../../js/utils.js";
+import { go_to_page, isUserAuth } from "../../js/utils.js";
 import { set_online } from "../../js/utils.js";
 import { alertMessage} from "../../js/utils.js";
 export class LoginSignup extends HTMLElement {
@@ -12,45 +12,51 @@ export class LoginSignup extends HTMLElement {
     }
 
     connectedCallback() {
-        alreadyAuth();
-        
-        const template = document.getElementById("login-signup");
-        const content = template.content.cloneNode(true);
-        this.appendChild(content);
-        updateLanguageContent();
+        (async () => {
+            const isAuthenticated = await isUserAuth();
+            if (isAuthenticated) {
+                go_to_page('/home');
+                return;
+            }
+            
+            const template = document.getElementById("login-signup");
+            const content = template.content.cloneNode(true);
+            this.appendChild(content);
+            updateLanguageContent();
 
-        this.querySelector('.signup-box').addEventListener('submit', this.handleSignup);
-        
-        const clickEye1 = this.querySelector('.click_eye1');
-        const clickEye2 = this.querySelector('.click_eye2');
+            this.querySelector('.signup-box').addEventListener('submit', this.handleSignup);
+            
+            const clickEye1 = this.querySelector('.click_eye1');
+            const clickEye2 = this.querySelector('.click_eye2');
 
-        if (clickEye1) {
-            clickEye1.addEventListener('click', () => {
-                const passwordInput = this.querySelector('#password');
-                const eyeIcon = this.querySelector('.eye1');
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    eyeIcon.src = "./images/open_eye.png";
-                } else {
-                    passwordInput.type = 'password';
-                    eyeIcon.src = "./images/closed_eye.png";
-                }
-            });
-        }
+            if (clickEye1) {
+                clickEye1.addEventListener('click', () => {
+                    const passwordInput = this.querySelector('#password');
+                    const eyeIcon = this.querySelector('.eye1');
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        eyeIcon.src = "./images/open_eye.png";
+                    } else {
+                        passwordInput.type = 'password';
+                        eyeIcon.src = "./images/closed_eye.png";
+                    }
+                });
+            }
 
-        if (clickEye2) {
-            clickEye2.addEventListener('click', () => {
-                const confirmPasswordInput = this.querySelector('#confirm_password');
-                const eyeIcon = this.querySelector('.eye2');
-                if (confirmPasswordInput.type === 'password') {
-                    confirmPasswordInput.type = 'text';
-                    eyeIcon.src = "./images/open_eye.png";
-                } else {
-                    confirmPasswordInput.type = 'password';
-                    eyeIcon.src = "./images/closed_eye.png";
-                }
-            });
-        }
+            if (clickEye2) {
+                clickEye2.addEventListener('click', () => {
+                    const confirmPasswordInput = this.querySelector('#confirm_password');
+                    const eyeIcon = this.querySelector('.eye2');
+                    if (confirmPasswordInput.type === 'password') {
+                        confirmPasswordInput.type = 'text';
+                        eyeIcon.src = "./images/open_eye.png";
+                    } else {
+                        confirmPasswordInput.type = 'password';
+                        eyeIcon.src = "./images/closed_eye.png";
+                    }
+                });
+            }
+        })();
     }
 
     disconnectedCallback() {
@@ -77,11 +83,12 @@ export class LoginSignup extends HTMLElement {
         }
 
         try {
-            const response = await fetch('http://localhost:8000/auth/register/', {
+            const response = await fetch('https://localhost:8000/auth/register/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     username: username,
                     email: email,
@@ -93,8 +100,8 @@ export class LoginSignup extends HTMLElement {
                 alertMessage(data.error || "An error occurred. Try again");
                 return ;
             }
-            localStorage.setItem('access_token', data.access);
-            localStorage.setItem('refresh_token', data.refresh);
+            // localStorage.setItem('access_token', data.access);
+            // localStorage.setItem('refresh_token', data.refresh);
 
             set_online();
             const url = '/home';

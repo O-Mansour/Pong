@@ -1,44 +1,68 @@
-import { event } from "../components/link/index.js";
+export function getCSRFToken() {
+    const cookies = document.cookie.split('; '); // Split all cookies into an array
+    let csrfToken = null;
 
-// import jwtDecode from 'jwt-decode';
-
-// export function isTokenExpired(token) {
-//     try {
-//         const decoded = jwtDecode(token);
-//         const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-//         return decoded.exp < currentTime; // Token is expired if exp < current time
-//     } catch (e) {
-//         return true; // If decoding fails, treat as expired
-//     }
-// }
-
-// Redirect to login page if not authenticated
-export function requireAuth() {
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-        const url = '/';
-        history.pushState({ url }, null, url);
-        document.dispatchEvent(event);
+    for (let cookie of cookies) {
+        if (cookie.startsWith('csrftoken=')) {
+            csrfToken = cookie.split('=')[1]; // Get the value
+            break;
+        }
     }
+    return csrfToken;
 }
 
-// Redirect to home page if authenticated
-export function alreadyAuth() {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-        const url = '/home';
-        history.pushState({ url }, null, url);
-        document.dispatchEvent(event);
+export function get_access_token() {
+    const cookies = document.cookie.split('; '); // Split all cookies into an array
+    let access_token = null;
+
+    for (let cookie of cookies) {
+        if (cookie.startsWith('access_token=')) {
+            access_token = cookie.split('=')[1]; // Get the value
+            break;
+        }
+    }
+    return access_token;
+}
+
+export async function isUserAuth() {
+    try {
+        let response = await fetch('https://localhost:8000/api/profiles/me/', {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if (response.status === 401) {
+            const refreshResponse = await fetch('https://localhost:8000/auth/refresh_token/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+            });
+
+            if (!refreshResponse.ok) {
+                return false;
+            }
+
+            response = await fetch('https://localhost:8000/api/profiles/me/', {
+                method: 'GET',
+                credentials: 'include',
+            });
+        }
+
+        return response.ok;
+    } catch (error) {
+        return false;
     }
 }
 
 export async function set_online() {
     try {
-        const response = await fetch('http://localhost:8000/api/profiles/me/', {
+        const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem('access_token')}`
+                // 'X-CSRFToken': getCSRFToken(),
             },
             body: JSON.stringify({
                 is_online: true
@@ -57,11 +81,11 @@ export async function set_online() {
 
 export async function set_offline() {
     try {
-        const response = await fetch('http://localhost:8000/api/profiles/me/', {
+        const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem('access_token')}`
+                // 'X-CSRFToken': getCSRFToken(),
             },
             body: JSON.stringify({
                 is_online: false
@@ -73,7 +97,6 @@ export async function set_offline() {
             throw new Error(errorData.message || 'Failed to change online status');
         }
     } catch (error) {
-        // console.log('Error changing online status:', error);
         alertMessage(error.message);
     }
 }
@@ -83,20 +106,6 @@ export function go_to_page(url) {
     history.pushState({ url }, null, url);
     document.dispatchEvent(go_event);
 }
-
-// export function go_to_select(url) {
-//     const go_event = new Event("mylink");
-//     history.pushState({ url }, null, url);
-//     document.dispatchEvent(go_event);
-//     // const gameContainer = document.getElementById('body_game');
-//     // if (gameContainer) {
-//     //     gameContainer.style.display = 'none';
-//     // }
-//     const canvas = document.querySelector('canvas[data-engine="three.js r171"]');
-//     if (canvas) {
-//         canvas.style.display = 'none'; // Hide the canvas element
-//     }
-// }
 
 // classname: An optional parameter specifying the CSS class for the alert type (e.g., alert-danger, alert-success).
 //div.role = "alert"; =>setattrbuit
@@ -124,9 +133,41 @@ export function alertMessage(message, classname = "alert-danger") {
 }
 
 
-// alertMessage("hello test", "alert-success");
-// alertMessage("hello test");
-// alertMessage("hello test");
-// alertMessage("hello test");
-// alertMessage("hello test");
-// alertMessage("hello test");
+export async function fetchProtectedUrl(url, options = {}) {
+    try {
+        let response = await fetch(url, {
+            ...options,
+            credentials: 'include',
+        });
+
+        // refresh the access token when it expires
+        if (response.status === 401) {
+            const refreshResponse = await fetch('https://localhost:8000/auth/refresh_token/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'X-CSRFToken': getCSRFToken(),
+                },
+                credentials: 'include',
+            });
+
+            // redirect to login when refresh token expires
+            if (!refreshResponse.ok) {
+                alertMessage('Session expired, log in again');
+                return refreshResponse;
+                // go_to_page('/');
+            }
+
+            // retry fetch again after refreshing tokens
+            response = await fetch(url, {
+                ...options,
+                credentials: 'include',
+            });
+        }
+
+        return response;
+    }
+    catch (error) {
+        alertMessage('Error while fetching data : ' + error.message);
+    }
+}

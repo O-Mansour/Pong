@@ -36,7 +36,6 @@ const  langData = ({
                 password_login: "Password",
                 "remember-me": "Remember me",
                 "login-button": "Login",
-                "forgot-password": "Forgot password?",
                 or: "Or",
                 "sign-in-intra": "Sign in with intra",
                 "dont-have-account": "Don’t have an account?",
@@ -115,7 +114,6 @@ const  langData = ({
                 password: "Mot de passe",
                 "remember-me": "Se souvenir de moi",
                 "login-button": "Se connecter",
-                "forgot-password": "Mot de passe oublié?",
                 or: "Ou",
                 "sign-in-intra": "Se connecter avec Intra",
                 "dont-have-account": "Vous n'avez pas de compte?",
@@ -129,8 +127,6 @@ const  langData = ({
                 "signup-button": "S'inscrire",
                 "already-registered": "Déjà inscrit?",
                 "login-link": "Se connecter",
-                forgot_password_title: "Mot de passe oublié ?",
-                forgot_password_subtitle: "Encore ? Voyons si nous pouvons arranger ça.",
                 enter_email: "Entrez votre email",
                 reset_password_button: "Réinitialiser le mot de passe",
                 or_text: "Ou",
@@ -207,7 +203,6 @@ const  langData = ({
                 password: "Contraseña",
                 "remember-me": "Recuérdame",
                 "login-button": "Iniciar sesión",
-                "forgot-password": "¿Olvidaste tu contraseña?",
                 or: "O",
                 "sign-in-intra": "Iniciar sesión con Intra",
                 "dont-have-account": "¿No tienes cuenta?",
@@ -257,52 +252,52 @@ const  langData = ({
 //If the key is "welcomeMessage" and langData[currLang]?.["welcomeMessage"] is undefined, 
 //the displayed text will be "welcomeMessage".
 
+import {getCSRFToken, fetchProtectedUrl, alertMessage} from "./utils.js";
+
 async function updateLanguageContent() {
         let currLang = localStorage.getItem('lang') || 'en';
-        if (localStorage.getItem('access_token'))
+        if (!['/', '/sign-up'].includes(window.location.pathname))
         {
-            try {
-                const response = await fetch('http://localhost:8000/api/profiles/me/', {
-                  headers: {
-                    'Authorization': `JWT ${localStorage.getItem('access_token')}`
-                  }
+                try {
+                const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+                        method: 'GET',
+                        // headers: {
+                        //         'X-CSRFToken': getCSRFToken(),
+                        // },
                 });
                 if (!response.ok)
-                // console.log(`Failed to fetch profile: ${response.status}`);
-                  alertMessage('Failed to fetch profile.',"alert-danger");
-               
+                        alertMessage('Failed to fetch profile.');
+                
                 const data = await response.json();
                 currLang = data.language;
                 localStorage.setItem('lang', currLang);
-            } catch (error) {
-                // console.log("Error fetching language :", error);
-                alertMessage(error.message);
-            }
+                } catch (error) {
+                        alertMessage(error.message);
+                }
         }
-      
+
         const elements = document.querySelectorAll("[data-i18n]");
         elements.forEach((el) => {
-          const key = el.getAttribute("data-i18n");
-          if (key) 
+                const key = el.getAttribute("data-i18n");
+                if (key) 
                 el.innerHTML = langData[currLang]?.[key] || key;
         });
-      
-       
+
+
         const placeholders = document.querySelectorAll("[data-i18n-placeholder]");
         placeholders.forEach((input) => {
-          const key = input.getAttribute("data-i18n-placeholder");
-          if (key)
-                 input.placeholder = langData[currLang]?.[key] || key;
+                const key = input.getAttribute("data-i18n-placeholder");
+                if (key)
+                        input.placeholder = langData[currLang]?.[key] || key;
         });
 
         const buttons = document.querySelectorAll("[data-i18n-button]");
         buttons.forEach((btn) => {
-          const key = btn.getAttribute("data-i18n-button");
-          if (key)
+                const key = btn.getAttribute("data-i18n-button");
+                if (key)
                 btn.textContent = langData[currLang]?.[key] || key;
         });
-        // console.log("Language content updated!");
-      }
+}
       
 export default updateLanguageContent;
 

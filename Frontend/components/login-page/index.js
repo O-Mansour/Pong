@@ -1,8 +1,8 @@
-import updateLanguageContent from "../../js/lagages.js";
+import updateLanguageContent from "../../js/language.js";
 import { event } from "../link/index.js";
-import { alreadyAuth } from "../../js/utils.js";
+import { go_to_page, isUserAuth } from "../../js/utils.js";
 import { set_online } from "../../js/utils.js";
-import langData from "../../js/lagages.js";
+import langData from "../../js/language.js";
 
 export class LoginPage extends HTMLElement
 {
@@ -14,43 +14,48 @@ export class LoginPage extends HTMLElement
     }
 
     connectedCallback() {
-        alreadyAuth();
-        
-        const template = document.getElementById("login-page");
-        const content = template.content.cloneNode(true);
-        this.appendChild(content);
-        updateLanguageContent();
-        
-        this.loginForm = this.querySelector('.login-box');
-        this.errorMessage = this.querySelector('#errorMessage');
-        this.intraButton = this.querySelector('.intra-login');
-        
-        // Add event listeners
-        this.loginForm.addEventListener('submit', this.handleSubmit);
-        this.intraButton.addEventListener('click', this.handleFTLogin);
-        
-        // Handle callback if redirected back with tokens
-        this.handleOAuthCallback();
-        
-        document.querySelector('.click_eye').addEventListener('click', () => {
-            const passwordInput = document.getElementById('password');
-            if (passwordInput.type == 'password') {
-                passwordInput.type = 'text';
-                document.querySelector('.eye').src = "./images/open_eye.png";
-            } else {
-                passwordInput.type = 'password';
-                document.querySelector('.eye').src = "./images/closed_eye.png";
+        (async () => {
+            const isAuthenticated = await isUserAuth();
+            if (isAuthenticated) {
+                go_to_page('/home');
+                return;
             }
-        });
 
+            const template = document.getElementById("login-page");
+            const content = template.content.cloneNode(true);
+            this.appendChild(content);
+            updateLanguageContent();
+            
+            this.loginForm = this.querySelector('.login-box');
+            this.errorMessage = this.querySelector('#errorMessage');
+            this.intraButton = this.querySelector('.intra-login');
+            
+            // Add event listeners
+            this.loginForm.addEventListener('submit', this.handleSubmit);
+            this.intraButton.addEventListener('click', this.handleFTLogin);
+            
+            // Handle callback if redirected back with tokens
+            this.handleOAuthCallback();
+            
+            document.querySelector('.click_eye').addEventListener('click', () => {
+                const passwordInput = document.getElementById('password');
+                if (passwordInput.type == 'password') {
+                    passwordInput.type = 'text';
+                    document.querySelector('.eye').src = "./images/open_eye.png";
+                } else {
+                    passwordInput.type = 'password';
+                    document.querySelector('.eye').src = "./images/closed_eye.png";
+                }
+            });
 
+        })();
     }
 
-    disconnectedCallback() {
-        // Clean up event listeners
-        this.loginForm.removeEventListener('submit', this.handleSubmit);
-        this.intraButton.removeEventListener('click', this.handleFTLogin);
-    }
+    // disconnectedCallback() {
+    //     // Clean up event listeners
+    //     this.loginForm.removeEventListener('submit', this.handleSubmit);
+    //     this.intraButton.removeEventListener('click', this.handleFTLogin);
+    // }
 
 
     async handleSubmit(e) {
@@ -60,19 +65,20 @@ export class LoginPage extends HTMLElement
         const password = this.querySelector('#password').value;
 
         try {
-            const response = await fetch('http://localhost:8000/auth/login/', {
+            const response = await fetch('https://localhost:8000/auth/login/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify({ username, password })
             });
             const data = await response.json();
             if (!response.ok)
                 throw new Error(data.error || 'Login failed');
-            
-            localStorage.setItem('access_token', data.access);
-            localStorage.setItem('refresh_token', data.refresh);
+
+            // localStorage.setItem('access_token', data.access);
+            // localStorage.setItem('refresh_token', data.refresh);
             const url = '/home';
             history.pushState({url}, null, url);
             document.dispatchEvent(event);
@@ -89,12 +95,7 @@ export class LoginPage extends HTMLElement
 
         try {
             // Fetch the authorization URL from the backend
-            const response = await fetch('http://localhost:8000/auth/42login/', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response = await fetch('https://localhost:8000/auth/42login/');
 
             const data = await response.json();
             if (response.ok && data.authorization_url) {
@@ -119,18 +120,16 @@ export class LoginPage extends HTMLElement
         if (code) {
             try {
                 // Send the authorization code to the backend to exchange for JWT tokens
-                const response = await fetch(`http://localhost:8000/auth/42callback/?code=${code}`, {
+                const response = await fetch(`https://localhost:8000/auth/42callback/?code=${code}`, {
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    credentials: 'include'
                 });
 
                 const data = await response.json();
                 if (response.ok) {
                     // Store JWT tokens in localStorage
-                    localStorage.setItem('access_token', data.access_token);
-                    localStorage.setItem('refresh_token', data.refresh_token);
+                    // localStorage.setItem('access_token', data.access_token);
+                    // localStorage.setItem('refresh_token', data.refresh_token);
 
                     set_online();
                     const url = '/home';

@@ -5,7 +5,7 @@ services:
     build:
       context: ./Frontend
     ports:
-      - "3000:3000"
+      - "3000:443"
     networks:
       - pong-network
     volumes:
@@ -17,7 +17,7 @@ services:
     build:
       context: ./Backend
     ports:
-      - "8000:8000"
+      - "8000:443"
     networks:
       - pong-network
     volumes:

@@ -1,7 +1,7 @@
 
 
-import updateLanguageContent from "../../js/lagages.js";
-import langData from "../../js/lagages.js";
+import updateLanguageContent from "../../js/language.js";
+import langData from "../../js/language.js";
 import { alertMessage } from "../../js/utils.js";
 
 export class Gamelocal extends HTMLElement {

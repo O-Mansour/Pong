@@ -1,6 +1,6 @@
-import updateLanguageContent from "../../js/lagages.js";
-import langData from "../../js/lagages.js";
-import {requireAuth,alertMessage} from "../../js/utils.js";
+import updateLanguageContent from "../../js/language.js";
+import langData from "../../js/language.js";
+import {isUserAuth, alertMessage, getCSRFToken, fetchProtectedUrl, go_to_page} from "../../js/utils.js";
 
 export class HomeDashboard extends  HTMLElement
 {
@@ -12,23 +12,32 @@ export class HomeDashboard extends  HTMLElement
     
     connectedCallback()
     {
-      requireAuth();
-      const template = document.getElementById("home-dashboard");
-      const content = template.content.cloneNode(true);
-      this.appendChild(content);
-      updateLanguageContent();
-      this.fetchDashbordData();
-      this.fetchNotfication();
-      this.fetchTotalPlayers();
+      (async () => {
+        const isAuthenticated = await isUserAuth();
+        if (!isAuthenticated) {
+            go_to_page('/');
+            return;
+        }
+
+        const template = document.getElementById("home-dashboard");
+        const content = template.content.cloneNode(true);
+        this.appendChild(content);
+        updateLanguageContent();
+        this.fetchDashbordData();
+        this.fetchNotfication();
+        this.fetchTotalPlayers();
+      })();
     }
 
   async fetchDashbordData() {
     try {
-      const response = await fetch(`http://localhost:8000/api/profiles/me/`, {
-        headers: {
-          'Authorization': `JWT ${localStorage.getItem('access_token')}`
-        }
+      const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+        method: 'GET',
+        // headers: {
+        //   'X-CSRFToken': getCSRFToken(),
+        // },
       });
+      
       const data = await response.json();
 
       const fullnameElement = document.getElementById('fetched_fullname');
@@ -56,7 +65,7 @@ export class HomeDashboard extends  HTMLElement
                 progressPercentage = (data.xps / maxXp) * 100;
             document.querySelector('.ft_progress').style = `--xp:${progressPercentage}%`;
 
-          imgElement.src = `http://localhost:8000${data.profileimg}`;
+          imgElement.src = `https://localhost:8000${data.profileimg}`;
 
 
           matches_played.textContent = data.wins + data.losses;
@@ -109,10 +118,11 @@ export class HomeDashboard extends  HTMLElement
 
   async fetchNotfication() {
     try {
-      const response = await fetch('http://localhost:8000/api/friendships/requests_received', {
-        headers: {
-          'Authorization': `JWT ${localStorage.getItem('access_token')}`
-        }
+      const response = await fetchProtectedUrl('https://localhost:8000/api/friendships/requests_received', {
+          method: 'GET',
+          // headers: {
+          //   'X-CSRFToken': getCSRFToken(),
+          // },
       });
       const NotifData = await response.json();
       const badge = document.querySelector('.badge');
@@ -133,7 +143,7 @@ export class HomeDashboard extends  HTMLElement
 
         notificationRow.innerHTML = `
             <div class="name_notf">
-                <img src="http://localhost:8000${sender.sender_profile.profileimg}" class="img_led">
+                <img src="https://localhost:8000${sender.sender_profile.profileimg}" class="img_led">
                 <p class="name_invit">${sender.sender_profile.firstname} ${sender.sender_profile.lastname}</p>
             </div>
           
@@ -155,10 +165,11 @@ export class HomeDashboard extends  HTMLElement
 
         acceptButton.addEventListener('click', async (event) => {
           try {
-            await fetch(`http://localhost:8000/api/friendships/${sender.id}/accept/`, {
-              headers: {
-                'Authorization': `JWT ${localStorage.getItem('access_token')}`
-              }
+              await fetchProtectedUrl(`https://localhost:8000/api/friendships/${sender.id}/accept/`, {
+              method: 'GET',
+              // headers: {
+              //   'X-CSRFToken': getCSRFToken(),
+              // },
             });
             acceptButton.disabled = true;
             rejectButton.disabled = true;
@@ -169,10 +180,11 @@ export class HomeDashboard extends  HTMLElement
 
         rejectButton.addEventListener('click', async (event) => {
           try {
-            await fetch(`http://localhost:8000/api/friendships/${sender.id}/reject/`, {
-              headers: {
-                'Authorization': `JWT ${localStorage.getItem('access_token')}`
-              }
+              await fetchProtectedUrl(`https://localhost:8000/api/friendships/${sender.id}/reject/`, {
+              method: 'GET',
+              // headers: {
+              //   'X-CSRFToken': getCSRFToken(),
+              // },
             });
             acceptButton.disabled = true;
             rejectButton.disabled = true;
@@ -183,7 +195,7 @@ export class HomeDashboard extends  HTMLElement
 
         updateLanguageContent();
       });
-    } catch (error) {
+    } catch (err) {
       alertMessage("Error fetching data : " + err.message);
     }
   }
@@ -191,40 +203,48 @@ export class HomeDashboard extends  HTMLElement
 
   async fetchTotalPlayers() {
     try {
-      const response = await fetch('http://localhost:8000/api/profiles/me/', {
-        headers: {
-          'Authorization': `JWT ${localStorage.getItem('access_token')}`
-        }
+      const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+        method: 'GET',
+        // headers: {
+        //   'X-CSRFToken': getCSRFToken(),
+        // }
       });
       const data = await response.json();
 
-      const profilesResponse = await fetch('http://localhost:8000/api/profiles/', {
-        headers: {
-          'Authorization': `JWT ${localStorage.getItem('access_token')}`
-        }
+      const profilesResponse = await fetchProtectedUrl('https://localhost:8000/api/profiles/', {
+          method: 'GET',
+          // headers: {
+          //   'X-CSRFToken': getCSRFToken(),
+          // }
       });
       const profilesData = await profilesResponse.json();
 
-      const friendsResponse = await fetch('http://localhost:8000/api/friendships/friends/', {
-        headers: {
-          'Authorization': `JWT ${localStorage.getItem('access_token')}`
-        }
+      const friendsResponse = await fetchProtectedUrl('https://localhost:8000/api/friendships/friends/', {
+        method: 'GET',
+        // headers: {
+        //   'X-CSRFToken': getCSRFToken(),
+        // }
       });
       const friendsData = await friendsResponse.json();
-      const friendsIds = friendsData.map(friend => friend.user_id);
+      let friendsIds = [];
+      if (Array.isArray(friendsData)){
+        friendsIds = friendsData.map(friend => friend.user_id);
+      }
 
-      const SentResponse = await fetch('http://localhost:8000/api/friendships/requests_sent', {
-        headers: {
-          'Authorization': `JWT ${localStorage.getItem('access_token')}`
-        }
+      const SentResponse = await fetchProtectedUrl('https://localhost:8000/api/friendships/requests_sent', {
+        method: 'GET',
+        // headers: {
+        //   'X-CSRFToken': getCSRFToken(),
+        // }
       });
       const sentData = await SentResponse.json();
       const sentIds = sentData.map(pending => pending.receiver_profile.user_id);
 
-      const receivedResponse = await fetch('http://localhost:8000/api/friendships/requests_received', {
-        headers: {
-          'Authorization': `JWT ${localStorage.getItem('access_token')}`
-        }
+      const receivedResponse = await fetchProtectedUrl('https://localhost:8000/api/friendships/requests_received', {
+        method: 'GET',
+        // headers: {
+        //   'X-CSRFToken': getCSRFToken(),
+        // }
       });
       const receivedData = await receivedResponse.json();
       const receivedIds = receivedData.map(pending => pending.sender_profile.user_id);
@@ -284,11 +304,11 @@ export class HomeDashboard extends  HTMLElement
   
           addFriendBtn.addEventListener('click', async () => {
             try {
-              const response = await fetch('http://localhost:8000/api/friendships/', {
+              const response = await fetchProtectedUrl('https://localhost:8000/api/friendships/', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': `JWT ${localStorage.getItem('access_token')}`
+                  // 'X-CSRFToken': getCSRFToken(),
                 },
                 body: JSON.stringify({ receiver: leader.user_id }),
               });

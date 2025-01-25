@@ -20,7 +20,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as ValidationErrorException
 
-from django.http import JsonResponse
+# from django.http import JsonResponse
 
 class ProfileViewSet(ModelViewSet):
 	queryset = Profile.objects.order_by('-level', '-xps')
@@ -203,10 +203,31 @@ class RegistrationView(APIView):
 		if serializer.is_valid():
 			user = serializer.save()
 			refresh = RefreshToken.for_user(user)
-			return Response({
-				'refresh': str(refresh),
-				'access': str(refresh.access_token),
-			}, status=status.HTTP_201_CREATED)
+
+			# return Response({
+			# 	'refresh': str(refresh),
+			# 	'access': str(refresh.access_token),
+			# }, status=status.HTTP_201_CREATED)
+			response = Response({"message": "Welcome, Enjoy Your Time!"})
+
+			response.set_cookie(
+				key='access_token',
+				value=str(refresh.access_token),
+				httponly=False,
+				secure=True,  # False only in development
+				max_age=60 * 30,
+				samesite='None'
+			)
+			response.set_cookie(
+				key='refresh_token',
+				value=str(refresh),
+				httponly=True,
+				secure=True,
+				max_age=24 * 60 * 60,
+				samesite='None'
+			)
+			# I MAY NEED TO CREATE A PROFILE HERE
+			return response
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(APIView):
@@ -217,10 +238,26 @@ class LoginView(APIView):
 		
 		if user:
 			refresh = RefreshToken.for_user(user)
-			return Response({
-				'refresh': str(refresh),
-				'access': str(refresh.access_token),
-			})
+			response = Response({"message": "Welcome, Enjoy Your Time!"})
+
+			response.set_cookie(
+				key='access_token',
+				value=str(refresh.access_token),
+				httponly=False,
+				secure=True,  # False only in development
+				max_age=60 * 30,
+				samesite='None'
+			)
+			response.set_cookie(
+				key='refresh_token',
+				value=str(refresh),
+				httponly=True,
+				secure=True,
+				max_age=24 * 60 * 60,
+				samesite='None'
+			)
+
+			return response
 		return Response({'error': 'Invalid credentials'}, status=401)
 
 class FT_LoginView(APIView):
@@ -253,7 +290,7 @@ class FT_CallbackView(APIView):
 			
 		tokens = token_response.json()
 		access_token = tokens.get('access_token')
-		refresh_token = tokens.get('refresh_token')
+		# refresh_token = tokens.get('refresh_token') # NO NEED
 		
 		# Fetch user information from 42 API
 		user_response = requests.get(
@@ -266,12 +303,11 @@ class FT_CallbackView(APIView):
 		user_data = user_response.json()
 		ft_id = user_data['id']  # id for 42 users
 
-
-		# Match the user based on ft_id, not username
+		# Find the user based on ft_id, not username
 		profile = Profile.objects.filter(ft_id=ft_id).first()
 
 		if profile:
-			# If profile exists, update user details
+			# If profile exists, update user details (NO NEED TO DO THAT JUST RETURN TOKENS)
 			user = profile.user
 			user.first_name = user_data.get('first_name', user.first_name)
 			user.last_name = user_data.get('last_name', user.last_name)
@@ -300,26 +336,88 @@ class FT_CallbackView(APIView):
 						from django.core.files.base import ContentFile
 						# Save the image to profile
 						profile.profileimg.save(
-							f'{user.username}_profile.jpg', # filename
+							f'{user.username}.jpg',
 							ContentFile(image_response.content),
 							save=True
 						)
 				except Exception as e:
-					print(f"Error saving profile picture: {str(e)}")
+					print(f"Error saving profile picture: {str(e)}") # file=stderr
 		
 		# Generate JWT
 		refresh = RefreshToken.for_user(user)
-		return JsonResponse({
-			'refresh_token': str(refresh),
-			'access_token': str(refresh.access_token),
-		})
+		# return JsonResponse({
+		# 	'refresh_token': str(refresh),
+		# 	'access_token': str(refresh.access_token),
+		# })
+		response = Response({"message": "Welcome, Enjoy Your Time!"})
+
+		response.set_cookie(
+			key='access_token',
+			value=str(refresh.access_token),
+			httponly=False,
+			secure=True,  # False only in development
+			max_age=60 * 30,
+			samesite='None'
+		)
+		response.set_cookie(
+			key='refresh_token',
+			value=str(refresh),
+			httponly=True,
+			secure=True,
+			max_age=24 * 60 * 60,
+			samesite='None'
+		)
+
+		return response
 
 class LogoutView(APIView):
+	# def post(self, request):
+	# 	try:
+	# 		refresh_token = request.data["refresh_token"]
+	# 		token = RefreshToken(refresh_token)
+	# 		token.blacklist()
+	# 		return Response(status=status.HTTP_205_RESET_CONTENT)
+	# 	except Exception:
+	# 		return Response(status=status.HTTP_400_BAD_REQUEST)
+
 	def post(self, request):
-		try:
-			refresh_token = request.data["refresh_token"]
-			token = RefreshToken(refresh_token)
-			token.blacklist()
-			return Response(status=status.HTTP_205_RESET_CONTENT)
-		except Exception:
-			return Response(status=status.HTTP_400_BAD_REQUEST)
+		response = Response({"message": "Logged out successfully!"})
+		response.delete_cookie('access_token')
+		response.delete_cookie('refresh_token')
+		return response
+
+
+class RefreshTokenView(APIView):
+    def post(self, request):
+        refresh_token = request.COOKIES.get('refresh_token')
+
+        if not refresh_token:
+            return Response({"error": "Refresh token not found"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        try:
+            refresh = RefreshToken(refresh_token)
+            new_access_token = str(refresh.access_token)
+            new_refresh_token = str(refresh)
+
+            response = Response({"message": "Tokens refreshed successfully"})
+            response.set_cookie(
+                key='access_token',
+                value=new_access_token,
+                httponly=False,
+				secure=True,  # False only in development
+				max_age=60 * 30,
+				samesite='None'
+			)
+            response.set_cookie(
+                key='refresh_token',
+                value=new_refresh_token,
+                httponly=True,
+				secure=True,
+				max_age=24 * 60 * 60,
+				samesite='None'
+            )
+
+            return response
+
+        except Exception:
+            return Response({"error": "Invalid refresh token"}, status=status.HTTP_403_FORBIDDEN)

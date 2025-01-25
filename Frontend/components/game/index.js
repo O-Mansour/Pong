@@ -2,7 +2,7 @@ import { Initializer } from './initializer.js';
 import { GameObjects } from './objects.js';
 import { WebSocketManager } from './socketManager.js';
 import { InputHandler } from './handler.js';
-import {requireAuth} from "../../js/utils.js";
+// import {requireAuth} from "../../js/utils.js";
 import * as dat from 'dat.gui';
 
 
@@ -15,7 +15,7 @@ export class Game extends HTMLElement
 
     connectedCallback()
     {
-        requireAuth();
+        // requireAuth();
         const container = document.createElement('div');
 
         container.setAttribute("id", "body_game");

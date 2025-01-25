@@ -6,7 +6,6 @@ psycopg2
 djangorestframework
 django-filter
 djangorestframework-simplejwt
-gunicorn
 django-cors-headers
 daphne
 channels

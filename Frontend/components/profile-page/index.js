@@ -1,5 +1,5 @@
-import updateLanguageContent from "../../js/lagages.js";
-import {alertMessage, requireAuth} from "../../js/utils.js";
+import updateLanguageContent from "../../js/language.js";
+import {alertMessage, isUserAuth, go_to_page, getCSRFToken, fetchProtectedUrl} from "../../js/utils.js";
 
 export class Profile extends HTMLElement {
   constructor() {
@@ -8,25 +8,31 @@ export class Profile extends HTMLElement {
 
   connectedCallback()
   {
-    requireAuth();
-    const template = document.getElementById("profile");
-    const content = template.content.cloneNode(true);
-    this.appendChild(content);
-    updateLanguageContent();
-    this.fetchProfileData();
-    this.fetchFriendsList();
-    this.fetchMatchHistory();
+    (async () => {
+      const isAuthenticated = await isUserAuth();
+      if (!isAuthenticated) {
+          go_to_page('/');
+          return;
+      }
+      const template = document.getElementById("profile");
+      const content = template.content.cloneNode(true);
+      this.appendChild(content);
+      updateLanguageContent();
+      this.fetchProfileData();
+      this.fetchFriendsList();
+      this.fetchMatchHistory();
+    })();
   }
 
   async fetchProfileData() {
     try {
-      const response = await fetch('http://localhost:8000/api/profiles/me/', {
-        headers: {
-          'Authorization': `JWT ${localStorage.getItem('access_token')}`
-        }
+      const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+        method: 'GET',
+        // headers: {
+        //   'X-CSRFToken': getCSRFToken(),
+        // },
       });
       const data = await response.json();
-      // console.log("Profile data received:", data);
       const usernameElement = document.getElementById('fetched_username');
       const fullnameElement = document.getElementById('fetched_fullname');
       const joinedElement = document.getElementById('fetched_joined');
@@ -64,7 +70,7 @@ export class Profile extends HTMLElement {
             xpElement.textContent = data.xps;
             levelElement.textContent = data.level;
 
-        imgElement.src = `http://localhost:8000${data.profileimg}`;
+        imgElement.src = `https://localhost:8000${data.profileimg}`;
         if (data.is_online == false)
           onlineElement.classList.remove('online-status_1');
       }
@@ -103,10 +109,11 @@ export class Profile extends HTMLElement {
 
   async fetchFriendsList() {
     try {
-      const response = await fetch('http://localhost:8000/api/friendships/friends', {
-        headers: {
-            'Authorization': `JWT ${localStorage.getItem('access_token')}`
-        }
+      const response = await fetchProtectedUrl('https://localhost:8000/api/friendships/friends', {
+        method: 'GET',
+        // headers: {
+        //   'X-CSRFToken': getCSRFToken(),
+        // }
       });
 
       const friendsData = await response.json();
@@ -119,7 +126,7 @@ export class Profile extends HTMLElement {
         friendDiv.innerHTML = `
 
                 <div class="status_img">
-                  <img src="http://localhost:8000${friend.profileimg}" class="img_leader1">
+                  <img src="https://localhost:8000${friend.profileimg}" class="img_leader1">
                    <span class="active" style="--color: ${friend.is_online ? '#37C25E' : '#941b1b'}"/>
                 </div>
                 <span class="leader-name_1">${friend.firstname} ${friend.lastname}</span>
@@ -138,16 +145,16 @@ export class Profile extends HTMLElement {
 
   async fetchMatchHistory() {
     try {
-      const response = await fetch('http://localhost:8000/api/matches', {
-        headers: {
-            'Authorization': `JWT ${localStorage.getItem('access_token')}`
-        }
+      const response = await fetchProtectedUrl('https://localhost:8000/api/matches', {
+        method: 'GET',
+        // headers: {
+        //   'X-CSRFToken': getCSRFToken(),
+        // }
       });
       const historyData = await response.json();
 
       const historyList = document.querySelector('.list_hostory');
 
-      // console.log("History data received:", historyData);
       historyData.forEach(match => {
         const matchDiv = document.createElement('div');
         matchDiv.classList.add('history_1');

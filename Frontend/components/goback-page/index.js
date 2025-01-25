@@ -1,5 +1,5 @@
-import updateLanguageContent from "../../js/lagages.js";
-import {requireAuth} from "../../js/utils.js";
+import updateLanguageContent from "../../js/language.js";
+// import {requireAuth} from "../../js/utils.js";
 
 export class Goback extends  HTMLElement
 {
@@ -12,7 +12,7 @@ export class Goback extends  HTMLElement
 
     connectedCallback()
     {
-        requireAuth();
+        // requireAuth();
         const template = document.getElementById("goback");
         const content = template.content.cloneNode(true);
         this.appendChild(content);

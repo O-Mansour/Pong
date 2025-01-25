@@ -1,4 +1,4 @@
-import { go_to_page, alertMessage } from "../../js/utils.js";
+import { go_to_page, alertMessage, get_access_token } from "../../js/utils.js";
 
 export class WebSocketManager {
     constructor(game) {
@@ -21,7 +21,8 @@ export class WebSocketManager {
     }
 
     connect() {
-        const token = localStorage.getItem('access_token');
+        // const token = localStorage.getItem('access_token');
+        const token = get_access_token();
         const wsUrl = this.getWebSocketUrl(this.gameMode) + `?token=${encodeURIComponent(token)}`;
         this.socket = new WebSocket(wsUrl);
         // this.socket.onerror = () => {
@@ -215,17 +216,17 @@ export class WebSocketManager {
         if (data.players) {
             if (data.players.left) {
                 this.playerLeftName.textContent = data.players.left;
-                this.playerLeftImage.src = `http://localhost:8000/media/profile_images/${data.players.left}_profile.jpg`;
+                this.playerLeftImage.src = `https://localhost:8000/media/profile_images/${data.players.left}.jpg`;
                 this.playerLeftImage.onerror = () => {
-                    this.playerLeftImage.src = `http://localhost:8000/media/default_pfp.jpg`;
+                    this.playerLeftImage.src = `https://localhost:8000/media/default_pfp.jpg`;
                 };
             }
             
             if (data.players.right) {
                 this.playerRightName.textContent = data.players.right;
-                this.playerRightImage.src = `http://localhost:8000/media/profile_images/${data.players.right}_profile.jpg`;
+                this.playerRightImage.src = `https://localhost:8000/media/profile_images/${data.players.right}.jpg`;
                 this.playerRightImage.onerror = () => {
-                    this.playerRightImage.src = `http://localhost:8000/media/default_pfp.jpg`;
+                    this.playerRightImage.src = `https://localhost:8000/media/default_pfp.jpg`;
                 };
             }
         }
@@ -259,7 +260,7 @@ export class WebSocketManager {
 
 
     getWebSocketUrl(gameMode) {
-        const baseUrl = 'ws://127.0.0.1:8000/ws/pong/';
+        const baseUrl = 'wss://localhost:8000/ws/pong/';
         const modes = {
             '1vs1-remote': '1vs1-remote/',
             '1vs1-local': '1vs1-local/',
