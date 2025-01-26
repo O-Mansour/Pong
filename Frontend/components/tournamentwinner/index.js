@@ -1,3 +1,5 @@
+import updateLanguageContent from "../../js/language.js";
+
 export class Gamevers4winner extends HTMLElement {
     constructor() {
         super();
@@ -7,6 +9,7 @@ export class Gamevers4winner extends HTMLElement {
         const template = document.getElementById("page-tournamentwinner");
         const content = template.content.cloneNode(true);
         this.appendChild(content);
+        updateLanguageContent();
 
         const player1 = document.querySelector("#tournamentplayer1res");
         const player2 = document.querySelector("#tournamentplayer2res");

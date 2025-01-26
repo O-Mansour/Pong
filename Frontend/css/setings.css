@@ -258,6 +258,7 @@
     align-items: center;
     justify-content: center;
     width: 80%;
+    height: 70%;
 }
 
 
@@ -270,8 +271,6 @@
     font-size: 14px;
 
 }
-
-
 
 .textchange,
 input[type="text"],
@@ -296,7 +295,7 @@ input[type="email"]
     text-align: center;
     box-sizing: border-box;
     font-size: 16px;
-    
+    margin-top: 40px;
 }
 
 

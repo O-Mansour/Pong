@@ -551,8 +551,8 @@
                                 <button class="btn_ch"><span data-i18n="change"></span></button>
                             </form>
                         </div>
-                        <div class="game-set">
-                        </div>
+                        <!-- <div class="game-set">
+                        </div> -->
                     </div>
                 </div>
             </main>
@@ -776,8 +776,8 @@
                            <!-- <ul><li> <img src="./images/vs1.png" alt="" class="vss_1"></li></ul> -->
                            <ul><li> <img src="./images/vs.png" alt="" class="vss_1"></li></ul>
                            <div class="local_remote">
-                                <button class="loca"  onclick="go_to_page('/game?mode=1vs1-local')">Local</button>
-                                <button class="remo"  onclick="go_to_page('/game?mode=1vs1-remote')">Remote</button>
+                                <button class="loca"  onclick="go_to_page('/game?mode=1vs1-local')" data-i18n="local">Local</button>
+                                <button class="remo"  onclick="go_to_page('/game?mode=1vs1-remote')" data-i18n="remote">Remote</button>
                             </div>
                         
                            
@@ -790,7 +790,7 @@
                         <!-- <ul> <li><my-link href="/tournament"><img src="./images/poker.png" alt="" class="vss_4"></my-link></li> </ul> -->
                         <ul> <img src="./images/tour1.png" alt="" class="vss_4"> </ul>
 
-                        <button class="remo"  onclick="go_to_page('/tournament')">Game start</button>
+                        <button class="remo"  onclick="go_to_page('/tournament')" data-i18n="gameStart">Game start</button>
                        
                       </div>
                     </div>
@@ -826,7 +826,7 @@
                     <div class="ca1">
                         <div class="player-con1">
                             <div class="player1">
-                                <span  class="wonn1" id="player1text">Winner</span>
+                                <span  class="wonn1" id="player1text" data-i18n="winner">Winner</span>
                                 <img src="./images/game.png" class="imgply1" id="leftplayerimage">
                                 <p class="us1" id="rightplayername">Player 1</p>
                             </div>
@@ -837,7 +837,7 @@
                                 <span class="Loss1" id="loserscore">0</span> 
                             </div>  
                             <div class="player1">
-                                <span class="Lost1" id="player2text">Loser</span>
+                                <span class="Lost1" id="player2text" data-i18n="loser">Loser</span>
                                 <img src="./images/game.png" class="imgply2" id="rightplayerimage">
                                 <p class="us1" id="leftplayername">Player 2</p>
                             </div>   
@@ -846,67 +846,14 @@
                     </div>
 
                     <div class="btn-container"> 
-                        <button class="Rematch" onclick="go_to_page('/select')">Rematch</button> 
-                        <button class="back_h" onclick="go_to_page('/home')">Back to Home</button>
+                        <button class="Rematch" onclick="go_to_page('/select')" data-i18n="rematch">Rematch</button> 
+                        <button class="back_h" onclick="go_to_page('/home')" data-i18n="backToHome">Back to Home</button>
                     </div>
              </main>
          </div>
      </div>
  </template>
 
-
- <template id="goback">
-    <!-- <canvas id="game-canva"></canvas> -->
-    <div class="ft_container">
-         <div class="header">
-             <div class="ft-box">
-                 <img src="./images/logo.png" class="logo">
-             </div>
-         </div>
-         <div class="content">
-             <aside class="sidebar">
-                 <nav class="menu">
-                     <ul>
-                         <li><my-link href="/home"><img src="./images/Home Page.svg" alt="Home"></my-link></li>
-                         <li><my-link href="/user"><img src="./images/User Male.png" alt="Friends"></my-link></li>
-                         <li><my-link href="/select"><img src="./images/Stadium.png" alt="Games"></my-link></li>
-                         <li><my-link href="/setting"><img src="./images/Services.png" alt="Setting"></my-link></li>
-                     </ul>
-                 </nav>
-             </aside>
-
-            <main class="content1">
-                <h1 class="game_mode" data-i18n="alreadyplaying"></h1>
-                    <div class="ca1">
-                        <div class="player-con1">
-                            <div class="player1">
-                                <span  class="wonn1">Winner</span>
-                                <img src="./images/game.png" class="imgply1">
-                                <p class="us1">Plyer 1</p>
-                            </div>
-                          
-                            <div class="scor_win_lost">
-                                <span class="win1">5</span>
-                                <img src="./images/versus.png" class="imgplyer_2">
-                                <span class="Loss1">2</span> 
-                            </div>  
-                            <div class="player1">
-                                <span class="Lost1">Loser</span>
-                                <img src="./images/game.png" class="imgply2">
-                                <p class="us1">Plyer 2</p>
-                            </div>   
-                        </div>
-                        <!-- <button class="cancel1" onclick="go_to_page('/select')">Go back!</button> -->
-                    </div>
-
-                    <div class="btn-container"> 
-                        <button class="Rematch">Rematch</button> 
-                        <button class="back_h">Back to Home</button>
-                    </div>
-             </main>
-         </div>
-     </div>
- </template>
  <template id="page-gamelocal">
     <!-- <canvas id="game-canva"></canvas> -->
     <div class="ft_container">
@@ -990,12 +937,12 @@
                             <div class="maatch3">
                                 <div class="player">
                                     <img src="./images/plyer.png"  class="plyer_tour" id="tournamentplayersemi1">
-                                    <span class="uss1">To be Determined</span>
+                                    <span class="uss1" data-i18n="toBeDetermined">To be Determined</span>
                                     <!-- <span class="score"> 3</span> -->
                                 </div>
                                 <div class="player">
                                     <img src="./images/plyer.png" class="plyer_tour" id="tournamentplayersemi2">
-                                    <span class="uss1">To be Determined</span>
+                                    <span class="uss1" data-i18n="toBeDetermined">To be Determined</span>
                                     <!-- <span class="score"> 2 </span> -->
                                 </div>
                             </div>
@@ -1004,13 +951,12 @@
                                 <div class="winner">
                                     <img src="./images/star (10).png"  class="star">
                                     <img src="./images/plyer.png"  class="plyer_tourr1">
-                                    <span class="uss2">Champion</span>
+                                    <span class="uss2" data-i18n="champion">Champion</span>
                                 </div>
                             </div>
                             <div class="sub_star">
-                                <button type="submit" id="submit-players" class="submit-button">Game Start </button>
+                                <button type="submit" id="submit-players" class="submit-button" data-i18n="gameSr">Game Start </button>
                             </div>
-                           
                         </form>
                     </div>
                 </div>
@@ -1125,21 +1071,20 @@
                         <div class="anther">
                             <div class="ard_warning">
                                 <img src="./images/warning.png"  class="warning1">
-                                <p class="title_aother">You are Already Playing in Another Game</p>
+                                <p class="title_aother" data-i18n="anothergame" >You are Already Playing in Another Game</p>
                             </div>
                            
                             <div class="con-aoth">
-                                <button class="Back_game" onclick="go_to_page('/home')">Back to Home</button>
-                                <button class="Leve_game" onclick="go_to_page('/select')">Leave Game</button>
+                                <button class="Back_game" onclick="go_to_page('/home')" data-i18n="homeBack" >Back to Home</button>
+                                <button class="Leve_game" onclick="go_to_page('/select')" data-i18n="leaveGame" >Leave Game</button>
                             </div>
                         </div>
                       
                     </div>
-             </main>
+            </main>
          </div>
      </div>
  </template>
-
 </body>
 
 

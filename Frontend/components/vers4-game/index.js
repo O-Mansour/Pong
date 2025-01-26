@@ -1,3 +1,5 @@
+import updateLanguageContent from "../../js/language.js";
+
 export class Gamevers4 extends  HTMLElement
 {
     constructor()
@@ -12,6 +14,7 @@ export class Gamevers4 extends  HTMLElement
         const template = document.getElementById("page-game4vers");
         const content = template.content.cloneNode(true);
         this.appendChild(content);
+        updateLanguageContent();
         document.querySelector('form').addEventListener('submit', (e) => {
             e.preventDefault(); // Prevent default form submission
             

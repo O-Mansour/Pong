@@ -16,7 +16,7 @@ export class GameAnotherpage extends  HTMLElement
         const template = document.getElementById("page-AnotherGame");
         const content = template.content.cloneNode(true);
         this.appendChild(content);
-        // updateLanguageContent();
+        updateLanguageContent();
     }
 }
 

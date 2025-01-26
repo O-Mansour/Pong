@@ -68,7 +68,20 @@ const  langData = ({
                 login_link: "Login",
                 login_error: "Invalid credentials",
                 settings: "Settings",
-                playNow: "Play Now"
+                playNow: "Play Now",
+                remote: "Remote",
+                local: "Local",
+                gameStart: "Game Start",
+                winner: "Winner",
+                loser: "Loser",
+                rematch: "Rematch",
+                backToHome: "Back to Home",
+                anothergame: "You are already playing in another game",
+                homeBack: "Back to Home",
+                leaveGame: "Leave Game",
+                gameSr:"Game Start",
+                toBeDetermined: "To be Determined",
+                champion: "Champion",
         },
         fr: {
                 selectLanguage: "Choisissez une langue",
@@ -151,7 +164,20 @@ const  langData = ({
                 password_login:"Mot de passe",
                 password_signup: "Mot de passe",
                 login_link: "Se connecter",
-                login_error:"Identifiants invalides"
+                login_error:"Identifiants invalides",
+                remote: "À distance",
+                local: "Local",
+                gameStart: "Démarrage",
+                winner: "Gagnant",
+                loser: "Perdant",
+                rematch: "Revanche",
+                backToHome: "Retour à l'accueil",
+                anothergame: "Vous jouez déjà dans une autre partie",
+                homeBack: "Retour à l'accueil",
+                leaveGame: "Quitter la partie",
+                gameSr: "Démarrage",
+                toBeDetermined: "À déterminer",
+                champion: "Champion",
         },
         es: {
                 selectLanguage: "Seleccionar idioma",
@@ -230,7 +256,20 @@ const  langData = ({
                 "login-link": "Iniciar sesión",
                  "already-registered":"¿Ya estás registrado",
                  "signup-details":"Solo algunos detalles para que puedas entrar",
-                login_error: "Credenciales inválidas"
+                login_error: "Credenciales inválidas",
+                remote: "Remoto",
+                local: "Local",
+                gameStart: "Inicio del juego",
+                winner: "Ganador",
+                loser: "Perdedor",
+                rematch: "Revancha",
+                backToHome: "Volver al inicio",
+                anothergame: "Ya estás jugando en otra partida",
+                homeBack: "Volver al inicio",
+                leaveGame: "Salir del juego",
+                gameSr: "Inicio del juego",
+                toBeDetermined: "Por determinar",
+                champion: "Campeón",
         },
 });
 
@@ -279,8 +318,10 @@ async function updateLanguageContent() {
         const elements = document.querySelectorAll("[data-i18n]");
         elements.forEach((el) => {
                 const key = el.getAttribute("data-i18n");
+                
                 if (key) 
                 el.innerHTML = langData[currLang]?.[key] || key;
+                console.log(langData.fr.anothergame);
         });
 
 
