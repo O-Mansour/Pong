@@ -141,6 +141,7 @@ export class WebSocketManager {
     }
     handleMatchFinished(data) {
         const state = data.tournament_status.state;
+        localStorage.setItem('currentTournamentState', state);
         if (state === 'completed') {
             localStorage.setItem('finalwinner', JSON.stringify(data.winner));
             localStorage.setItem('finalwinnerscore', JSON.stringify(data.winnerscore));
@@ -162,7 +163,7 @@ export class WebSocketManager {
                 localStorage.setItem('winner2score', JSON.stringify(data.winnerscore));
                 localStorage.setItem('loser2score', JSON.stringify(data.loserscore));
             }
-            this.socket?.close();
+            // this.socket?.close();
             setTimeout(() => {
                 go_to_page("/game?mode=tournament");
             }, 2000);

@@ -78,6 +78,8 @@ export class Gamevers4winner extends HTMLElement {
         localStorage.removeItem("finalwinnerscore");
         localStorage.removeItem("finalloserscore");
         localStorage.removeItem("gameScores");
+        localStorage.removeItem('currentTournamentState');
+        localStorage.removeItem('tournamentPlayers');
     }
 }
 

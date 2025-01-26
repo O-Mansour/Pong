@@ -24,11 +24,8 @@ export class Gamevers4 extends  HTMLElement
                 player3: document.querySelector("#tournamentplayer3").value,
                 player4: document.querySelector("#tournamentplayer4").value
             };
-            
-            // Store the nicknames in localStorage
             localStorage.setItem('tournamentPlayers', JSON.stringify(nicknames));
             
-            // Then navigate
             go_to_page('/game?mode=tournament');
         });
         // const canvas = document.getElementById('game-canva')
