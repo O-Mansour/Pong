@@ -303,12 +303,13 @@ input[type="email"]
 {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    margin-top: -13%;
     gap: 5%;
     width: 60%;
-    height: 70%;   /* wech mekhshach tkon ?*/
-    /* height: ; */
+    height: 40%;
+
 }
 
 .pass-settings

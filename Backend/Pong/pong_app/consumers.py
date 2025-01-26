@@ -726,19 +726,19 @@ class PongGameTournamentConsumer(AsyncWebsocketConsumer):
             return PlayerSide.RIGHT.value
         return None
     async def match_canceled(self):
-        if hasattr(self, 'room_id') and self.room_id in self.game_rooms:
-            game_state = self.game_rooms[self.room_id]['game_state']
-            game_state['playing'] = False
-            await self.send(text_data=json.dumps({
-                'type': 'match_canceled',
-                'message': 'Game Over'
-            }))
-            await self.close()
-            del self.game_rooms[self.room_id]
-            
         self.tournament_manager.reset_tournament()
         if self.token in self.active_tournaments:
             del self.active_tournaments[self.token]
+        if hasattr(self, 'room_id') and self.room_id in self.game_rooms:
+            game_state = self.game_rooms[self.room_id]['game_state']
+            game_state['playing'] = False
+            del self.game_rooms[self.room_id]
+            await self.close()
+            # await self.send(text_data=json.dumps({
+            #     'type': 'match_canceled',
+            #     'message': 'Game Over'
+            # }))
+            
     async def match_finished(self):
         game_state = self.game_rooms[self.room_id]['game_state']
         scores = game_state['scores']

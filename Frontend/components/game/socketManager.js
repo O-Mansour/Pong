@@ -119,20 +119,8 @@ export class WebSocketManager {
                 break
             case 'match_canceled':
                 alertMessage("Match is canceled")
-                if (this.gameMode === "tournament"){
-                    localStorage.removeItem('tournamentPlayers');
-                    localStorage.removeItem('playersemione');
-                    localStorage.removeItem('playersemitwo');
-                    localStorage.removeItem('winner1score');
-                    localStorage.removeItem('loser1score');
-                    localStorage.removeItem('winner2score');
-                    localStorage.removeItem('loser2score');
-                    localStorage.removeItem('finalwinner');
-                    localStorage.removeItem('finalwinnerscore');
-                    localStorage.removeItem('finalloserscore');
-                }
                 this.socket?.close()
-                go_to_page("/tournament")
+                go_to_page("/select")
                 break;
             case 'error':
                 console.error(data.message);
@@ -175,7 +163,9 @@ export class WebSocketManager {
                 localStorage.setItem('loser2score', JSON.stringify(data.loserscore));
             }
             this.socket?.close();
-            go_to_page("/game?mode=tournament");
+            setTimeout(() => {
+                go_to_page("/game?mode=tournament");
+            }, 2000);
         }
     }
     handlePlayersReady(data, connectionStatus) {
