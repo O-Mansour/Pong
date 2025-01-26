@@ -23,7 +23,6 @@ from django.contrib.auth import get_user_model
 class PlayerSide(Enum):
     LEFT = 'left'
     RIGHT = 'right'
-
 class GameConfig:
     FPS = 120
     FRAME_TIME = 1 / FPS
@@ -539,7 +538,6 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                     won=True,
                     date_played=timezone.now()
                 )
-                print(f"the winner is {winner}: Wins={winner.profile.wins}, Level={winner.profile.level}", file=sys.stderr)
                 winner.profile.save()
             else:
                 loser.profile.losses += 1
@@ -549,7 +547,6 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                     won=False,
                     date_played=timezone.now()
                 )
-                print(f"the loser is {loser}: Wins={loser.profile.wins}, Level={loser.profile.level}", file=sys.stderr)
                 loser.profile.save()
     def _check_paddle_collision(self, ball: Dict, paddle_x: float, paddle: Dict) -> bool:
         if (paddle_x > 0 and ball['position'][0] >= paddle_x - GameConfig.BALL_RADIUS) or \
@@ -608,17 +605,6 @@ class TournamentState(Enum):
 class TournamentManager:
     def __init__(self):
         self.reset_tournament()
-    def reset_tournament(self):
-        self.players = ["player1", "player2", "player3", "player4"]
-        self.player_nicknames = {}
-        self.matches = {
-            "semifinals_1": {"players": [], "winner": None},
-            "semifinals_2": {"players": [], "winner": None},
-            "finals": {"players": [], "winner": None}
-        }
-        self.state = TournamentState.NOT_STARTED
-        self.current_match_rooms = {}
-        self.player_to_channel = {}
     def reset_tournament(self):
         self.players = ["player1", "player2", "player3", "player4"]
         self.player_nicknames = {}
@@ -749,6 +735,10 @@ class PongGameTournamentConsumer(AsyncWebsocketConsumer):
             }))
             await self.close()
             del self.game_rooms[self.room_id]
+            
+        self.tournament_manager.reset_tournament()
+        if self.token in self.active_tournaments:
+            del self.active_tournaments[self.token]
     async def match_finished(self):
         game_state = self.game_rooms[self.room_id]['game_state']
         scores = game_state['scores']

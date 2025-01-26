@@ -67,7 +67,8 @@ export class WebSocketManager {
             case 'players_ready':
                 this.currentRoomId = data.room_id; 
                 if (this.gameMode === "tournament") {
-                    this.tPlayers = JSON.parse(localStorage.getItem('tournamentPlayers'));
+                    this.tPlayers = JSON.parse(localStorage.getItem('tournamentPlayers')) || 
+                    {player1: '', player2: '', player3: '', player4: ''};
                     switch(data.tournament_status.state) {
                         case 'semifinals_1':
                             this.playerLeftName.textContent = this.tPlayers.player1;
@@ -118,8 +119,20 @@ export class WebSocketManager {
                 break
             case 'match_canceled':
                 alertMessage("Match is canceled")
+                if (this.gameMode === "tournament"){
+                    localStorage.removeItem('tournamentPlayers');
+                    localStorage.removeItem('playersemione');
+                    localStorage.removeItem('playersemitwo');
+                    localStorage.removeItem('winner1score');
+                    localStorage.removeItem('loser1score');
+                    localStorage.removeItem('winner2score');
+                    localStorage.removeItem('loser2score');
+                    localStorage.removeItem('finalwinner');
+                    localStorage.removeItem('finalwinnerscore');
+                    localStorage.removeItem('finalloserscore');
+                }
                 this.socket?.close()
-                go_to_page("/select")
+                go_to_page("/tournament")
                 break;
             case 'error':
                 console.error(data.message);
@@ -140,7 +153,6 @@ export class WebSocketManager {
     }
     handleMatchFinished(data) {
         const state = data.tournament_status.state;
-        console.log(state);
         if (state === 'completed') {
             localStorage.setItem('finalwinner', JSON.stringify(data.winner));
             localStorage.setItem('finalwinnerscore', JSON.stringify(data.winnerscore));
@@ -196,15 +208,17 @@ export class WebSocketManager {
             }
         }
         const playerSideElement = document.getElementById('player-side');
-        if (this.gameMode === "1vs1-remote") {
-            const side = this.playerSide 
-            if (side === 'left')
-                playerSideElement.textContent = `You can play with W/S or A/D`;
-            if (side === 'right')
-                playerSideElement.textContent = `You can play with Arrow Keys`;
+        if (playerSideElement) {
+            if (this.gameMode === "1vs1-remote") {
+                const side = this.playerSide 
+                if (side === 'left')
+                    playerSideElement.textContent = `You can play with W/S or A/D`;
+                if (side === 'right')
+                    playerSideElement.textContent = `You can play with Arrow Keys`;
+            } else {
+                playerSideElement.style.display = 'none';
+            }
         }
-        else
-            playerSideElement.style.display = 'none';
         if (this.gameMode === '1vs1-local' || this.gameMode === 'tournament') {
             this.game.camera.position.set(0, 6, 6);
         } else if (data.player_side === "left") {

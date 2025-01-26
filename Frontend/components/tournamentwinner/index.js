@@ -74,6 +74,7 @@ export class Gamevers4winner extends HTMLElement {
         localStorage.removeItem("loser2score");
         localStorage.removeItem("finalwinnerscore");
         localStorage.removeItem("finalloserscore");
+        localStorage.removeItem("gameScores");
     }
 }
 
