@@ -269,6 +269,7 @@
     color: white;
     font-family: "Roboto", sans-serif;
     font-size: 14px;
+    left: 0;
 
 }
 
@@ -295,7 +296,7 @@ input[type="email"]
     text-align: center;
     box-sizing: border-box;
     font-size: 16px;
-    margin-top: 40px;
+    margin-top: 24px;
 }
 
 
