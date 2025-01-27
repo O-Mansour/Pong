@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 from datetime import timedelta
 
+DEBUG = True
+
 STATIC_URL = '/static/'
 
 INSTALLED_APPS = [
@@ -113,45 +115,53 @@ LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ),
-# }
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'core.helpers.CookieJWTAuthentication',
     ],
 }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': '5432',
+    }
+}
 
+SECRET_KEY = os.getenv('SECRET_KEY')
+FT_CLIENT_SECRET = os.getenv('FT_CLIENT_SECRET')
 
-# CSRF Protection
-# CSRF_COOKIE_HTTPONLY = True # Not accessible via JavaScript
-# CSRF_TRUSTED_ORIGINS = ['https://localhost:3000']  # Trusted domains to send cross-site requests to back-end.
-# CSRF_COOKIE_SAMESITE = "None"
+ALLOWED_HOSTS = [
+    'localhost',
+    ]
 
-# Secure Cookies
-SESSION_COOKIE_HTTPONLY = False # Protects the session cookie from XSS attacks (Not accessible via JavaScript)
+SESSION_COOKIE_HTTPONLY = False
 
-# CORS Settings
-CORS_ALLOW_CREDENTIALS = True # Ensures the browser includes cookies when making cross-origin requests to back-end.
-
-# SIMPLE_JWT = {
-#     'ACCESS_TOKEN_LIFETIME': timedelta(days=10),
-#     'AUTH_HEADER_TYPES': ('JWT',),
-# }
+# Ensures the browser includes cookies when making cross-origin requests to back-end.
+CORS_ALLOW_CREDENTIALS = True
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("JWT",),
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+}
 
-# Paths and directories
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'

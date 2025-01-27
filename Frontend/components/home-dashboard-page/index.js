@@ -31,12 +31,7 @@ export class HomeDashboard extends  HTMLElement
 
   async fetchDashbordData() {
     try {
-      const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
-        method: 'GET',
-        // headers: {
-        //   'X-CSRFToken': getCSRFToken(),
-        // },
-      });
+      const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/');
       
       const data = await response.json();
 
@@ -81,35 +76,29 @@ export class HomeDashboard extends  HTMLElement
           document.querySelector('.percentage_loss').textContent = lossPercentage + '%';
           document.querySelector('.percentage_win').textContent = winPercentage + '%';
 
-          // need to change that later
 
-          if (data.total_games != null) {
-            Element_totalgame.textContent = data.total_games;
-          } else {
-
-            Element_totalgame.textContent = '0';
+          if (data.rank == null) {
+            Element_yourrank.style.fontSize = "18px";
+            Element_yourrank.textContent = "Not ranked yet";
+            Element_yourrank.setAttribute('data-i18n', 'notRankedYet');
           }
-          if (data.games_today != null) {
-            Element_gametoday.textContent = data.games_today;
-          } else {
-            Element_gametoday.textContent = '0';
-          }
-
-          if (data.playing_now != null) {
-            Element_playin_now.textContent = data.playing_now;
-          } else {
-            Element_playin_now.textContent = '0';
-          }
-
-          // Update your rank
-          if (data.rank == null){
-              Element_yourrank.style.fontSize = "18px";
-              Element_yourrank.textContent = "Not ranked yet";
-              Element_yourrank.setAttribute('data-i18n', 'notRankedYet');
-          }
-          else
+          else {
             Element_yourrank.textContent = '#' + data.rank;
-            updateLanguageContent();
+          }
+
+          const total_matches_response = await fetchProtectedUrl('https://localhost:8000/api/matches/total_matches/');
+          const total_matches_data = await total_matches_response.json();
+          Element_totalgame.textContent = total_matches_data.total_matches;
+
+          const matches_today_response = await fetchProtectedUrl('https://localhost:8000/api/matches/total_today_matches/');
+          const matches_today_data = await matches_today_response.json();
+          Element_gametoday.textContent = matches_today_data.total_today_matches;
+
+          const online_users_response = await fetchProtectedUrl('https://localhost:8000/api/profiles/online_users/');
+          const online_users_data = await online_users_response.json();
+          Element_playin_now.textContent = online_users_data.online_users;
+          
+          updateLanguageContent();
       }
     } catch (error) {
         alertMessage('Error fetching data : ' + error.message);

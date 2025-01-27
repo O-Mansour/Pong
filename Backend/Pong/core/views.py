@@ -10,7 +10,6 @@ from django.db.models import Q
 from .serializers import ProfileSerializer, FriendshipSerializer, MatchSerializer, UserSerializer, PasswordSerializer, FriendshipRequestsReceivedSerializer, FriendshipRequestsSentSerializer
 from .models import Profile, Friendship, Match
 from .helpers import get_unique_username
-# from .pagination import DefaultPagination
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
@@ -19,8 +18,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as ValidationErrorException
+from django.utils.timezone import now, localtime
 
-# from django.http import JsonResponse
 
 class ProfileViewSet(ModelViewSet):
 	queryset = Profile.objects.order_by('-level', '-xps')
@@ -31,7 +30,6 @@ class ProfileViewSet(ModelViewSet):
 	# filterset_fields = ['is_online']
 	# search_fields = ['user__username']
 	# ordering_fields = ['level', 'xps']
-	# pagination_class = DefaultPagination
 
 	@action(detail=False, methods=['GET', 'PUT'])
 	def me(self, request):
@@ -68,6 +66,10 @@ class ProfileViewSet(ModelViewSet):
 			serializer.errors, 
 			status=status.HTTP_400_BAD_REQUEST
 		)
+	@action(detail=False, methods=['GET'])
+	def online_users(self, request):
+		online_users = Profile.objects.filter(is_online=True).count()
+		return Response({"online_users": online_users})
 
 class FriendshipViewSet(ModelViewSet):
 	serializer_class = FriendshipSerializer
@@ -175,7 +177,7 @@ class MatchViewSet(ModelViewSet):
 	permission_classes = [IsAuthenticated]
 
 	def get_queryset(self):
-		return Match.objects.filter(player=self.request.user.profile)
+		return Match.objects.filter(player=self.request.user.profile).order_by('-date_played')
 
 	def perform_create(self, serializer):
 		opponent = serializer.validated_data['opponent']
@@ -184,6 +186,17 @@ class MatchViewSet(ModelViewSet):
 			raise ValidationError({"message": "You cannot play a match with yourself"})
 
 		serializer.save(player=self.request.user.profile)
+
+	@action(detail=False, methods=['GET'])
+	def total_matches(self, request):
+		total_matches = Match.objects.count() // 2
+		return Response({"total_matches": total_matches})
+
+	@action(detail=False, methods=['GET'])
+	def total_today_matches(self, request):
+		today = localtime(now()).date()
+		total_today = Match.objects.filter(date_played__date=today).count() // 2
+		return Response({"total_today_matches": total_today})
 
 class RegistrationView(APIView):
 	def post(self, request):
@@ -345,10 +358,6 @@ class FT_CallbackView(APIView):
 		
 		# Generate JWT
 		refresh = RefreshToken.for_user(user)
-		# return JsonResponse({
-		# 	'refresh_token': str(refresh),
-		# 	'access_token': str(refresh.access_token),
-		# })
 		response = Response({"message": "Welcome, Enjoy Your Time!"})
 
 		response.set_cookie(

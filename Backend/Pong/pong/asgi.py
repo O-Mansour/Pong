@@ -6,7 +6,7 @@ from pong_app.routing import websocket_urlpatterns  # Adjust this import path
 from channels.security.websocket import AllowedHostsOriginValidator
 
 # Set the default Django settings module
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pong.settings.dev')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pong.settings')
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
