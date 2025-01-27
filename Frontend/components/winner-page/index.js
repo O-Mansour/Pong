@@ -16,8 +16,8 @@ export class Gamewinner extends  HTMLElement
         const template = document.getElementById("page-winner");
         const content = template.content.cloneNode(true);
         this.appendChild(content);
-        updateLanguageContent();
         this.displayScores();
+        updateLanguageContent();
     }
     
     displayScores() {
@@ -45,15 +45,19 @@ export class Gamewinner extends  HTMLElement
         }
         if (scores.rightScore > scores.leftScore){
             lefttextElement.textContent = "Winner";
+            lefttextElement.setAttribute("data-i18n", "winner");
             leftcolorElement.style.color="#3992A5";
             righttextElement.textContent = "Loser";
             rightcolorElement.style.color="white";
+            righttextElement.setAttribute("data-i18n", "loser");
         }
         else{
+            righttextElement.textContent = "Winner";
+            righttextElement.setAttribute("data-i18n", "winner");
+            rightcolorElement.style.color="#3992A5";
             lefttextElement.textContent = "Loser";
             leftcolorElement.style.color="white";
-            righttextElement.textContent = "Winner";
-            rightcolorElement.style.color="#3992A5";
+            lefttextElement.setAttribute("data-i18n", "loser");
         }
         if (players && players.players){
             playerLeftImage.src = `https://localhost:8000/media/profile_images/${players.players.left}.jpg`;
@@ -67,7 +71,6 @@ export class Gamewinner extends  HTMLElement
             if (scores.rightScore > scores.leftScore && players.players.right === winner.winner){
                 rightnameElement.textContent = players.players.right;
                 leftnameElement.textContent = players.players.left;
-                console.log("hello winner is right", players.players.right)
             }
             else{
                 rightnameElement.textContent = players.players.left;

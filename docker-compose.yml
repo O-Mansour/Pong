@@ -11,6 +11,7 @@ services:
     volumes:
       - front_volume:/usr/share/nginx/html
       - cert_volume:/etc/nginx/ssl
+    env_file: .env
 
   backend:
     image: backend

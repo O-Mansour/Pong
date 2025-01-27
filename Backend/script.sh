@@ -21,16 +21,14 @@ if not User.objects.filter(username='admin').exists():
 
 mkdir -p /etc/nginx/ssl
 
-# openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx_k.key \
-#     -out /etc/nginx/ssl/nginx_c.crt -subj "/CN=localhost"
 
-# Start Django development server in the background
+sed -i "s|\$SSL_CERT|$SSL_CERT|g; s|\$SSL_KEY|$SSL_KEY|g" /etc/nginx/conf.d/default.conf
+
+
 python manage.py runserver 0.0.0.0:8000 &
 DJANGO_PID=$!
 
-# Start Nginx in the foreground
 nginx -g "daemon off;" &
 NGINX_PID=$!
 
-# Wait for both processes
 wait $DJANGO_PID $NGINX_PID
