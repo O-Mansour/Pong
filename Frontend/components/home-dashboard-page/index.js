@@ -31,7 +31,7 @@ export class HomeDashboard extends  HTMLElement
 
   async fetchDashbordData() {
     try {
-      const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/');
+      const response = await fetchProtectedUrl('/api/profiles/me/');
       
       const data = await response.json();
 
@@ -60,7 +60,8 @@ export class HomeDashboard extends  HTMLElement
                 progressPercentage = (data.xps / maxXp) * 100;
             document.querySelector('.ft_progress').style = `--xp:${progressPercentage}%`;
 
-          imgElement.src = `https://localhost:8000${data.profileimg}`;
+          imgElement.src = `${data.profileimg}`;
+          console.log(data.profileimg)
 
 
           matches_played.textContent = data.wins + data.losses;
@@ -86,15 +87,15 @@ export class HomeDashboard extends  HTMLElement
             Element_yourrank.textContent = '#' + data.rank;
           }
 
-          const total_matches_response = await fetchProtectedUrl('https://localhost:8000/api/matches/total_matches/');
+          const total_matches_response = await fetchProtectedUrl('/api/matches/total_matches/');
           const total_matches_data = await total_matches_response.json();
           Element_totalgame.textContent = total_matches_data.total_matches;
 
-          const matches_today_response = await fetchProtectedUrl('https://localhost:8000/api/matches/total_today_matches/');
+          const matches_today_response = await fetchProtectedUrl('/api/matches/total_today_matches/');
           const matches_today_data = await matches_today_response.json();
           Element_gametoday.textContent = matches_today_data.total_today_matches;
 
-          const online_users_response = await fetchProtectedUrl('https://localhost:8000/api/profiles/online_users/');
+          const online_users_response = await fetchProtectedUrl('/api/profiles/online_users/');
           const online_users_data = await online_users_response.json();
           Element_playin_now.textContent = online_users_data.online_users;
           
@@ -107,7 +108,7 @@ export class HomeDashboard extends  HTMLElement
 
   async fetchNotfication() {
     try {
-      const response = await fetchProtectedUrl('https://localhost:8000/api/friendships/requests_received', {
+      const response = await fetchProtectedUrl('/api/friendships/requests_received', {
           method: 'GET',
           // headers: {
           //   'X-CSRFToken': getCSRFToken(),
@@ -132,7 +133,7 @@ export class HomeDashboard extends  HTMLElement
 
         notificationRow.innerHTML = `
             <div class="name_notf">
-                <img src="https://localhost:8000${sender.sender_profile.profileimg}" class="img_led">
+                <img src="${sender.sender_profile.profileimg}" class="img_led">
                 <p class="name_invit">${sender.sender_profile.firstname} ${sender.sender_profile.lastname}</p>
             </div>
           
@@ -154,7 +155,7 @@ export class HomeDashboard extends  HTMLElement
 
         acceptButton.addEventListener('click', async (event) => {
           try {
-              await fetchProtectedUrl(`https://localhost:8000/api/friendships/${sender.id}/accept/`, {
+              await fetchProtectedUrl(`/api/friendships/${sender.id}/accept/`, {
               method: 'GET',
               // headers: {
               //   'X-CSRFToken': getCSRFToken(),
@@ -169,7 +170,7 @@ export class HomeDashboard extends  HTMLElement
 
         rejectButton.addEventListener('click', async (event) => {
           try {
-              await fetchProtectedUrl(`https://localhost:8000/api/friendships/${sender.id}/reject/`, {
+              await fetchProtectedUrl(`/api/friendships/${sender.id}/reject/`, {
               method: 'GET',
               // headers: {
               //   'X-CSRFToken': getCSRFToken(),
@@ -192,7 +193,7 @@ export class HomeDashboard extends  HTMLElement
 
   async fetchTotalPlayers() {
     try {
-      const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+      const response = await fetchProtectedUrl('/api/profiles/me/', {
         method: 'GET',
         // headers: {
         //   'X-CSRFToken': getCSRFToken(),
@@ -200,7 +201,7 @@ export class HomeDashboard extends  HTMLElement
       });
       const data = await response.json();
 
-      const profilesResponse = await fetchProtectedUrl('https://localhost:8000/api/profiles/', {
+      const profilesResponse = await fetchProtectedUrl('/api/profiles/', {
           method: 'GET',
           // headers: {
           //   'X-CSRFToken': getCSRFToken(),
@@ -208,7 +209,7 @@ export class HomeDashboard extends  HTMLElement
       });
       const profilesData = await profilesResponse.json();
 
-      const friendsResponse = await fetchProtectedUrl('https://localhost:8000/api/friendships/friends/', {
+      const friendsResponse = await fetchProtectedUrl('/api/friendships/friends/', {
         method: 'GET',
         // headers: {
         //   'X-CSRFToken': getCSRFToken(),
@@ -220,7 +221,7 @@ export class HomeDashboard extends  HTMLElement
         friendsIds = friendsData.map(friend => friend.user_id);
       }
 
-      const SentResponse = await fetchProtectedUrl('https://localhost:8000/api/friendships/requests_sent', {
+      const SentResponse = await fetchProtectedUrl('/api/friendships/requests_sent', {
         method: 'GET',
         // headers: {
         //   'X-CSRFToken': getCSRFToken(),
@@ -229,7 +230,7 @@ export class HomeDashboard extends  HTMLElement
       const sentData = await SentResponse.json();
       const sentIds = sentData.map(pending => pending.receiver_profile.user_id);
 
-      const receivedResponse = await fetchProtectedUrl('https://localhost:8000/api/friendships/requests_received', {
+      const receivedResponse = await fetchProtectedUrl('/api/friendships/requests_received', {
         method: 'GET',
         // headers: {
         //   'X-CSRFToken': getCSRFToken(),
@@ -249,6 +250,7 @@ export class HomeDashboard extends  HTMLElement
       profilesData.forEach((leader, index) => {
         const leaderDiv = document.createElement('div');
         leaderDiv.classList.add('leader');
+        console.log(leader.profileimg)
         leaderDiv.innerHTML = `
           <h1>#${index + 1}</h1>
           <img src="${leader.profileimg}" class="img_leader">
@@ -293,7 +295,7 @@ export class HomeDashboard extends  HTMLElement
   
           addFriendBtn.addEventListener('click', async () => {
             try {
-              const response = await fetchProtectedUrl('https://localhost:8000/api/friendships/', {
+              const response = await fetchProtectedUrl('/api/friendships/', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

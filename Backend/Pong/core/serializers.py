@@ -1,14 +1,17 @@
 from .models import Profile, Friendship, Match
+# from django.conf import settings
 from rest_framework import serializers
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+import sys
 
 class ProfileSerializer(serializers.ModelSerializer):
 	user_id = serializers.IntegerField(required=False, read_only=True)
 	username = serializers.CharField(source='user.username', required=False)
 	firstname = serializers.CharField(source='user.first_name', required=False)
+	profileimg = serializers.SerializerMethodField()
 	lastname = serializers.CharField(source='user.last_name', required=False)
 	email = serializers.EmailField(source='user.email', required=False)
 	date_joined = serializers.DateTimeField(source='user.date_joined', format="%Y-%m-%d", read_only=True)
@@ -71,6 +74,14 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 		return instance
 
+	def get_profileimg(self, obj):
+		# Return a relative path
+		if obj.profileimg:
+			return obj.profileimg.url
+		return None
+
+
+
 	# def validate_email(self, value):
 	# 	if self.instance:
 	# 		current_user = self.instance.user
@@ -90,10 +101,17 @@ class ProfileSimpleSerializer(serializers.ModelSerializer):
 	username = serializers.CharField(source='user.username', read_only=True)
 	firstname = serializers.CharField(source='user.first_name', read_only=True)
 	lastname = serializers.CharField(source='user.last_name', read_only=True)
+	profileimg = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Profile
 		fields = ['username', 'firstname', 'lastname', 'profileimg']
+
+	def get_profileimg(self, obj):
+		# Return a relative path
+		if obj.profileimg:
+			return obj.profileimg.url
+		return None
 
 class MatchSerializer(serializers.ModelSerializer):
 	opponent_profile = ProfileSimpleSerializer(source='opponent', read_only=True)

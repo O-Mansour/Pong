@@ -65,7 +65,7 @@ export class LoginPage extends HTMLElement
         const password = this.querySelector('#password').value;
 
         try {
-            const response = await fetch('https://localhost:8000/auth/login/', {
+            const response = await fetch('/auth/login/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ export class LoginPage extends HTMLElement
 
         try {
             // Fetch the authorization URL from the backend
-            const response = await fetch('https://localhost:8000/auth/42login/');
+            const response = await fetch('/auth/42login/');
 
             const data = await response.json();
             if (response.ok && data.authorization_url) {
@@ -120,7 +120,7 @@ export class LoginPage extends HTMLElement
         if (code) {
             try {
                 // Send the authorization code to the backend to exchange for JWT tokens
-                const response = await fetch(`https://localhost:8000/auth/42callback/?code=${code}`, {
+                const response = await fetch(`/auth/42callback/?code=${code}`, {
                     method: 'GET',
                     credentials: 'include'
                 });

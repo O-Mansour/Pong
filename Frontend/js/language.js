@@ -298,7 +298,7 @@ async function updateLanguageContent() {
         if (!['/', '/sign-up'].includes(window.location.pathname))
         {
                 try {
-                const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+                const response = await fetchProtectedUrl('/api/profiles/me/', {
                         method: 'GET',
                         // headers: {
                         //         'X-CSRFToken': getCSRFToken(),

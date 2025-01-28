@@ -262,6 +262,7 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                 room['player_info'] = {}
             room['player_info'][self.player_side] = {
                 'username': self.user.username,
+                'img' : await self._get_player_image(),
                 'channel_name': self.channel_name
             }
             self.game_rooms[self.user_id] = self.room_name
@@ -374,6 +375,7 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
         if 'player_info' in room:
             for side, info in room['player_info'].items():
                 players_info[side] = info['username']
+                players_info[side] = info['img']
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -382,12 +384,19 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                     'type': 'players_ready',
                     'players_count': len(room['players']),
                     'player_side': self.player_side,
+                    # 'player_image': players_img,
                     'player_username': self.user.username,
                     'players': players_info,
                     'waiting': len(room['players']) == 1
                 }
             }
         )
+    @database_sync_to_async
+    def _get_player_image(self):
+        print(f"username-> '{self.user.username}'", file=sys.stderr)
+        image = Profile.objects.get(user__username=self.user.username).profileimg
+        print(f"image-> '{image}'", file=sys.stderr)
+        return str(image)
     def _generate_initial_velocity(self) -> List[float]:
         angle = random.uniform(-math.pi / 8, math.pi / 8)
         direction = random.choice([-1, 1])

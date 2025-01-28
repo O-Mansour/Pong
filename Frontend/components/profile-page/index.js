@@ -26,7 +26,7 @@ export class Profile extends HTMLElement {
 
   async fetchProfileData() {
     try {
-      const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+      const response = await fetchProtectedUrl('/api/profiles/me/', {
         method: 'GET',
         // headers: {
         //   'X-CSRFToken': getCSRFToken(),
@@ -70,7 +70,7 @@ export class Profile extends HTMLElement {
             xpElement.textContent = data.xps;
             levelElement.textContent = data.level;
 
-        imgElement.src = `https://localhost:8000${data.profileimg}`;
+        imgElement.src = `${data.profileimg}`;
         if (data.is_online == false)
           onlineElement.classList.remove('online-status_1');
       }
@@ -109,7 +109,7 @@ export class Profile extends HTMLElement {
 
   async fetchFriendsList() {
     try {
-      const response = await fetchProtectedUrl('https://localhost:8000/api/friendships/friends', {
+      const response = await fetchProtectedUrl('/api/friendships/friends', {
         method: 'GET',
         // headers: {
         //   'X-CSRFToken': getCSRFToken(),
@@ -126,7 +126,7 @@ export class Profile extends HTMLElement {
         friendDiv.innerHTML = `
 
                 <div class="status_img">
-                  <img src="https://localhost:8000${friend.profileimg}" class="img_leader1">
+                  <img src="${friend.profileimg}" class="img_leader1">
                    <span class="active" style="--color: ${friend.is_online ? '#37C25E' : '#941b1b'}"/>
                 </div>
                 <span class="leader-name_1">${friend.firstname} ${friend.lastname}</span>
@@ -145,7 +145,7 @@ export class Profile extends HTMLElement {
 
   async fetchMatchHistory() {
     try {
-      const response = await fetchProtectedUrl('https://localhost:8000/api/matches', {
+      const response = await fetchProtectedUrl('/api/matches', {
         method: 'GET',
         // headers: {
         //   'X-CSRFToken': getCSRFToken(),

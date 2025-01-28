@@ -26,7 +26,7 @@ export class Setting extends HTMLElement {
     
     async fetchsettingsData() {
         try {
-            const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+            const response = await fetchProtectedUrl('/api/profiles/me/', {
                 method: 'GET',
                 // headers: {
                 //     'X-CSRFToken': getCSRFToken(),
@@ -41,7 +41,7 @@ export class Setting extends HTMLElement {
             const Elementemail = document.querySelector('#emailInput');
 
             if (imgElement && Elementfirstname && Elementlastname && Elementusername && Elementemail) {
-                imgElement.src = `https://localhost:8000${data.profileimg}`;
+                imgElement.src = `${data.profileimg}`;
                 Elementfirstname.value = data.firstname;
                 Elementlastname.value = data.lastname;
                 Elementusername.value = data.username;
@@ -62,7 +62,7 @@ export class Setting extends HTMLElement {
                             throw new Error('Failed to update user information, empty field.');
                     }
 
-                    const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+                    const response = await fetchProtectedUrl('/api/profiles/me/', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export class Setting extends HTMLElement {
                 }
 
                 try {
-                    const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/change_password/', {
+                    const response = await fetchProtectedUrl('/api/profiles/change_password/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ export class Setting extends HTMLElement {
                 picData.append('profileimg', file);
 
                 try {
-                    const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+                    const response = await fetchProtectedUrl('/api/profiles/me/', {
                         method: 'PUT',
                         // headers: {
                         //     'X-CSRFToken': getCSRFToken(),
@@ -164,7 +164,7 @@ export class Setting extends HTMLElement {
                         throw new Error('Failed to update profile picture' + profileImgError);
                     }
                     const result = await response.json();
-                    pictureElement.src = `https://localhost:8000${result.profileimg}`;
+                    pictureElement.src = `${result.profileimg}`;
                 } catch (error) {
                     alertMessage(error.message);
                 }
@@ -179,7 +179,7 @@ export class Setting extends HTMLElement {
 async function logout() {
     try {
         set_offline();
-        const response = await fetchProtectedUrl('https://localhost:8000/auth/logout/', {
+        const response = await fetchProtectedUrl('/auth/logout/', {
             method: 'POST',
             // headers: {
             //     'X-CSRFToken': getCSRFToken(),
@@ -197,7 +197,7 @@ async function logout() {
 async function setLanguage(event) {
     try {
         const selectedLang = event.target.value;
-        const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+        const response = await fetchProtectedUrl('/api/profiles/me/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

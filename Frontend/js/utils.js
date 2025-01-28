@@ -26,13 +26,13 @@ export function get_access_token() {
 
 export async function isUserAuth() {
     try {
-        let response = await fetch('https://localhost:8000/api/profiles/me/', {
+        let response = await fetch('/api/profiles/me/', {
             method: 'GET',
             credentials: 'include',
         });
 
         if (response.status === 401) {
-            const refreshResponse = await fetch('https://localhost:8000/auth/refresh_token/', {
+            const refreshResponse = await fetch('/auth/refresh_token/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export async function isUserAuth() {
                 return false;
             }
 
-            response = await fetch('https://localhost:8000/api/profiles/me/', {
+            response = await fetch('/api/profiles/me/', {
                 method: 'GET',
                 credentials: 'include',
             });
@@ -58,7 +58,7 @@ export async function isUserAuth() {
 
 export async function set_online() {
     try {
-        const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+        const response = await fetchProtectedUrl('/api/profiles/me/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export async function set_online() {
 
 export async function set_offline() {
     try {
-        const response = await fetchProtectedUrl('https://localhost:8000/api/profiles/me/', {
+        const response = await fetchProtectedUrl('/api/profiles/me/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ export async function fetchProtectedUrl(url, options = {}) {
 
         // refresh the access token when it expires
         if (response.status === 401) {
-            const refreshResponse = await fetch('https://localhost:8000/auth/refresh_token/', {
+            const refreshResponse = await fetch('/auth/refresh_token/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -65,6 +65,7 @@ export class WebSocketManager {
         const data = JSON.parse(event.data);
         switch(data.type) {
             case 'players_ready':
+                console.log(data)
                 this.currentRoomId = data.room_id; 
                 if (this.gameMode === "tournament") {
                     this.tPlayers = JSON.parse(localStorage.getItem('tournamentPlayers')) || 
@@ -184,17 +185,17 @@ export class WebSocketManager {
         }
         if (data.players) {
             if (data.players.left) {
-                this.playerLeftName.textContent = data.players.left;
-                this.playerLeftImage.src = `https://localhost:8000/media/profile_images/${data.players.left}.jpg`;
+                // this.playerLeftName.textContent = data.players.left;
+                this.playerLeftImage.src = `/media/${data.players.left}`;
                 this.playerLeftImage.onerror = () => {
-                    this.playerLeftImage.src = `https://localhost:8000/media/default_pfp.jpg`;
+                    this.playerLeftImage.src = `/media/default_pfp.jpg`;
                 };
             }
             if (data.players.right) {
-                this.playerRightName.textContent = data.players.right;
-                this.playerRightImage.src = `https://localhost:8000/media/profile_images/${data.players.right}.jpg`;
+                // this.playerRightName.textContent = data.players.right;
+                this.playerRightImage.src = `/media/${data.players.right}`;
                 this.playerRightImage.onerror = () => {
-                    this.playerRightImage.src = `https://localhost:8000/media/default_pfp.jpg`;
+                    this.playerRightImage.src = `/media/default_pfp.jpg`;
                 };
             }
         }
@@ -225,7 +226,7 @@ export class WebSocketManager {
         }
     }
     getWebSocketUrl(gameMode) {
-        const baseUrl = 'wss://localhost:8000/ws/pong/';
+        const baseUrl = '/ws/pong/';
         const modes = {
             '1vs1-remote': '1vs1-remote/',
             '1vs1-local': '1vs1-local/',
