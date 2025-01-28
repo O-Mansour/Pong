@@ -14,8 +14,6 @@ export class Gamermote extends HTMLElement {
         const gameStartButton = this.querySelector('#tourbutton');
         if (gameStartButton) {
             gameStartButton.addEventListener('click', () => this.handleGameStart());
-        } else {
-            console.error('Game start button not found');
         }
 
         localStorage.removeItem('gameScores');
@@ -24,7 +22,6 @@ export class Gamermote extends HTMLElement {
     }
 
     handleGameStart() {
-        console.log("here")
         const state = localStorage.getItem('currentTournamentState');
         if (state && state !== 'completed' && state !== 'not_started') {
             alertMessage("You have an unfinished tournament");

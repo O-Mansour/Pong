@@ -374,8 +374,10 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
         players_info = {}
         if 'player_info' in room:
             for side, info in room['player_info'].items():
-                players_info[side] = info['username']
-                players_info[side] = info['img']
+                players_info[side] = {
+                    'username': info['username'],
+                    'img': info['img']
+                }
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -384,7 +386,6 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
                     'type': 'players_ready',
                     'players_count': len(room['players']),
                     'player_side': self.player_side,
-                    # 'player_image': players_img,
                     'player_username': self.user.username,
                     'players': players_info,
                     'waiting': len(room['players']) == 1

@@ -321,7 +321,6 @@ async function updateLanguageContent() {
                 
                 if (key) 
                 el.innerHTML = langData[currLang]?.[key] || key;
-                // console.log(langData.fr.anothergame);
         });
 
 

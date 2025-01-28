@@ -65,7 +65,6 @@ export class WebSocketManager {
         const data = JSON.parse(event.data);
         switch(data.type) {
             case 'players_ready':
-                console.log(data)
                 this.currentRoomId = data.room_id; 
                 if (this.gameMode === "tournament") {
                     this.tPlayers = JSON.parse(localStorage.getItem('tournamentPlayers')) || 
@@ -185,15 +184,15 @@ export class WebSocketManager {
         }
         if (data.players) {
             if (data.players.left) {
-                // this.playerLeftName.textContent = data.players.left;
-                this.playerLeftImage.src = `/media/${data.players.left}`;
+                this.playerLeftName.textContent = data.players.left.username;
+                this.playerLeftImage.src = `/media/${data.players.left.img}`;
                 this.playerLeftImage.onerror = () => {
                     this.playerLeftImage.src = `/media/default_pfp.jpg`;
                 };
             }
             if (data.players.right) {
-                // this.playerRightName.textContent = data.players.right;
-                this.playerRightImage.src = `/media/${data.players.right}`;
+                this.playerRightName.textContent = data.players.right.username;
+                this.playerRightImage.src = `/media/${data.players.right.img}`;
                 this.playerRightImage.onerror = () => {
                     this.playerRightImage.src = `/media/default_pfp.jpg`;
                 };

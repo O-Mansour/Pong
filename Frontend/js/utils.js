@@ -74,7 +74,6 @@ export async function set_online() {
             throw new Error(errorData.message || 'Failed to change online status');
         }
     } catch (error) {
-        // console.log('Error changing online status:', error);
         alertMessage(error.message);
     }
 }

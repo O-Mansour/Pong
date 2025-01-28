@@ -60,21 +60,21 @@ export class Gamewinner extends  HTMLElement
             lefttextElement.setAttribute("data-i18n", "loser");
         }
         if (players && players.players){
-            playerLeftImage.src = `/media/profile_images/${players.players.left}.jpg`;
+            playerLeftImage.src = `/media/${players.players.left.img}`;
             playerLeftImage.onerror = () => {
                 playerLeftImage.src = `/media/default_pfp.jpg`;
             };
-            playerRightImage.src = `/media/profile_images/${players.players.right}.jpg`;
+            playerRightImage.src = `/media/${players.players.right.img}`;
             playerRightImage.onerror = () => {
                 playerRightImage.src = `/media/default_pfp.jpg`;
             };
             if (scores.rightScore > scores.leftScore && players.players.right === winner.winner){
-                rightnameElement.textContent = players.players.right;
-                leftnameElement.textContent = players.players.left;
+                rightnameElement.textContent = players.players.right.username;
+                leftnameElement.textContent = players.players.left.username;
             }
             else{
-                rightnameElement.textContent = players.players.left;
-                leftnameElement.textContent = players.players.right;
+                rightnameElement.textContent = players.players.left.username;
+                leftnameElement.textContent = players.players.right.username;
             }
         }
     }

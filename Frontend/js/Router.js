@@ -25,10 +25,6 @@ const routes = new Map([
     ["/user",{
         Title: "Profile",
         Element: "profile-page"
-        // onLoad: async () => {
-        //     // The component will handle the data fetching itself
-        //     console.log("Profile page loaded");
-        // }
     }],
     ["/setting", {
         Title: "setting",
@@ -71,14 +67,6 @@ const Router = {
 
     init:() => {
 
-        // let location = window.location.hash.split('#').pop();
-        // console.log(location)
-        // console.log("my location " ,rout.includes(location))
-
-        // if (rout.includes(location))
-        // Initialization code for setting up event listeners on navigation links (init)
-        // console.log("here")
-
         document.addEventListener("mylink", event => {
             Router.go();    //  go=> to load the correct content based on the URL
         });
@@ -93,10 +81,7 @@ const Router = {
     
         // const route = location.pathname;  // Gets the current path from the browser’s location (e.g., "/home", "/user")
         let route = window.location.pathname;
-       
-        // Handles navigation to different routes and page content loading
-        // console.log(`Going to ${route}`, route.length); //next step well we need to call router go  so he can to the route
-         
+
         const cache = document.querySelector("main");
         if (routes.get(route)) // Checks if the current path matches a defined route in the routes map
         {
@@ -111,7 +96,6 @@ const Router = {
         else
         {
 
-            console.log(`Not founded  oooo`); //next step well we need to call router go  so he can to the route
             document.title = routes.get("/404").Title;
             const pageElement = document.createElement(routes.get("/404").Element);
             cache.innerHTML = "";
