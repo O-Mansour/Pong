@@ -1,4 +1,16 @@
 services:
+
+  database:
+    image: postgres:13
+    container_name: database
+    ports:
+      - "5432:5432"
+    networks:
+      - pong-network
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    env_file: .env
+
   frontend:
     image: frontend
     container_name: front
@@ -11,7 +23,10 @@ services:
     volumes:
       - front_volume:/usr/share/nginx/html
       - cert_volume:/etc/nginx/ssl
+      - media_volume:/media
     env_file: .env
+    depends_on:
+      - backend
 
   backend:
     image: backend
@@ -25,18 +40,9 @@ services:
     volumes:
       - back_volume:/backend
       - cert_volume:/etc/nginx/ssl
+      - media_volume:/backend/media
     depends_on:
       - database
-    env_file: .env
-
-  database:
-    image: postgres:13
-    ports:
-      - "5432:5432"
-    networks:
-      - pong-network
-    volumes:
-      - postgres_volume:/var/lib/postgresql/data
     env_file: .env
 
 networks:
@@ -58,10 +64,8 @@ volumes:
       device: ./Backend/Pong
   postgres_volume:
     driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ~/Desktop/pres_database
+  media_volume:
+    driver: local
   cert_volume:
     driver: local
     driver_opts:

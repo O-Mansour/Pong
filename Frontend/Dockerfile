@@ -9,8 +9,6 @@ COPY tools/setup.sh /tmp/setup.sh
 
 RUN chmod +x /tmp/setup.sh
 
-# EXPOSE 3000
-
 ENTRYPOINT ["bash"]
 
 CMD ["-c", "/tmp/setup.sh"]

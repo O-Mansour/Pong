@@ -70,7 +70,6 @@ export class LoginPage extends HTMLElement
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include',
                 body: JSON.stringify({ username, password })
             });
             const data = await response.json();
@@ -120,10 +119,7 @@ export class LoginPage extends HTMLElement
         if (code) {
             try {
                 // Send the authorization code to the backend to exchange for JWT tokens
-                const response = await fetch(`/auth/42callback/?code=${code}`, {
-                    method: 'GET',
-                    credentials: 'include'
-                });
+                const response = await fetch(`/auth/42callback/?code=${code}`);
 
                 const data = await response.json();
                 if (response.ok) {

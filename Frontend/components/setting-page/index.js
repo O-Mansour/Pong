@@ -41,7 +41,7 @@ export class Setting extends HTMLElement {
             const Elementemail = document.querySelector('#emailInput');
 
             if (imgElement && Elementfirstname && Elementlastname && Elementusername && Elementemail) {
-                imgElement.src = `${data.profileimg}`;
+                imgElement.src = `${data.profileimg_url}`;
                 Elementfirstname.value = data.firstname;
                 Elementlastname.value = data.lastname;
                 Elementusername.value = data.username;
@@ -164,7 +164,7 @@ export class Setting extends HTMLElement {
                         throw new Error('Failed to update profile picture' + profileImgError);
                     }
                     const result = await response.json();
-                    pictureElement.src = `${result.profileimg}`;
+                    pictureElement.src = `${result.profileimg_url}`;
                 } catch (error) {
                     alertMessage(error.message);
                 }

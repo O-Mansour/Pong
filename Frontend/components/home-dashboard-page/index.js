@@ -60,8 +60,7 @@ export class HomeDashboard extends  HTMLElement
                 progressPercentage = (data.xps / maxXp) * 100;
             document.querySelector('.ft_progress').style = `--xp:${progressPercentage}%`;
 
-          imgElement.src = `${data.profileimg}`;
-          console.log(data.profileimg)
+          imgElement.src = `${data.profileimg_url}`;
 
 
           matches_played.textContent = data.wins + data.losses;
@@ -133,7 +132,7 @@ export class HomeDashboard extends  HTMLElement
 
         notificationRow.innerHTML = `
             <div class="name_notf">
-                <img src="${sender.sender_profile.profileimg}" class="img_led">
+                <img src="${sender.sender_profile.profileimg_url}" class="img_led">
                 <p class="name_invit">${sender.sender_profile.firstname} ${sender.sender_profile.lastname}</p>
             </div>
           
@@ -250,10 +249,9 @@ export class HomeDashboard extends  HTMLElement
       profilesData.forEach((leader, index) => {
         const leaderDiv = document.createElement('div');
         leaderDiv.classList.add('leader');
-        console.log(leader.profileimg)
         leaderDiv.innerHTML = `
           <h1>#${index + 1}</h1>
-          <img src="${leader.profileimg}" class="img_leader">
+          <img src="${leader.profileimg_url}" class="img_leader">
           <span class="leader-name">${leader.firstname} ${leader.lastname}</span>
           <div class="leader-username">${leader.username}</div>
           `;

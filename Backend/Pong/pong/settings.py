@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 from datetime import timedelta
 
-DEBUG = True
+DEBUG = False
 
 STATIC_URL = '/static/'
 

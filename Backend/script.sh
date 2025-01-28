@@ -21,15 +21,6 @@ if not User.objects.filter(username='admin').exists():
 
 mkdir -p /etc/nginx/ssl
 
-
 sed -i "s|\$SSL_CERT|$SSL_CERT|g; s|\$SSL_KEY|$SSL_KEY|g" /etc/nginx/conf.d/default.conf
 
-
-python manage.py runserver 0.0.0.0:8000 &
-DJANGO_PID=$!
-
-# nginx -g "daemon off;" &
-# NGINX_PID=$!
-
-wait $DJANGO_PID 
-# $NGINX_PID
+python manage.py runserver 0.0.0.0:8000
