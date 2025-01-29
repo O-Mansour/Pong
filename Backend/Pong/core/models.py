@@ -48,23 +48,5 @@ class Friendship(models.Model):
 	receiver = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='received_friendships', on_delete=models.CASCADE)
 	status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='P')
 
-	# class Meta:
-	# 	constraints = [
-	# 		# Prevents both duplicate friendships and reverse friendships
-	# 		models.UniqueConstraint(
-	# 			fields=['sender', 'receiver'],
-	# 			name='unique_friendship'
-	# 		),
-	# 		models.UniqueConstraint(
-	# 			fields=['receiver', 'sender'],
-	# 			name='unique_reverse_friendship'
-	# 		),
-	# 		# Prevents self-friendships
-	# 		models.CheckConstraint(
-	# 			check=~models.Q(sender=models.F('receiver')),
-	# 			name='no_self_friendship'
-	# 		)
-	# 	]
-
 	def __str__(self):
 		return f"Friendship from {self.sender} to {self.receiver} : {self.get_status_display()}"

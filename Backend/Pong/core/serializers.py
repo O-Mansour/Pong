@@ -4,7 +4,6 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-import sys
 
 class ProfileSerializer(serializers.ModelSerializer):
 	user_id = serializers.IntegerField(required=False, read_only=True)
@@ -30,13 +29,10 @@ class ProfileSerializer(serializers.ModelSerializer):
 		return current_friends
 	
 	def update(self, instance, validated_data):
-		# Extract user data
 		user_data = validated_data.pop('user', {})
 
 		if self.instance:
 			current_user = self.instance.user
-
-			# Check username and email uniqueness
 			username = user_data.get('username')
 			email = user_data.get('email')
 
@@ -46,11 +42,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 			if email and Profile.objects.exclude(user=current_user).filter(user__email=email).exists():
 				raise serializers.ValidationError({"message": "The email is already in use"})
 		
-		# Update user fields
 		if user_data:
 			user = instance.user
 			
-			# Update basic fields
 			if 'username' in user_data:
 				user.username = user_data['username']
 			if 'first_name' in user_data:
@@ -60,13 +54,11 @@ class ProfileSerializer(serializers.ModelSerializer):
 			if 'email' in user_data:
 				user.email = user_data['email']
 			
-			# Handle password with proper hashing
 			if 'password' in user_data:
 				user.set_password(user_data['password'])
 			
 			user.save()
 
-		# Update profile fields
 		for attr, value in validated_data.items():
 			setattr(instance, attr, value)
 		instance.save()
@@ -77,7 +69,6 @@ class ProfileSerializer(serializers.ModelSerializer):
 		if obj.profileimg:
 			return obj.profileimg.url
 		return None
-
 
 class ProfileSimpleSerializer(serializers.ModelSerializer):
 	username = serializers.CharField(source='user.username', read_only=True)
@@ -147,24 +138,9 @@ class UserSerializer(serializers.ModelSerializer):
 		)
 		return user
 
-	# I may not need it here (added in the view)
-	# def validate_password(self, value):
-	# 	try:
-	# 		validate_password(value)
-	# 	except ValidationError:
-	# 		raise serializers.ValidationError({"message": "The password is not valid"})
-	# 	return value
-
 class PasswordSerializer(serializers.Serializer):
 	old_password = serializers.CharField(write_only=True, required=False, allow_blank=True)
 	new_password = serializers.CharField(write_only=True, required=True)
-
-	# def validate_new_password(self, value):
-	# 	try:
-	# 		validate_password(value)
-	# 	except ValidationError:
-	# 		raise serializers.ValidationError({"message": "New password is not valid"})
-	# 	return value
 
 	def validate(self, data):
 		# Check if old password is correct

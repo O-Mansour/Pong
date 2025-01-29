@@ -12,7 +12,6 @@ from typing import Dict, List, Optional
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
-import sys
 from threading import Thread
 from datetime import datetime
 from django.utils import timezone
@@ -394,9 +393,7 @@ class PongGameRemoteConsumer(AsyncWebsocketConsumer):
         )
     @database_sync_to_async
     def _get_player_image(self):
-        print(f"username-> '{self.user.username}'", file=sys.stderr)
         image = Profile.objects.get(user__username=self.user.username).profileimg
-        print(f"image-> '{image}'", file=sys.stderr)
         return str(image)
     def _generate_initial_velocity(self) -> List[float]:
         angle = random.uniform(-math.pi / 8, math.pi / 8)

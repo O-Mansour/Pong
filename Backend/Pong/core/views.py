@@ -1,9 +1,8 @@
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.serializers import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
@@ -25,11 +24,6 @@ class ProfileViewSet(ModelViewSet):
 	queryset = Profile.objects.order_by('-level', '-xps')
 	serializer_class = ProfileSerializer
 	permission_classes = [IsAuthenticated]
-
-	# filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-	# filterset_fields = ['is_online']
-	# search_fields = ['user__username']
-	# ordering_fields = ['level', 'xps']
 
 	@action(detail=False, methods=['GET', 'PUT'])
 	def me(self, request):
@@ -83,7 +77,6 @@ class FriendshipViewSet(ModelViewSet):
 	def perform_create(self, serializer):
 		receiver = serializer.validated_data['receiver']
 		
-		# Prevent self-friendship
 		if receiver == self.request.user:
 			raise ValidationError({"message": "You cannot send a friendship request to yourself"})
 
@@ -91,17 +84,14 @@ class FriendshipViewSet(ModelViewSet):
 		existing_friendship = Friendship.objects.filter(
 			(Q(sender=self.request.user) & Q(receiver=receiver)) |
 			(Q(sender=receiver) & Q(receiver=self.request.user))
-		).exclude(status='A')  # Exclude accepted friendships
+		).exclude(status='A')
 
 		if existing_friendship.exists():
-			# Check if all existing requests are rejected
 			if all(friendship.status == 'R' for friendship in existing_friendship):
-				# Allow new request if all previous were rejected
 				serializer.save(sender=self.request.user)
 			else:
 				raise ValidationError({"message": "Friendship request already exists"})
 		else:
-			# No existing requests, create new
 			serializer.save(sender=self.request.user)
 
 	@action(detail=True, methods=['GET', 'PUT'])
@@ -146,20 +136,18 @@ class FriendshipViewSet(ModelViewSet):
 			(Q(sender=request.user) | Q(receiver=request.user)),
 			status='A'
 		)
-		# return Response(FriendshipSerializer(accepted_friendships, many=True).data)
+
 		friends_data = []
 		for friendship in accepted_friendships:
 			if friendship.sender == request.user:
 				friend = friendship.receiver
 			else:
 				friend = friendship.sender
-			# Serialize the friend's profile
 			friend_profile = ProfileSerializer(friend.profile).data
 			friends_data.append(friend_profile)
 
 		return Response(friends_data)
 
-	# need some tests on those requests
 	@action(detail=False, methods=['GET'])
 	def requests_received(self, request):
 		pending_friendships = Friendship.objects.filter(
@@ -200,7 +188,6 @@ class MatchViewSet(ModelViewSet):
 
 class RegistrationView(APIView):
 	def post(self, request):
-		# Check if the username and email already in use
 		if User.objects.filter(username=request.data['username']).exists():
 			return Response(
 				{"message": "The username is already taken"}, status=status.HTTP_400_BAD_REQUEST)
@@ -216,18 +203,13 @@ class RegistrationView(APIView):
 		if serializer.is_valid():
 			user = serializer.save()
 			refresh = RefreshToken.for_user(user)
-
-			# return Response({
-			# 	'refresh': str(refresh),
-			# 	'access': str(refresh.access_token),
-			# }, status=status.HTTP_201_CREATED)
 			response = Response({"message": "Welcome, Enjoy Your Time!"})
 
 			response.set_cookie(
 				key='access_token',
 				value=str(refresh.access_token),
 				httponly=False,
-				secure=True,  # False only in development
+				secure=True,
 				max_age=60 * 30,
 				samesite='None'
 			)
@@ -239,7 +221,6 @@ class RegistrationView(APIView):
 				max_age=24 * 60 * 60,
 				samesite='None'
 			)
-			# I MAY NEED TO CREATE A PROFILE HERE
 			return response
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -257,7 +238,7 @@ class LoginView(APIView):
 				key='access_token',
 				value=str(refresh.access_token),
 				httponly=False,
-				secure=True,  # False only in development
+				secure=True,
 				max_age=60 * 30,
 				samesite='None'
 			)
@@ -286,7 +267,6 @@ class FT_CallbackView(APIView):
 		if not code:
 			return Response({'error': 'Authorization code not found.'}, status=400)
 		
-		# Exchange code for token
 		token_response = requests.post(
 			'https://api.intra.42.fr/oauth/token',
 			data={
@@ -303,7 +283,6 @@ class FT_CallbackView(APIView):
 			
 		tokens = token_response.json()
 		access_token = tokens.get('access_token')
-		# refresh_token = tokens.get('refresh_token') # NO NEED
 		
 		# Fetch user information from 42 API
 		user_response = requests.get(
@@ -320,14 +299,14 @@ class FT_CallbackView(APIView):
 		profile = Profile.objects.filter(ft_id=ft_id).first()
 
 		if profile:
-			# If profile exists, update user details (NO NEED TO DO THAT JUST RETURN TOKENS)
+			# Update user details
 			user = profile.user
 			user.first_name = user_data.get('first_name', user.first_name)
 			user.last_name = user_data.get('last_name', user.last_name)
 			user.email = user_data.get('email', user.email)
 			user.save()
 		else:
-			# Create a new user and profile if none exists
+			# Create a new user
 			base_username = user_data['login']
 			unique_username = get_unique_username(base_username)
 
@@ -343,20 +322,17 @@ class FT_CallbackView(APIView):
 			profile_picture_url = user_data.get('image', {}).get('versions', {}).get('medium')
 			if profile_picture_url:
 				try:
-					# Download image
 					image_response = requests.get(profile_picture_url)
 					if image_response.status_code == 200:
 						from django.core.files.base import ContentFile
-						# Save the image to profile
 						profile.profileimg.save(
 							f'{user.username}.jpg',
 							ContentFile(image_response.content),
 							save=True
 						)
 				except Exception as e:
-					print(f"Error saving profile picture: {str(e)}") # file=stderr
+					return Response({'error': 'Failed to save profile picture'}, status=400)
 		
-		# Generate JWT
 		refresh = RefreshToken.for_user(user)
 		response = Response({"message": "Welcome, Enjoy Your Time!"})
 
@@ -380,15 +356,6 @@ class FT_CallbackView(APIView):
 		return response
 
 class LogoutView(APIView):
-	# def post(self, request):
-	# 	try:
-	# 		refresh_token = request.data["refresh_token"]
-	# 		token = RefreshToken(refresh_token)
-	# 		token.blacklist()
-	# 		return Response(status=status.HTTP_205_RESET_CONTENT)
-	# 	except Exception:
-	# 		return Response(status=status.HTTP_400_BAD_REQUEST)
-
 	def post(self, request):
 		response = Response({"message": "Logged out successfully!"})
 		response.delete_cookie('access_token')
@@ -413,7 +380,7 @@ class RefreshTokenView(APIView):
                 key='access_token',
                 value=new_access_token,
                 httponly=False,
-				secure=True,  # False only in development
+				secure=True,
 				max_age=60 * 30,
 				samesite='None'
 			)

@@ -46,9 +46,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
-# CORS_ALLOWED_ORIGINS = [
-#     "https://localhost:3000"
-# ]
 CORS_ALLOW_ALL_ORIGINS = True
 
 ASGI_APPLICATION = 'pong.asgi.application'
@@ -107,7 +104,6 @@ SITE_URL = 'https://localhost:3000/'
 
 
 AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend'
 ]
 
@@ -141,7 +137,6 @@ ALLOWED_HOSTS = ['*']
 
 SESSION_COOKIE_HTTPONLY = False
 
-# Ensures the browser includes cookies when making cross-origin requests to back-end.
 CORS_ALLOW_CREDENTIALS = True
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
