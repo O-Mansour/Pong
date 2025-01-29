@@ -1,4 +1,5 @@
-import {updateLanguageContent, langData} from "../../js/language.js";
+import updateLanguageContent from "../../js/language.js";
+import langData from "../../js/language.js";
 import { go_to_page, isUserAuth, set_online } from "../../js/utils.js";
 
 export class LoginPage extends HTMLElement
