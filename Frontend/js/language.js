@@ -82,6 +82,8 @@ const  langData = ({
                 gameSr:"Game Start",
                 toBeDetermined: "To be Determined",
                 champion: "Champion",
+                winn1: "Winner",
+                loser1: "Loser"
         },
         fr: {
                 selectLanguage: "Choisissez une langue",
@@ -178,6 +180,8 @@ const  langData = ({
                 gameSr: "Démarrage",
                 toBeDetermined: "À déterminer",
                 champion: "Champion",
+                winn1: "Gagnant",
+                loser1: "Perdant"
         },
         es: {
                 selectLanguage: "Seleccionar idioma",
@@ -270,6 +274,8 @@ const  langData = ({
                 gameSr: "Inicio del juego",
                 toBeDetermined: "Por determinar",
                 champion: "Campeón",
+                winn1: "Ganador",
+                loser1: "Perdedor"
         },
 });
 
