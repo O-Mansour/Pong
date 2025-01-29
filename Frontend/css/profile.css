@@ -17,10 +17,6 @@
 
 }
 
-/* classe -> user-info=> transform: translate(x, y);=> x is the horizontal movement (left/right).
-                                 y is the vertical movement (up/down).
-    The element is moved up by 50% of its own height (-50% on the Y-axis). 
-    The negative value indicates upward movement. */
 
 .user-info
 {
@@ -30,7 +26,6 @@
     translate: 0 -50%;
 }
 
- /* plus importent  grid*/
 .user-info .firstL 
 {
     grid-row: 1 / 2;
@@ -61,12 +56,9 @@
     margin: 0;
 }
 
-/* fin plus griid */
-
 .tournaments
 {   
     width: 90%;
-    /* height: 40px; */
     margin: 0 5%;
     display: flex;
     flex-direction: row;
@@ -118,7 +110,6 @@
 
 }
 
-/* solution ldak div bech isghiir */
 .header_1
 {
     display: flex;
@@ -155,29 +146,15 @@
 
 .header_1 .img_prof_2 .online-status_1
 {
-
-    /* width: 25px;
-    height: 25px;
-    background-color:#37C25E; 
-    border-radius: 50%;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    transform: translate(50%, -50%); */
-
-
     display: var(--online-status);
     position: absolute;
     top: 0;
     left: 0;
     translate: 522% -38%;
-    /* background-color: green; */
     background-color: #37C25E;
     border-radius: 50%;
     width: 17px;
     height: 17px;
-
-
 }
 
 
@@ -186,29 +163,10 @@
     position: relative;
 }
 
-
-/* .leader_1 .img_prof_1 .online-status_2
-{
-    width: 25px;
-    height: 25px;
-    background-color:#37C25E; 
-    border-radius: 50%;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    transform: translate(50%, -50%);
-} */
-
-
-
-
-
-
 .tourn
 {
    
     width: 100%;
-    /* height: 100%; */
     padding: 5px;
     backdrop-filter: blur(10px);
     background: rgba(109, 96, 96, 0.1);
@@ -221,7 +179,6 @@
 .tournaments .tourn
 {
     padding: 20px;
-    /* padding: 10px; */
     font-size: 14px;
     text-align: center;
 }
@@ -321,18 +278,12 @@
     translate: 0 -100%;
 }
 
-
-/* fin */
-
-
 .p2
 {
     display: grid;
     grid-template-columns: 49% 49%;
     column-gap: 3%;
-    padding: 0 5%;  /* padding left and rghit l parent  not chaild*/
-    /* height: 40%; */
-   
+    padding: 0 5%;   
 }
 
 .modal .fade .hidden-scrollbar
@@ -419,13 +370,11 @@
     grid-row-start: 2;
 }
 
-/* 2 => grid-row-end: -1;*/
 .leader_1 .add-friend-btn_1 {
     grid-row-start: 1;
     grid-row-end: -1;
 }
 
-/* */
 .leader_1 .img_leader1
 {
     width: 50px;
@@ -442,20 +391,15 @@
 }
 
 .leader_1 .active {
-    /* display: block; */
     position: absolute;
     top: 0;
     left: 0;
     translate: -30% -30%;
-    /* background-color: green; */
-    /* background-color: #37C25E; */
     background-color: var(--color);
     border-radius: 50%;
     width: 15px;
     height: 15px;
 }
-
-
 
 .leader-name_1
 {
@@ -512,7 +456,6 @@
     background-color: #453827; 
 }
 
-/* los and winn */
 
 .chart-container_1 {
 
@@ -531,27 +474,13 @@
 } 
 
 .charts {
-
-    /* width: 150px;
-    height: 150px; */
-
-    /* width: 50%;
-    /* height: 60%; */
-    /* justify-content: center;
-    
-    background: conic-gradient(#3992A5 0% var(--per), #453827 var(--per) 100%);
- 
-    border-radius: 50%;
-    position: relative;
-    padding-top: 50%; */ 
-
-
     width: 40%;
     justify-content: center;
     background: conic-gradient(#3992A5 0% var(--per), #453827 var(--per) 100%);
     border-radius: 50%;
     position: relative;
     padding-top: 40%;
+
 }
 
 .charts::before {
@@ -581,9 +510,6 @@
     margin-bottom: 5%;
     margin-left: 10%;
 
-    /* position: absolute;
-    top: 0;
-    right: 0; */
 }
 
 .lab {
@@ -597,7 +523,6 @@
     font-weight: 700;
     text-align: center;
     padding-top: 5%
-    
     
 }
 
@@ -640,7 +565,6 @@
     text-align: center;
     border-radius: 10px;
     padding: 5%;
-    /* z-index: 1; */
 }
 
 .percentagee_winn   
@@ -673,12 +597,7 @@
     
 }
 
-/* 
-.list_hostory
-{
-    padding: 0 5%; /* padding l child -> left and right
-}*/
- 
+
 
 .matches2
 {
@@ -689,7 +608,6 @@
 
 .mtch1 .matches2
 {
-    /* margin-top: 20px; */
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -711,7 +629,6 @@
 .mtch1 .matches-plyes_1
 {
     padding: 30px 29px 30px 15px;
-     /* margin-top: 16px; */
     margin-bottom: 15px;
     margin-left: 30px;
     margin-right: 29px; 
@@ -744,8 +661,6 @@
     font-family: "Roboto", sans-serif;
 }
 
-
-/* metch_history */
 .hidden-scrollbar 
 {
     overflow: auto;
@@ -782,7 +697,6 @@
     -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5;
     text-align: center;
-    /* margin: 0 90px; */
     margin-top: 1px;
 }
 
@@ -895,12 +809,7 @@
     grid-template-columns: 50px 50px 1fr minmax(auto, 1fr) auto;
     column-gap: 3%;
     width: 600px;
-
-/* 
-    grid-template-columns: 50px 5fr 50px auto 50px; */
-
 }
-
 
 .history_1 .vs
 {
@@ -961,7 +870,6 @@
     display: flex;
     align-items: flex-end;
     align-content: flex-end;
-    /* vertical-align: text-bottom; */
 }
 
 

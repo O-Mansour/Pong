@@ -1,5 +1,6 @@
 import updateLanguageContent from "../../js/language.js";
-// import {requireAuth} from "../../js/utils.js";
+import {isUserAuth, go_to_page} from "../../js/utils.js";
+
 
 export class Gamewinner extends  HTMLElement
 {
@@ -8,16 +9,21 @@ export class Gamewinner extends  HTMLElement
         super();
     }
 
-     // when the component is attached to the dom 
-
     connectedCallback()
     {
-        // requireAuth();
-        const template = document.getElementById("page-winner");
-        const content = template.content.cloneNode(true);
-        this.appendChild(content);
-        this.displayScores();
-        updateLanguageContent();
+        (async () => {
+            const isAuthenticated = await isUserAuth();
+            if (!isAuthenticated) {
+                go_to_page('/');
+                return;
+            }
+
+            const template = document.getElementById("page-winner");
+            const content = template.content.cloneNode(true);
+            this.appendChild(content);
+            this.displayScores();
+            updateLanguageContent();
+        })();
     }
     
     displayScores() {

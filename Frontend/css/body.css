@@ -60,16 +60,7 @@ body {
     justify-content: space-evenly;
 }
 
-/* .ft_container .content1 > div:nth-child(2){
-    flex: 0 0 41%;
-} */
-
-
-/*************Genral code***************/
 .ft-box {
-    max-width: 90%;
-    /* margin: 0 auto; */
- 
+    max-width: 90%; 
     margin: 0 5%;
-
 }

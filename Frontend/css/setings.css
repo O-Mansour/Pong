@@ -9,8 +9,6 @@
 
 .change_1 .chg1
 {
-
-    /* width: 100%; */
     width: 130%;
     border-radius: 5px;
     cursor: pointer;
@@ -76,8 +74,6 @@
     background: #07414e;
 }
 
-
-
 .hed_1 .logee
 {
     width: 40%;
@@ -137,7 +133,6 @@
 .title10
 {
     text-align: center;
-    /* margin-top: 40px; */
     font-weight: 800; 
     font-size: 1.4rem;
     font-family: "Roboto", sans-serif;
@@ -172,17 +167,6 @@
     -webkit-text-stroke: 0px #3992A5; 
 }
 
-/* .lop2
-{
-  
-    text-align: center;
-    margin: 0 0 30px 0;  /* ?*/
-/*    
-    font-weight: 700;
-    font-size: 1.3rem; */
-    /* color: #fff;
-} */ 
-
 .pass-settings,
 .change_op5
 {
@@ -199,8 +183,6 @@
     -1px 1px 0 #3992A5;
     -webkit-text-stroke: 0px #3992A5; 
 }
-
-
 
 .game-set,
 .hge_gamee
@@ -222,8 +204,6 @@
     -webkit-text-stroke: 0px #3992A5; 
 }
 
-
-
 .textchange .update-btn
 {
     width: 40%;
@@ -239,7 +219,6 @@
     font-size: 15px;
 }
 
-
 .textchange
 {
     display: flex;
@@ -250,7 +229,6 @@
 
 }
 
-
 .textp1
 {
     display: flex;
@@ -260,8 +238,6 @@
     width: 80%;
     height: 70%;
 }
-
-
 
 .textp1 input[type="password"]
 {
@@ -346,8 +322,6 @@ input[type="email"]
     background: linear-gradient(to right, rgba(24, 27, 28, 0.6), rgba(68, 104, 112, 0.5));
 
 }
-
-
 
 .change_1 {
     

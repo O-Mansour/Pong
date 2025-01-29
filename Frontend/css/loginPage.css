@@ -1,26 +1,4 @@
 
-
-/* body {
-    margin: 0px;
-    padding: 0px;
-    height: 100vh;
-    width: 100%;
-}
-
-.ft_container {
-    background: url(../images/new_background.webp);
-    background-size: cover;
-    height: 100vh;
-    width: 100%;
-    background-repeat: no-repeat;
-    overflow: hidden;
-}
-
-.logo {
-    width: 140px;
-    margin: 30px 70px;
-} */
-
 .login-box,
 .signup-box,
 .forgotpassword-box {
@@ -123,27 +101,11 @@ input[type="password"],
 
 .pass_eyy
 .click_eye
-{
-
- /* border: none;
- background: none;
- width: 2%;
- position:absolute;
- height:30px;
- top: 31%;
- right: 13%;
- transform: translate(-50%);
- font-size: 20px;
- cursor:pointer; */
-
- 
+{ 
     border: none; 
     background: none;
     width: 2%;
     position: absolute;
-    /* height: 30px; */
-    /* top: 31%; */
-    /* right: 13%; */
     transform: translate(-334%, -13%);
     font-size: 20px;
     cursor: pointer;
@@ -158,9 +120,6 @@ input[type="password"],
     background: none;
     width: 2%;
     position: absolute;
-    /* height: 30px; */
-    /* top: 31%; */
-    /* right: 13%; */
     transform: translate(-334%, -13%);
     font-size: 20px;
     cursor: pointer;
@@ -185,30 +144,13 @@ input[type="password"],
 .pass_eyy
 .click_eye
 {
-
- /* border: none;
- background: none;
- width: 2%;
- position:absolute;
- height:30px;
- top: 31%;
- right: 13%;
- transform: translate(-50%);
- font-size: 20px;
- cursor:pointer; */
-
  
     border: none; 
     background: none;
     width: 2%;
     position: absolute;
-    /* height: 30px; */
-    /* top: 31%; */
-    /* right: 13%; */
-    /* transform: translate(-334%, -13%); */
     font-size: 20px;
     cursor: pointer;
-
    
 }
 
@@ -234,13 +176,6 @@ input[type="email"]
     background: rgba(234, 228, 228, 0.1);
     color: white;
 }
-
-/* .eye .o
-{
-    color: #ffffff;
-    width: 15px;
-} */
-
 
 
 .pass_eyy1
@@ -380,13 +315,6 @@ button {
 
 }
 
-/* .login {
-    padding: 15px 0;
-    font-size: 0.8rem;
-    color: #a1a1a1;
-    text-align: center;
-} */
-
 .intra-login svg {
     vertical-align: middle;
 }
@@ -408,7 +336,7 @@ button {
 {
     text-decoration: underline;
 }
-/* login singup */
+
 .signup a{
     color: #ecf5f6;
     text-decoration: none;
@@ -443,19 +371,4 @@ a {
 .reset-pass {
     margin-bottom: 90px;
 }
-
-
-/* 
-@media only screen and (max-width: 900px) {
-    .login-box{
-        margin: 0 auto;
-    }
-}
-
-@media only screen and (max-width: 480px) {
-    .login-box{
-        margin: 0 auto;
-    }
-} */
-
 

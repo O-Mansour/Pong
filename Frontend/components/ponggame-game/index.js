@@ -1,24 +1,32 @@
 import updateLanguageContent from "../../js/language.js";
-import { go_to_page, alertMessage } from "../../js/utils.js";
+import { go_to_page, alertMessage, isUserAuth } from "../../js/utils.js";
+
 export class Gamermote extends HTMLElement {
     constructor() {
         super();
     }
 
     connectedCallback() {
-        const template = document.getElementById("page-game");
-        const content = template.content.cloneNode(true);
-        this.appendChild(content);
-        updateLanguageContent();
-        
-        const gameStartButton = this.querySelector('#tourbutton');
-        if (gameStartButton) {
-            gameStartButton.addEventListener('click', () => this.handleGameStart());
-        }
+        (async () => {
+            const isAuthenticated = await isUserAuth();
+            if (!isAuthenticated) {
+                go_to_page('/');
+                return;
+            }
+            const template = document.getElementById("page-game");
+            const content = template.content.cloneNode(true);
+            this.appendChild(content);
+            updateLanguageContent();
+            
+            const gameStartButton = this.querySelector('#tourbutton');
+            if (gameStartButton) {
+                gameStartButton.addEventListener('click', () => this.handleGameStart());
+            }
 
-        localStorage.removeItem('gameScores');
-        localStorage.removeItem('Players');
-        localStorage.removeItem('remotewinner');
+            localStorage.removeItem('gameScores');
+            localStorage.removeItem('Players');
+            localStorage.removeItem('remotewinner');
+        })();
     }
 
     handleGameStart() {

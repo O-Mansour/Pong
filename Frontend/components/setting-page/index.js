@@ -1,5 +1,5 @@
 import updateLanguageContent from "../../js/language.js";
-import { alertMessage, isUserAuth, go_to_page, set_offline, getCSRFToken, fetchProtectedUrl } from "../../js/utils.js";
+import { alertMessage, isUserAuth, go_to_page, set_offline, fetchProtectedUrl } from "../../js/utils.js";
 
 export class Setting extends HTMLElement {
     constructor() {
@@ -26,12 +26,7 @@ export class Setting extends HTMLElement {
     
     async fetchsettingsData() {
         try {
-            const response = await fetchProtectedUrl('/api/profiles/me/', {
-                method: 'GET',
-                // headers: {
-                //     'X-CSRFToken': getCSRFToken(),
-                // }
-            });
+            const response = await fetchProtectedUrl('/api/profiles/me/');
             const data = await response.json();
 
             const imgElement = document.querySelector('.img_change');
@@ -66,7 +61,6 @@ export class Setting extends HTMLElement {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
-                            // 'X-CSRFToken': getCSRFToken(),
                         },
                         body: JSON.stringify({
                             firstname: Elementfirstname.value.trim(),
@@ -104,7 +98,6 @@ export class Setting extends HTMLElement {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            // 'X-CSRFToken': getCSRFToken(),
                         },
                         body: JSON.stringify({
                             old_password: oldPassword.value,
@@ -117,7 +110,6 @@ export class Setting extends HTMLElement {
                         throw new Error(errorData.message || 'Failed to change password');
                     }
                     alertMessage('Password changed successfully.', "alert-success");
-                    // Clear the input fields
                     oldPassword.value = '';
                     newPassword.value = '';
                 } catch (error) {
@@ -134,7 +126,6 @@ export class Setting extends HTMLElement {
             });
 
             fileInput.addEventListener('change', async (event) => {
-                // Check if a file is selected
                 const file = event.target.files[0];
                 if (!file) {
                     alertMessage('No file selected!');
@@ -144,23 +135,19 @@ export class Setting extends HTMLElement {
                     alertMessage('Only JPG files are supported.');
                     return;
                 }
-                // Prepare the picture data
                 const picData = new FormData();
                 picData.append('profileimg', file);
 
                 try {
                     const response = await fetchProtectedUrl('/api/profiles/me/', {
                         method: 'PUT',
-                        // headers: {
-                        //     'X-CSRFToken': getCSRFToken(),
-                        // },
                         body: picData
                     });
 
                     if (!response.ok) {
                         const errorData = await response.json();
-                        // Extract profileimg error message if available
-                        const profileImgError = errorData.profileimg ? errorData.profileimg.join(', ') : 'Unknown error';
+
+                        const profileImgError = Array.isArray(errorData.profileimg) ? errorData.profileimg.join(', ') : 'Unknown error';
                         throw new Error('Failed to update profile picture' + profileImgError);
                     }
                     const result = await response.json();
@@ -181,9 +168,6 @@ async function logout() {
         set_offline();
         const response = await fetchProtectedUrl('/auth/logout/', {
             method: 'POST',
-            // headers: {
-            //     'X-CSRFToken': getCSRFToken(),
-            // },
         });
         if (!response.ok) {
             throw new Error('Failed to logout');
@@ -201,7 +185,6 @@ async function setLanguage(event) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                // 'X-CSRFToken': getCSRFToken(),
             },
             body: JSON.stringify({
                 language: selectedLang

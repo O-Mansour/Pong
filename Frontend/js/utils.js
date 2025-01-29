@@ -1,23 +1,10 @@
-export function getCSRFToken() {
-    const cookies = document.cookie.split('; '); // Split all cookies into an array
-    let csrfToken = null;
-
-    for (let cookie of cookies) {
-        if (cookie.startsWith('csrftoken=')) {
-            csrfToken = cookie.split('=')[1]; // Get the value
-            break;
-        }
-    }
-    return csrfToken;
-}
-
 export function get_access_token() {
-    const cookies = document.cookie.split('; '); // Split all cookies into an array
+    const cookies = document.cookie.split('; ');
     let access_token = null;
 
     for (let cookie of cookies) {
         if (cookie.startsWith('access_token=')) {
-            access_token = cookie.split('=')[1]; // Get the value
+            access_token = cookie.split('=')[1];
             break;
         }
     }
@@ -62,7 +49,6 @@ export async function set_online() {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                // 'X-CSRFToken': getCSRFToken(),
             },
             body: JSON.stringify({
                 is_online: true
@@ -84,7 +70,6 @@ export async function set_offline() {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                // 'X-CSRFToken': getCSRFToken(),
             },
             body: JSON.stringify({
                 is_online: false
@@ -106,8 +91,6 @@ export function go_to_page(url) {
     document.dispatchEvent(go_event);
 }
 
-// classname: An optional parameter specifying the CSS class for the alert type (e.g., alert-danger, alert-success).
-//div.role = "alert"; =>setattrbuit
 export function alertMessage(message, classname = "alert-danger") {
     const a = document.getElementById('alert');
     
@@ -118,10 +101,8 @@ export function alertMessage(message, classname = "alert-danger") {
 
     div.className = `alert ${classname} d-flex p-2 gap-2`;
     div.role = "alert";
-    //div.setAttribute("role", "alert");
     div.innerHTML = message + `
-        <button type="button" class="btn-close m-0" data-bs-dismiss="alert" aria-label="Close"></button>
-    `;
+        <button type="button" class="btn-close m-0" data-bs-dismiss="alert" aria-label="Close"></button>`;
     
     a.append(div);
 
@@ -139,25 +120,20 @@ export async function fetchProtectedUrl(url, options = {}) {
             credentials: 'include',
         });
 
-        // refresh the access token when it expires
         if (response.status === 401) {
             const refreshResponse = await fetch('/auth/refresh_token/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // 'X-CSRFToken': getCSRFToken(),
                 },
                 credentials: 'include',
             });
 
-            // redirect to login when refresh token expires
             if (!refreshResponse.ok) {
                 alertMessage('Session expired, log in again');
                 return refreshResponse;
-                // go_to_page('/');
             }
 
-            // retry fetch again after refreshing tokens
             response = await fetch(url, {
                 ...options,
                 credentials: 'include',

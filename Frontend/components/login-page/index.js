@@ -1,8 +1,5 @@
-import updateLanguageContent from "../../js/language.js";
-import { event } from "../link/index.js";
-import { go_to_page, isUserAuth } from "../../js/utils.js";
-import { set_online } from "../../js/utils.js";
-import langData from "../../js/language.js";
+import {updateLanguageContent, langData} from "../../js/language.js";
+import { go_to_page, isUserAuth, set_online } from "../../js/utils.js";
 
 export class LoginPage extends HTMLElement
 {
@@ -30,11 +27,9 @@ export class LoginPage extends HTMLElement
             this.errorMessage = this.querySelector('#errorMessage');
             this.intraButton = this.querySelector('.intra-login');
             
-            // Add event listeners
             this.loginForm.addEventListener('submit', this.handleSubmit);
             this.intraButton.addEventListener('click', this.handleFTLogin);
             
-            // Handle callback if redirected back with tokens
             this.handleOAuthCallback();
             
             document.querySelector('.click_eye').addEventListener('click', () => {
@@ -50,13 +45,6 @@ export class LoginPage extends HTMLElement
 
         })();
     }
-
-    // disconnectedCallback() {
-    //     // Clean up event listeners
-    //     this.loginForm.removeEventListener('submit', this.handleSubmit);
-    //     this.intraButton.removeEventListener('click', this.handleFTLogin);
-    // }
-
 
     async handleSubmit(e) {
         e.preventDefault();
@@ -75,12 +63,7 @@ export class LoginPage extends HTMLElement
             const data = await response.json();
             if (!response.ok)
                 throw new Error(data.error || 'Login failed');
-
-            // localStorage.setItem('access_token', data.access);
-            // localStorage.setItem('refresh_token', data.refresh);
-            const url = '/home';
-            history.pushState({url}, null, url);
-            document.dispatchEvent(event);
+            go_to_page('/home');
             set_online();
         } catch (error) {
             const currLang = localStorage.getItem('lang') || 'en';
@@ -91,20 +74,16 @@ export class LoginPage extends HTMLElement
 
     async handleFTLogin(e) {
         e.preventDefault();
-
         try {
-            // Fetch the authorization URL from the backend
             const response = await fetch('/auth/42login/');
 
             const data = await response.json();
             if (response.ok && data.authorization_url) {
-                // Redirect the user to the 42 authorization URL
                 window.location.href = data.authorization_url;
             } else {
                 throw new Error(data.error || 'Failed to initiate 42 login.');
             }
         } catch (error) {
-            // Show the error message
             const currLang = localStorage.getItem('lang') || 'en';
             this.errorMessage.style.display = 'block';
             this.errorMessage.textContent = langData[currLang]?.login_error || error.message;
@@ -112,25 +91,17 @@ export class LoginPage extends HTMLElement
     }
 
     async handleOAuthCallback() {
-        // Check if the current URL contains an authorization code
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
 
         if (code) {
             try {
-                // Send the authorization code to the backend to exchange for JWT tokens
                 const response = await fetch(`/auth/42callback/?code=${code}`);
 
                 const data = await response.json();
                 if (response.ok) {
-                    // Store JWT tokens in localStorage
-                    // localStorage.setItem('access_token', data.access_token);
-                    // localStorage.setItem('refresh_token', data.refresh_token);
-
                     set_online();
-                    const url = '/home';
-                    history.pushState({url}, null, url);
-                    document.dispatchEvent(event);
+                    go_to_page('/home');
                 } else {
                     throw new Error(data.error || 'Failed to authenticate with 42.');
                 }
@@ -144,9 +115,3 @@ export class LoginPage extends HTMLElement
 }
 
 customElements.define("login-page", LoginPage);
-
-// customElements ketkhd deux parameter  paramer awal kakon fih nom dil components li ankhdm bih b melf html
- //parameter  2  object ou class inhert les elements html
- //plus nom compontes khs tkon fih (-)=>login-page
-
- //connectedCallback => ket3rf lia  html 

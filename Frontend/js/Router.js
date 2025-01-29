@@ -34,14 +34,6 @@ const routes = new Map([
         Title: "game",
         Element: "ponggame-game"
     }],
-    ["/1vs1-local", {
-        Title: "game",
-        Element: "vers1-game"
-    }],
-    ["/local", {
-        Title: "game",
-        Element: "localgame-game"
-    }],
     ["/congrats", {
         Title: "congrats",
         Element: "pagegame-winner"
@@ -68,30 +60,25 @@ const Router = {
     init:() => {
 
         document.addEventListener("mylink", event => {
-            Router.go();    //  go=> to load the correct content based on the URL
+            Router.go();
         });
 
        window.addEventListener("popstate",event=>{
-           Router.go();   // which is triggered by the user clicking the back or forward buttons. This ensures the app displays the correct page without reloading.
+           Router.go();
        });
        Router.go();
 
    },
    go:() => {
-    
-        // const route = location.pathname;  // Gets the current path from the browser’s location (e.g., "/home", "/user")
         let route = window.location.pathname;
 
         const cache = document.querySelector("main");
-        if (routes.get(route)) // Checks if the current path matches a defined route in the routes map
+        if (routes.get(route))
         {
             document.title = routes.get(route).Title;
-            const pageElement = document.createElement(routes.get(route).Element);  //Creates a new instance of the component specified by Element (e.g., <home-dashboard-page>).
-            cache.innerHTML = "";  //Replaces any existing content in <main> with this new component
+            const pageElement = document.createElement(routes.get(route).Element);
+            cache.innerHTML = "";
             cache.appendChild(pageElement);
-            
-            // if (routes.get(route).onLoad)
-            //     routes.get(route).onLoad();
         }
         else
         {
@@ -104,9 +91,4 @@ const Router = {
     }
 }
 
-// export default Router;
 Router.init();
-
-//it updates the page’s title and content based on routes in the routes map and 
-//listens for both custom navigation events ("mylink") and popstate 
-//events to handle back/forward navigation.

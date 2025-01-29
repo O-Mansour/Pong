@@ -21,7 +21,6 @@ services:
     networks:
       - pong-network
     volumes:
-      - front_volume:/usr/share/nginx/html
       - cert_volume:/etc/nginx/ssl
       - media_volume:/media
     env_file: .env
@@ -38,7 +37,6 @@ services:
     networks:
       - pong-network
     volumes:
-      - back_volume:/backend
       - cert_volume:/etc/nginx/ssl
       - media_volume:/backend/media
     depends_on:
@@ -50,18 +48,6 @@ networks:
     driver: bridge
 
 volumes:
-  front_volume:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./Frontend
-  back_volume:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./Backend/Pong
   postgres_volume:
     driver: local
   media_volume:

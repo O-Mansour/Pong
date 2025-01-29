@@ -273,37 +273,14 @@ const  langData = ({
         },
 });
 
-
-//localStorage.setItem('lang', 'en'); is a JavaScript command used to store a key-value pair in the browser's local storage
-//localStorage.setItem(key, value);
-//localStorage is a Web Storage API that allows you to store data locally in the user's browser
-//Data stored in localStorage does not expire. It remains available even after the browser is closed and reopened
-
-// .? => Allows the application to handle missing data gracefully without crashing
-//Without ?., trying to access a property of undefined would throw an error like:
-//Cannot read properties of undefined (reading 'key')
-
-//Why use ?.:
-//If langData[currLang] (e.g., langData["en"]) does not exist, the optional chaining operator ?.
-// ensures no error is thrown.
-//Instead, it returns undefined.
-
-//If the key is "welcomeMessage" and langData[currLang]?.["welcomeMessage"] is undefined, 
-//the displayed text will be "welcomeMessage".
-
-import {getCSRFToken, fetchProtectedUrl, alertMessage} from "./utils.js";
+import {fetchProtectedUrl, alertMessage} from "./utils.js";
 
 async function updateLanguageContent() {
         let currLang = localStorage.getItem('lang') || 'en';
         if (!['/', '/sign-up'].includes(window.location.pathname))
         {
                 try {
-                const response = await fetchProtectedUrl('/api/profiles/me/', {
-                        method: 'GET',
-                        // headers: {
-                        //         'X-CSRFToken': getCSRFToken(),
-                        // },
-                });
+                const response = await fetchProtectedUrl('/api/profiles/me/');
                 if (!response.ok)
                         alertMessage('Failed to fetch profile.');
                 

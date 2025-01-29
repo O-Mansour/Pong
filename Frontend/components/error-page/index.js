@@ -5,8 +5,6 @@ export class NotFound extends  HTMLElement
         super();
     }
 
-     // when the component is attached to the dom 
-
     connectedCallback()
     {
         const template = document.getElementById("error-page-id");

@@ -1,14 +1,12 @@
 import updateLanguageContent from "../../js/language.js";
-import { event } from "../link/index.js";
-import { go_to_page, isUserAuth } from "../../js/utils.js";
-import { set_online } from "../../js/utils.js";
-import { alertMessage} from "../../js/utils.js";
+import { go_to_page, isUserAuth, set_online, alertMessage } from "../../js/utils.js";
+
 export class LoginSignup extends HTMLElement {
 
     constructor() 
     {
         super();
-        this.handleSignup = this.handleSignup.bind(this); // Bind the method
+        this.handleSignup = this.handleSignup.bind(this);
     }
 
     connectedCallback() {
@@ -96,16 +94,11 @@ export class LoginSignup extends HTMLElement {
             });
             const data = await response.json();
             if (!response.ok) {
-                alertMessage(data.error || "An error occurred. Try again");
+                alertMessage(data.message || "An error occurred. Try again");
                 return ;
             }
-            // localStorage.setItem('access_token', data.access);
-            // localStorage.setItem('refresh_token', data.refresh);
-
             set_online();
-            const url = '/home';
-            history.pushState({url}, null, url);
-            document.dispatchEvent(event);
+            go_to_page('/home');
         } catch (error) {
             alertMessage('An error occurred. Try again');
         }

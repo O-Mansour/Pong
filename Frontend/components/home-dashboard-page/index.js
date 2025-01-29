@@ -1,13 +1,12 @@
 import updateLanguageContent from "../../js/language.js";
 import langData from "../../js/language.js";
-import {isUserAuth, alertMessage, getCSRFToken, fetchProtectedUrl, go_to_page} from "../../js/utils.js";
+import {isUserAuth, alertMessage, fetchProtectedUrl, go_to_page} from "../../js/utils.js";
 
 export class HomeDashboard extends  HTMLElement
 {
     constructor()
     {
         super();
-        
     }
     
     connectedCallback()
@@ -66,7 +65,6 @@ export class HomeDashboard extends  HTMLElement
           matches_played.textContent = data.wins + data.losses;
           matches_won.textContent = data.wins;
 
-          // Calculate win and loss percentages
           let winPercentage = 100;
           if (data.wins + data.losses > 0)
             winPercentage = Math.ceil((data.wins / (data.wins + data.losses)) * 100);
@@ -107,12 +105,7 @@ export class HomeDashboard extends  HTMLElement
 
   async fetchNotfication() {
     try {
-      const response = await fetchProtectedUrl('/api/friendships/requests_received', {
-          method: 'GET',
-          // headers: {
-          //   'X-CSRFToken': getCSRFToken(),
-          // },
-      });
+      const response = await fetchProtectedUrl('/api/friendships/requests_received');
       const NotifData = await response.json();
       const badge = document.querySelector('.badge');
       const formContainer = document.querySelector("#formContainer");
@@ -126,7 +119,6 @@ export class HomeDashboard extends  HTMLElement
         const notificationRow = document.createElement("div");
         notificationRow.classList.add("d-flex");
 
-        // Add unique IDs to buttons
         const acceptButtonId = `accept_request_${index}`;
         const rejectButtonId = `reject_request_${index}`;
 
@@ -146,20 +138,13 @@ export class HomeDashboard extends  HTMLElement
         `;
         
         formContainer.appendChild(notificationRow);
-      
 
-        // Use the unique ID to select each button
         const acceptButton = document.getElementById(acceptButtonId);
         const rejectButton = document.getElementById(rejectButtonId);
 
         acceptButton.addEventListener('click', async (event) => {
           try {
-              await fetchProtectedUrl(`/api/friendships/${sender.id}/accept/`, {
-              method: 'GET',
-              // headers: {
-              //   'X-CSRFToken': getCSRFToken(),
-              // },
-            });
+            await fetchProtectedUrl(`/api/friendships/${sender.id}/accept/`);
             acceptButton.disabled = true;
             rejectButton.disabled = true;
           } catch(err) {
@@ -169,12 +154,7 @@ export class HomeDashboard extends  HTMLElement
 
         rejectButton.addEventListener('click', async (event) => {
           try {
-              await fetchProtectedUrl(`/api/friendships/${sender.id}/reject/`, {
-              method: 'GET',
-              // headers: {
-              //   'X-CSRFToken': getCSRFToken(),
-              // },
-            });
+            await fetchProtectedUrl(`/api/friendships/${sender.id}/reject/`);
             acceptButton.disabled = true;
             rejectButton.disabled = true;
           }catch(err) {
@@ -192,49 +172,24 @@ export class HomeDashboard extends  HTMLElement
 
   async fetchTotalPlayers() {
     try {
-      const response = await fetchProtectedUrl('/api/profiles/me/', {
-        method: 'GET',
-        // headers: {
-        //   'X-CSRFToken': getCSRFToken(),
-        // }
-      });
+      const response = await fetchProtectedUrl('/api/profiles/me/');
       const data = await response.json();
 
-      const profilesResponse = await fetchProtectedUrl('/api/profiles/', {
-          method: 'GET',
-          // headers: {
-          //   'X-CSRFToken': getCSRFToken(),
-          // }
-      });
+      const profilesResponse = await fetchProtectedUrl('/api/profiles/');
       const profilesData = await profilesResponse.json();
 
-      const friendsResponse = await fetchProtectedUrl('/api/friendships/friends/', {
-        method: 'GET',
-        // headers: {
-        //   'X-CSRFToken': getCSRFToken(),
-        // }
-      });
+      const friendsResponse = await fetchProtectedUrl('/api/friendships/friends/');
       const friendsData = await friendsResponse.json();
       let friendsIds = [];
       if (Array.isArray(friendsData)){
         friendsIds = friendsData.map(friend => friend.user_id);
       }
 
-      const SentResponse = await fetchProtectedUrl('/api/friendships/requests_sent', {
-        method: 'GET',
-        // headers: {
-        //   'X-CSRFToken': getCSRFToken(),
-        // }
-      });
+      const SentResponse = await fetchProtectedUrl('/api/friendships/requests_sent');
       const sentData = await SentResponse.json();
       const sentIds = sentData.map(pending => pending.receiver_profile.user_id);
 
-      const receivedResponse = await fetchProtectedUrl('/api/friendships/requests_received', {
-        method: 'GET',
-        // headers: {
-        //   'X-CSRFToken': getCSRFToken(),
-        // }
-      });
+      const receivedResponse = await fetchProtectedUrl('/api/friendships/requests_received');
       const receivedData = await receivedResponse.json();
       const receivedIds = receivedData.map(pending => pending.sender_profile.user_id);
 
@@ -297,7 +252,6 @@ export class HomeDashboard extends  HTMLElement
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  // 'X-CSRFToken': getCSRFToken(),
                 },
                 body: JSON.stringify({ receiver: leader.user_id }),
               });

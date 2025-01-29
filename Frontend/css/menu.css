@@ -41,13 +41,7 @@
     display: block;
 }
 
-/* 
 
-content: ''; => Empty Content: The empty string '' means that no actual content is inserted, but the pseudo-element itself can be styled.
-Pseudo-elements: The content property only works with pseudo-elements like ::before and ::after. 
-
- */
- 
 .sidebar .menu  a::after {
     content: '';
     height: 5px;

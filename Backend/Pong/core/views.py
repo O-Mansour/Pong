@@ -364,7 +364,7 @@ class FT_CallbackView(APIView):
 			key='access_token',
 			value=str(refresh.access_token),
 			httponly=False,
-			secure=True,  # False only in development
+			secure=True,
 			max_age=60 * 30,
 			samesite='None'
 		)

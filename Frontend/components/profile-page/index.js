@@ -1,5 +1,5 @@
 import updateLanguageContent from "../../js/language.js";
-import {alertMessage, isUserAuth, go_to_page, getCSRFToken, fetchProtectedUrl} from "../../js/utils.js";
+import {alertMessage, isUserAuth, go_to_page, fetchProtectedUrl} from "../../js/utils.js";
 
 export class Profile extends HTMLElement {
   constructor() {
@@ -26,12 +26,7 @@ export class Profile extends HTMLElement {
 
   async fetchProfileData() {
     try {
-      const response = await fetchProtectedUrl('/api/profiles/me/', {
-        method: 'GET',
-        // headers: {
-        //   'X-CSRFToken': getCSRFToken(),
-        // },
-      });
+      const response = await fetchProtectedUrl('/api/profiles/me/');
       const data = await response.json();
       const usernameElement = document.getElementById('fetched_username');
       const fullnameElement = document.getElementById('fetched_fullname');
@@ -90,7 +85,6 @@ export class Profile extends HTMLElement {
 
       document.querySelector('.progress_2').style = `--xp:${progressPercentage}%`;
 
-      // Calculate win and loss percentages
       let winPercentage = 100;
       if (data.wins + data.losses > 0)
         winPercentage = Math.ceil((data.wins / (data.wins + data.losses)) * 100);
@@ -109,12 +103,7 @@ export class Profile extends HTMLElement {
 
   async fetchFriendsList() {
     try {
-      const response = await fetchProtectedUrl('/api/friendships/friends', {
-        method: 'GET',
-        // headers: {
-        //   'X-CSRFToken': getCSRFToken(),
-        // }
-      });
+      const response = await fetchProtectedUrl('/api/friendships/friends');
 
       const friendsData = await response.json();
       const friendsList = document.querySelector('.Friend_list');
@@ -141,16 +130,10 @@ export class Profile extends HTMLElement {
     }
   }
 
-  // match history
 
   async fetchMatchHistory() {
     try {
-      const response = await fetchProtectedUrl('/api/matches', {
-        method: 'GET',
-        // headers: {
-        //   'X-CSRFToken': getCSRFToken(),
-        // }
-      });
+      const response = await fetchProtectedUrl('/api/matches');
       const historyData = await response.json();
 
       const historyList = document.querySelector('.list_hostory');
@@ -185,5 +168,3 @@ export class Profile extends HTMLElement {
 }
 
 customElements.define("profile-page", Profile);
-
-/* <span class="opp_win">${match.won ? 'Win' : 'Loss'}</span> */
