@@ -84,8 +84,8 @@ export class Setting extends HTMLElement {
             changePasswordButton.addEventListener('click', async (event) => {
                 event.preventDefault();
 
-                const oldPassword = document.querySelector('input[placeholder="Old Password"]');
-                const newPassword = document.querySelector('input[placeholder="New Password"]');
+                const oldPassword = document.querySelector('#oldPassword');
+                const newPassword = document.querySelector('#newPassword');
 
                 if (!newPassword || !newPassword.value.trim())
                 {

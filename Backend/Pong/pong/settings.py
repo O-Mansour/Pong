@@ -100,7 +100,7 @@ AUTH_PASSWORD_VALIDATORS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 FT_CLIENT_ID = 'u-s4t2ud-a9c4870c74d181b5f2d09157314996a195bc8f6734e9cefac685730ff61294d3'
-SITE_URL = 'https://localhost:3000/'
+SITE_URL = os.getenv('SITE_URL', 'https://localhost:3000/')
 
 
 AUTHENTICATION_BACKENDS = [

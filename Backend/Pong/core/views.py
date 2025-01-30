@@ -18,6 +18,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as ValidationErrorException
 from django.utils.timezone import now, localtime
+from rest_framework.permissions import AllowAny
 
 
 class ProfileViewSet(ModelViewSet):
@@ -187,6 +188,9 @@ class MatchViewSet(ModelViewSet):
 		return Response({"total_today_matches": total_today})
 
 class RegistrationView(APIView):
+	authentication_classes = []
+	permission_classes = [AllowAny]
+
 	def post(self, request):
 		if User.objects.filter(username=request.data['username']).exists():
 			return Response(
@@ -225,6 +229,9 @@ class RegistrationView(APIView):
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(APIView):
+	authentication_classes = []
+	permission_classes = [AllowAny]
+
 	def post(self, request):
 		username = request.data.get('username')
 		password = request.data.get('password')
@@ -255,6 +262,9 @@ class LoginView(APIView):
 		return Response({'error': 'Invalid credentials'}, status=401)
 
 class FT_LoginView(APIView):
+	authentication_classes = []
+	permission_classes = [AllowAny]
+	
 	def get(self, request):
 		redirect_uri = settings.SITE_URL
 		return Response({
@@ -262,6 +272,9 @@ class FT_LoginView(APIView):
 		})
 
 class FT_CallbackView(APIView):
+	authentication_classes = []
+	permission_classes = [AllowAny]
+
 	def get(self, request):
 		code = request.GET.get('code')
 		if not code:
