@@ -4,6 +4,10 @@
 
 Pong is a web-based gaming platform centered around a modernized version of the classic Pong game. The project combines cutting-edge web technologies, real-time multiplayer capabilities, and advanced 3D graphics to create an engaging gaming experience.
 
+🎥 Check out this short demo of the website :
+
+[![PONG Game Overview](https://img.youtube.com/vi/bteuyL3GVHs/maxresdefault.jpg)](https://www.youtube.com/watch?v=bteuyL3GVHs)
+
 ## ✨ Key Features
 
 - ✅ 3D Pong Implementation using ThreeJS/WebGL
